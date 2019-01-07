@@ -135,7 +135,7 @@ class ArticleManager
      *
      * By yuyang
      *
-     * 2018-12-20
+     * 2019-01-03
      */
     public static function getInfoByorId($info,$level = 0){
         if(strpos($level,'0')!== false){

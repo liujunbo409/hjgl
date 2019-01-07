@@ -24,9 +24,9 @@ class ArticleAscriptionManager
      */
     public static function getById($id)
     {
-        $article=new ArticleAscription();
-        $article = ArticleAscription::where('id', '=', $id)->first();
-        return $article;
+        $info =new ArticleAscription();
+        $info = ArticleAscription::where('id', '=', $id)->first();
+        return $info;
     }
     /*
      * 根据article_id获取首个文章所属文章分类
@@ -37,9 +37,9 @@ class ArticleAscriptionManager
      */
     public static function getByArticleId($article_id)
     {
-        $article=new ArticleAscription();
-        $article = ArticleAscription::where('article_id', '=', $article_id)->first();
-        return $article;
+        $info=new ArticleAscription();
+        $info = ArticleAscription::where('article_id', '=', $article_id)->first();
+        return $info;
     }
     /*
      * 根据article_id获取全部文章所属文章分类
@@ -50,9 +50,9 @@ class ArticleAscriptionManager
      */
     public static function getByCon($article_id)
     {
-        $article=new ArticleAscription();
-        $article = ArticleAscription::where('article_id', '=', $article_id)->get();
-        return $article;
+        $info=new ArticleAscription();
+        $info = ArticleAscription::where('article_id', '=', $article_id)->get();
+        return $info;
     }
     /*
      * 根据type_id获取首个文章所属信息
@@ -63,23 +63,9 @@ class ArticleAscriptionManager
      */
     public static function getByTypeId($type_id)
     {
-        $article=new ArticleAscription();
-        $article = ArticleAscription::where('type_id', '=', $type_id)->first();
-        return $article;
-    }
-
-    /*
-     * 根据单个type_id获取全部文章所属信息
-     *
-     * By yuyang
-     *
-     * 2018-12-19
-     */
-    public static function getByTypeCon($type_id)
-    {
-        $article=new ArticleAscription();
-        $article = ArticleAscription::where('type_id', '=', $type_id)->get();
-        return $article;
+        $info=new ArticleAscription();
+        $info = ArticleAscription::where('type_id', '=', $type_id)->first();
+        return $info;
     }
 
     /*
@@ -91,7 +77,7 @@ class ArticleAscriptionManager
      */
     public static function getByTypeorCon($info,$level='0')
     {
-        $article=new ArticleAscription();
+        $articles=new ArticleAscription();
         $type_ids = array();
         if ($level = 0) {
             foreach($info as $v){
@@ -100,8 +86,8 @@ class ArticleAscriptionManager
         }else if($level = 1){
             $type_ids = $info;
         }
-        $article = ArticleAscription::wherein('type_id',$type_ids)->get();
-        return $article;
+        $articles = ArticleAscription::wherein('type_id',$type_ids)->get();
+        return $articles;
     }
 
     /*
@@ -136,7 +122,7 @@ class ArticleAscriptionManager
      *
      * By Yuyang
      * 
-     * 2018-12-21
+     * 2019-01-03
      */
     public static function setInfo($data)
     {   

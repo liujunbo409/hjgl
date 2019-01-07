@@ -13,15 +13,10 @@ use App\Components\HJGL\ArticleManager;
 use App\Components\HJGL\ArticleTypeManager;
 use App\Components\HJGL\ArticleAscriptionManager;
 use App\Models\HJGL\Article;
-use App\Models\HJGL\ArticleType;
-use App\Components\QNManager;
 use App\Components\Utils;
 use App\Http\Controllers\ApiResponse;
 use Illuminate\Http\Request;
-use App\Libs\ServerUtils;
-use App\Components\RequestValidator;
-use Illuminate\Support\Facades\Redirect;
-//use App\Components\HJGL\HandleRecordManager;
+use App\Components\HJGL\HandleRecordManager;
 
 
 class ArticleController
@@ -79,14 +74,33 @@ class ArticleController
         $data = $request->all();
         $admin = $request->session()->get('admin');
         $article = new Article();
-        //存在id是保存
+        //存在id是编辑
         if (array_key_exists('id', $data) && !Utils::isObjNull($data['id'])) {
             $article = ArticleManager::getById($data['id']);
+            $article = ArticleManager::setInfo($article, $data);
+            $article->save();
+            $re_arr=array(
+                't_table'=>'article_info',
+                't_id'=>$data['id'],
+                'type'=>'update',
+                'role'=>$admin['role'],
+                'role_id'=>$admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
+        }else{
+            $article = ArticleManager::setInfo($article, $data);
+            $article->oper_type = $admin->role;
+            $article->oper_id = $admin->id;
+            $article->save();
+            $re_arr=array(
+                't_table'=>'article_info',
+                't_id'=>$article->id,
+                'type'=>'create',
+                'role'=>$admin['role'],
+                'role_id'=>$admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
         }
-        $article = ArticleManager::setInfo($article, $data);
-        $article->oper_type = $admin->role;
-        $article->oper_id = $admin->id;
-        $article->save();
         return ApiResponse::makeResponse(true, $article, ApiResponse::SUCCESS_CODE);
     }
 
@@ -124,6 +138,14 @@ class ArticleController
             }
         }
         $article->delete();
+        $re_arr=array(
+            't_table'=>'article_info',
+            't_id'=>$data['id'],
+            'type'=>'delete',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true, '删除成功', ApiResponse::SUCCESS_CODE);
     }
 

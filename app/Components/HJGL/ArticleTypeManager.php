@@ -84,27 +84,30 @@ class ArticleTypeManager
      */
     public static function getListByCon($con_arr, $is_paginate)
     {
-        $articles = new ArticleType();
+        $types = new ArticleType();
         //相关条件
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
-            $articles = $articles->where(function ($query) use ($keyword) {
+            $types = $types->where(function ($query) use ($keyword) {
                     $query->where('title', 'like', "%{$keyword}%");
             });
         }
         if (array_key_exists('title', $con_arr)) {
-            $articles = $articles->where('title', '=', $con_arr['title']);
+            $types = $types->where('title', '=', $con_arr['title']);
         }
         if (array_key_exists('author', $con_arr)) {
-            $articles = $articles->where('author', '=', $con_arr['author']);
+            $types = $types->where('author', '=', $con_arr['author']);
         }
-        $articles = $articles->orderby('seq', 'asc')->orderby('id', 'desc');
+        if (array_key_exists('parent_id', $con_arr)) {
+            $types = $types->where('parent_id', '=', $con_arr['parent_id']);
+        }
+        $types = $types->orderby('seq', 'asc')->orderby('id', 'desc');
         if ($is_paginate) {
-            $articles = $articles->paginate(Utils::PAGE_SIZE);
+            $types = $types->paginate(Utils::PAGE_SIZE);
         } else {
-            $articles = $articles->get();
+            $types = $types->get();
         }
-        return $articles;
+        return $types;
     }
 
     /*
@@ -143,14 +146,14 @@ class ArticleTypeManager
         if (array_key_exists('ill_id', $data)) {
             $type->ill_id = array_get($data, 'ill_id');
         }
-        if (array_key_exists('created_at', $data)) {
-            $type->created_at = array_get($data, 'created_at');
+        if (array_key_exists('create_time', $data)) {
+            $type->create_time = array_get($data, 'create_time');
         }
-        if (array_key_exists('updated_at', $data)) {
-            $type->updated_at = array_get($data, 'updated_at');
+        if (array_key_exists('update_time', $data)) {
+            $type->update_time = array_get($data, 'update_time');
         }
-        if (array_key_exists('deleted_at', $data)) {
-            $type->deleted_at = array_get($data, 'deleted_at');
+        if (array_key_exists('delete_time', $data)) {
+            $type->delete_time = array_get($data, 'delete_time');
         }
         return $type;
     }
@@ -219,21 +222,21 @@ class ArticleTypeManager
      */
     public static function getBySeq($con_arr, $type)
     {
-        $mulu = new ArticleType();
+        $type_info = new ArticleType();
         //相关条件
         if (array_key_exists('parent_id', $con_arr) && !Utils::isObjNull($con_arr['parent_id'])) {
-            $mulu = $mulu->where('parent_id', '=', $con_arr['parent_id']);
+            $type_info = $type_info->where('parent_id', '=', $con_arr['parent_id']);
         }
         if ($type == 'down') {
-            $mulu = $mulu->where('seq', '>', $con_arr['seq']);
-            $mulu = $mulu->where('seq', '<=', $con_arr['seq_down']);
+            $type_info = $type_info->where('seq', '>', $con_arr['seq']);
+            $type_info = $type_info->where('seq', '<=', $con_arr['seq_down']);
         } else {
-            $mulu = $mulu->where('seq', '<', $con_arr['seq']);
-            $mulu = $mulu->where('seq', '>=', $con_arr['seq_up']);
+            $type_info = $type_info->where('seq', '<', $con_arr['seq']);
+            $type_info = $type_info->where('seq', '>=', $con_arr['seq_up']);
         }
-        $mulu = $mulu->orderby('seq', 'asc');
-        $mulu = $mulu->get();
-        return $mulu;
+        $type_info = $type_info->orderby('seq', 'asc');
+        $type_info = $type_info->get();
+        return $type_info;
     }
 
 }

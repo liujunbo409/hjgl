@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Components\Utils;
 use App\Components\QNManager;
 use App\Http\Controllers\ApiResponse;
+use App\Components\HJGL\HandleRecordManager;
 
 class ShopController{
     /*
@@ -63,6 +64,7 @@ class ShopController{
     public function editPost(Request $request)
     {
         $data = $request->all();
+        $admin = $request->session()->get('admin');
         if (!array_key_exists('shop_name', $data) || $data['shop_name'] == '') {
             return ApiResponse::makeResponse(false, '商家名称缺失', ApiResponse::MISSING_PARAM);
         }
@@ -91,12 +93,14 @@ class ShopController{
                 return ApiResponse::makeResponse(false, "手机号重复", ApiResponse::PHONE_DUP);
             }
             $shop = ShopManager::setShop($shop, $data);
+            $shop->save();
         }else{
             $shop = ShopManager::getById($data['id']);
             $shop->shop_name = $data['shop_name'];
             $shop->address = $data['address'];
+            $shop->save();
         }
-        $shop->save();
+
         return ApiResponse::makeResponse(true, $shop, ApiResponse::SUCCESS_CODE);
     }
 
@@ -110,6 +114,7 @@ class ShopController{
     public function setStatus(Request $request, $id)
     {
         $data = $request->all();
+        $admin = $request->session()->get('admin');
         if (is_numeric($id) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数商家id$id']);
         }

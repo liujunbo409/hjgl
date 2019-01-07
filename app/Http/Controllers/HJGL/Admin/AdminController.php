@@ -16,6 +16,7 @@ use App\Http\Controllers\ApiResponse;
 use App\Models\HJGL\Admin;
 use Illuminate\Http\Request;
 use App\Components\HJGL\VertifyManager;
+use App\Components\HJGL\HandleRecordManager;
 
 
 class AdminController
@@ -79,6 +80,7 @@ class AdminController
     public function editMySelfPost(Request $request)
     {
         $data = $request->all();
+        $curr_admin = $request->session()->get('admin');
         if (!array_key_exists('id', $data) || $data['id'] == '') {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }
@@ -92,6 +94,14 @@ class AdminController
         $admin->name = isset($data['name']) ? $data['name'] : '';
         $admin->avatar = isset($data['avatar']) ? $data['avatar'] : '';
         $admin->save();
+        $re_arr=array(
+            't_table'=>'admin',
+            't_id'=>$data['id'],
+            'type'=>'update',
+            'role'=>$curr_admin['role'],
+            'role_id'=>$curr_admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true, $admin, ApiResponse::SUCCESS_CODE);
     }
 
@@ -121,6 +131,7 @@ class AdminController
     public function editMyPassPost(Request $request)
     {
         $data = $request->all();
+        $curr_admin = $request->session()->get('admin');
         if (!array_key_exists('id', $data) || $data['id'] == '') {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }
@@ -145,6 +156,14 @@ class AdminController
             }
             $admin->password=$data['new_password'];
             $admin->save();
+            $re_arr=array(
+                't_table'=>'admin',
+                't_id'=>$data['id'],
+                'type'=>'update',
+                'role'=>$curr_admin['role'],
+                'role_id'=>$curr_admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
             return ApiResponse::makeResponse(true,$admin, ApiResponse::SUCCESS_CODE);
         }else{
             return ApiResponse::makeResponse(false, '没有此用户', ApiResponse::NO_USER);
@@ -178,6 +197,7 @@ class AdminController
     public function editMyTelPost(Request $request)
     {
         $data = $request->all();
+        $curr_admin = $request->session()->get('admin');
         if (!array_key_exists('id', $data) || $data['id'] == '') {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }
@@ -200,6 +220,14 @@ class AdminController
             }
             $admin->phone=$data['phone'];
             $admin->save();
+            $re_arr=array(
+                't_table'=>'admin',
+                't_id'=>$data['id'],
+                'type'=>'update',
+                'role'=>$curr_admin['role'],
+                'role_id'=>$curr_admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
             return ApiResponse::makeResponse(true,$admin, ApiResponse::SUCCESS_CODE);
         }else{
             return ApiResponse::makeResponse(false, '没有此用户', ApiResponse::NO_USER);
@@ -263,12 +291,21 @@ class AdminController
     public function setStatus(Request $request, $id)
     {
         $data = $request->all();
+        $curr_admin = $request->session()->get('admin');
         if (is_numeric($id) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数管理员id$id']);
         }
         $admin = AdminManager::getById($id);
         $admin->status = $data['status'];
         $admin->save();
+        $re_arr=array(
+            't_table'=>'admin',
+            't_id'=>$id,
+            'type'=>'update',
+            'role'=>$curr_admin['role'],
+            'role_id'=>$curr_admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true, $admin, ApiResponse::SUCCESS_CODE);
     }
 
@@ -299,6 +336,7 @@ class AdminController
     public function editPost(Request $request)
     {
         $data = $request->all();
+        $curr_admin = $request->session()->get('admin');
         if (!array_key_exists('role', $data) || $data['role'] == '') {
             return ApiResponse::makeResponse(false, '角色缺失', ApiResponse::MISSING_PARAM);
         }
@@ -318,11 +356,28 @@ class AdminController
                 return ApiResponse::makeResponse(false, "手机号重复", ApiResponse::PHONE_DUP);
             }
             $admin = AdminManager::setAdmin($admin, $data);
+            $admin->save();
+            $re_arr=array(
+                't_table'=>'admin',
+                't_id'=>$admin->id,
+                'type'=>'create',
+                'role'=>$curr_admin['role'],
+                'role_id'=>$curr_admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
         }else{
             $admin = AdminManager::getById($data['id']);
             $admin->role = $data['role'];
+            $admin->save();
+            $re_arr=array(
+                't_table'=>'admin',
+                't_id'=>$data['id'],
+                'type'=>'update',
+                'role'=>$curr_admin['role'],
+                'role_id'=>$curr_admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
         }
-        $admin->save();
         return ApiResponse::makeResponse(true, $admin, ApiResponse::SUCCESS_CODE);
     }
 

@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ArticleType extends Model
 {
-//	use SoftDeletes;    //使用软删除
+	use SoftDeletes;    //使用软删除
 	protected $connection = 'hjgldb';   //慢病管理数据库名
 	protected $table = 't_article_type';
 	public $timestamps = true;
-//	protected $dates = ['deleted_at'];  //软删除
+	protected $dates = ['delete_time'];  //软删除
 }

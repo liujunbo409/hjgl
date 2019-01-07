@@ -12,16 +12,12 @@ namespace App\Http\Controllers\HJGL\Admin;
 use App\Components\HJGL\ArticleManager;
 use App\Components\HJGL\ArticleTypeManager;
 use App\Components\HJGL\ArticleAscriptionManager;
-//use App\Components\HJGL\HandleRecordManager;
-use App\Components\QNManager;
+use App\Components\HJGL\HandleRecordManager;
 use App\Components\Utils;
 use App\Http\Controllers\ApiResponse;
 use App\Models\HJGL\Article;
 use App\Models\HJGL\ArticleType;
 use Illuminate\Http\Request;
-use App\Libs\ServerUtils;
-use App\Components\RequestValidator;
-use Illuminate\Support\Facades\Redirect;
 
 
 class ArticleTypeController
@@ -117,6 +113,7 @@ class ArticleTypeController
     public function editPost(Request $request)
     {
         $data = $request->all();
+        $admin = $request->session()->get('admin');
         $articleType = new ArticleType();
         if (array_key_exists('id', $data) && !Utils::isObjNull($data['id'])) {
             $articleType = ArticleTypeManager::getById($data['id']);
@@ -125,27 +122,32 @@ class ArticleTypeController
             }
             $articleType->name=$data['name'];
             $articleType->save();
-//            $re_arr=array(
-//                't_table'=>'article_type',
-//                't_id'=>$data['id'],
-//                'type'=>'update',
-//                'role'=>'admin',
-//                'role_id'=>$admin['id'],
-//                'action'=>'update',
-//            );
-//            HandleRecordManager::record($re_arr);
+            $re_arr=array(
+                't_table'=>'article_type',
+                't_id'=>$data['id'],
+                'type'=>'update',
+                'role'=>$admin['role'],
+                'role_id'=>$admin['id'],
+                'action'=>'update',
+            );
+            HandleRecordManager::record($re_arr);
         }else{
+            $con_arr=array(
+                'parent_id'=>$data['parent_id'],
+            );
+            $count = ArticleTypeManager::getListByCon($con_arr,true)->count();
             $articleType->name=$data['name'];
             $articleType->parent_id=$data['parent_id'];
+            $articleType->seq = $count + 1;
             $articleType->save();
-//            $re_arr=array(
-//                't_table'=>'article_type',
-//                't_id'=>$articleType->id,
-//                'type'=>'create',
-//                'role'=>'admin',
-//                'role_id'=>$admin['id'],
-//            );
-//            HandleRecordManager::record($re_arr);
+            $re_arr=array(
+                't_table'=>'article_type',
+                't_id'=>$articleType->id,
+                'type'=>'create',
+                'role'=>$admin['role'],
+                'role_id'=>$admin['id'],
+            );
+            HandleRecordManager::record($re_arr);
         }
         return ApiResponse::makeResponse(true, '修改成功', ApiResponse::SUCCESS_CODE);
     }
@@ -160,6 +162,7 @@ class ArticleTypeController
 
     public static function addTypeFather(Request $request){
         $data = $request->all();
+        $admin = $request->session()->get('admin');
         $type = new ArticleType();
         $con_arr=array(
             'parent_id'=>"0",
@@ -168,6 +171,14 @@ class ArticleTypeController
         $type->name = $data['name'];
         $type->seq = $count + 1;
         $type->save();
+        $re_arr=array(
+            't_table'=>'article_type',
+            't_id'=>$type->id,
+            'type'=>'create',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
     }
 
     /*
@@ -208,15 +219,15 @@ class ArticleTypeController
             $tag->seq = $seq_up;
         }
         $tag->save();
-//        $re_arr=array(
-//            't_table'=>'article_type',
-//            't_id'=>$tag_id,
-//            'type'=>'update',
-//            'role'=>'admin',
-//            'role_id'=>$admin['id'],
-//            'action'=>'up',
-//        );
-//        HandleRecordManager::record($re_arr);
+        $re_arr=array(
+            't_table'=>'article_type',
+            't_id'=>$tag_id,
+            'type'=>'update',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+            'action'=>'up',
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true,  '移动成功', ApiResponse::SUCCESS_CODE);
     }
 
@@ -254,15 +265,15 @@ class ArticleTypeController
             $tag->seq = $tag->seq+$i;
         }
         $tag->save();
-//        $re_arr=array(
-//            't_table'=>'article_type',
-//            't_id'=>$tag_id,
-//            'type'=>'update',
-//            'role'=>'admin',
-//            'role_id'=>$admin['id'],
-//            'action'=>'down',
-//        );
-//        HandleRecordManager::record($re_arr);
+        $re_arr=array(
+            't_table'=>'article_type',
+            't_id'=>$tag_id,
+            'type'=>'update',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+            'action'=>'down',
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true,  '移动成功', ApiResponse::SUCCESS_CODE);
     }
 
@@ -295,6 +306,14 @@ class ArticleTypeController
         $data['oper_id'] = $admin->id;
         $article = ArticleManager::setInfo($article, $data);
         $article->save();
+        $re_arr=array(
+            't_table'=>'article_info',
+            't_id'=>$article->id,
+            'type'=>'create',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
         
         $info = array();
         $info['type_id'] = $data['id'];
@@ -302,6 +321,14 @@ class ArticleTypeController
 
         $ascription = ArticleAscriptionManager::setInfo($info);
         $ascription->save();
+        $re_arr=array(
+            't_table'=>'article_ascription',
+            't_id'=>$ascription->id,
+            'type'=>'create',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
 
         return ApiResponse::makeResponse(true, $article, ApiResponse::SUCCESS_CODE);
     }
@@ -346,8 +373,6 @@ class ArticleTypeController
         foreach($articles_only as $v){
         	$ids[] = $v->article_id;
         }
-//        $articleascription =ArticleAscriptionManager:: getByTypeCon($data['id']);
-//        $articles = ArticleManager::getInfoByorId($articleascription);
         $articles = ArticleManager::getListByCon($con_arr, true);
         return view('HJGL.admin.articleType.chooseArticle', ['admin' => $admin, 'datas' => $articles, 'type_id' => $data['id'], 'ids' => $ids, 'con_arr' => $con_arr]);
     }
@@ -364,6 +389,14 @@ class ArticleTypeController
         $admin = $request->session()->get('admin');
         $ascription = ArticleAscriptionManager::setInfo($data);
         $ascription->save();
+        $re_arr=array(
+            't_table'=>'article_ascription',
+            't_id'=>$ascription->id,
+            'type'=>'create',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true, $ascription, ApiResponse::SUCCESS_CODE);
     }
 
@@ -393,14 +426,14 @@ class ArticleTypeController
             return ApiResponse::makeResponse(false, '该文章分类下挂有下属分类', ApiResponse::PARAM_ERROR);
         }
 
-//        $re_arr=array(
-//            't_table'=>'article_type',
-//            't_id'=>$data['id'],
-//            'type'=>'delete',
-//            'role'=>'admin',
-//            'role_id'=>$admin['id'],
-//        );
-//        HandleRecordManager::record($re_arr);
+        $re_arr=array(
+            't_table'=>'article_type',
+            't_id'=>$data['id'],
+            'type'=>'delete',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+        );
+        HandleRecordManager::record($re_arr);
         $article->delete();
         return ApiResponse::makeResponse(true, '删除成功', ApiResponse::SUCCESS_CODE);
     }
@@ -436,14 +469,14 @@ class ArticleTypeController
             return ApiResponse::makeResponse(false, '不存在的文章所属关系', ApiResponse::PARAM_ERROR);
         }
         foreach($ascription as $v){
-//        	$re_arr=array(
-//	            't_table'=>'article_ascription',
-//	            't_id'=>$data['type_id'],
-//	            'type'=>'delete',
-//	            'role'=>'admin',
-//	            'role_id'=>$admin['id'],
-//	        );
-//	        HandleRecordManager::record($re_arr);
+        	$re_arr=array(
+	            't_table'=>'article_ascription',
+	            't_id'=>$data['type_id'],
+	            'type'=>'delete',
+	            'role'=>$admin['role'],
+	            'role_id'=>$admin['id'],
+	        );
+	        HandleRecordManager::record($re_arr);
 	        $v->delete();
         }
         return ApiResponse::makeResponse(true, '删除成功', ApiResponse::SUCCESS_CODE);
@@ -470,7 +503,6 @@ class ArticleTypeController
             $open_id = 0;
         }
         $datas=array();
-//        dd($tags);
         foreach ($tags as $tag) {
             $data=(object)array();
             $data->name =$tag->name;
@@ -522,16 +554,15 @@ class ArticleTypeController
         $num=ArticleTypeManager::getListByCon($con_arr,false)->count();
         $type->seq=$num+1;
         $type->save();
-
-//        $re_arr=array(
-//            't_table'=>'article_type',
-//            't_id'=>$data['id'],
-//            'type'=>'update',
-//            'role'=>'admin',
-//            'role_id'=>$admin['id'],
-//            'action'=>'move',
-//        );
-//        HandleRecordManager::record($re_arr);
+        $re_arr=array(
+            't_table'=>'article_type',
+            't_id'=>$data['id'],
+            'type'=>'update',
+            'role'=>$admin['role'],
+            'role_id'=>$admin['id'],
+            'action'=>'move',
+        );
+        HandleRecordManager::record($re_arr);
         return ApiResponse::makeResponse(true,  '移动成功', ApiResponse::SUCCESS_CODE);
     }
 
