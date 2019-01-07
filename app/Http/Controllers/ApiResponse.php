@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use App\Components\Utils;
+use App\Components\HJGL\SystemParameterManager;
 
 class ApiResponse
 {
@@ -67,55 +68,53 @@ class ApiResponse
     public static $returnMessage = [
         self::SUCCESS_CODE => '操作成功',
 //
-//        self::UNKNOW_ERROR => '未知错误',
+        self::UNKNOW_ERROR => '未知错误',
         self::MISSING_PARAM => '缺少参数',
-//        self::INNER_ERROR => '内部错误',
+        self::INNER_ERROR => '内部错误',
 //
-//        self::TOKEN_LOST => '缺少token',
-//        self::TOKEN_ERROR => 'token校验失败',
+        self::TOKEN_LOST => '缺少token',
+        self::TOKEN_ERROR => 'token校验失败',
         self::USER_ID_LOST => '缺少用户编码',
-//        self::REGISTER_FAILED => '注册失败',
+        self::REGISTER_FAILED => '注册失败',
         self::NO_USER => '未找到用户',
-//        self::VERTIFY_ERROR => '验证码验证失败',
+        self::VERTIFY_ERROR => '验证码验证失败',
         self::PHONE_DUP => '手机号重复',
         self::PHONE_HAS_BEEN_SELECTED => '号码已经被申请',
         self::PHONE_IS_NOT_EXIST => '号码不存在',
-//        self::UITIFY_ORDER_FAILED => '统一下单失败',
-//
-//        self::API_PROCODE_ERROR => '公共接口授权失败',
-//        self::API_PROCODE_LOST => '缺少pro_code',
-//
-//        self::DATE_EARLY => '早于日期',
-//        self::DATE_LATE => '晚于日期',
-//        self::DATE_NOT_INT_SCOPE => '日期不在范围内',
-//
-//        self::NO_VALID_ENTERPRISE => '没有进行企业认证',
-//        self::NO_VALID_USERINFO => '没有进行个人信息认证',
-//
-//        self::NO_ENTERPRISE => '暂无企业信息',
+        self::UITIFY_ORDER_FAILED => '统一下单失败',
+
+        self::API_PROCODE_ERROR => '公共接口授权失败',
+        self::API_PROCODE_LOST => '缺少pro_code',
+
+        self::DATE_EARLY => '早于日期',
+        self::DATE_LATE => '晚于日期',
+        self::DATE_NOT_INT_SCOPE => '日期不在范围内',
+
+        self::NO_VALID_ENTERPRISE => '没有进行企业认证',
+        self::NO_VALID_USERINFO => '没有进行个人信息认证',
+
+        self::NO_ENTERPRISE => '暂无企业信息',
 
     ];
 
-
-    //格式化返回
+    //格式化返回(旧)
     public static function makeResponse($result, $ret, $code, $mapping_function = null, $params = [])
     {
         $rsp = [];
-        $rsp['code'] = $code;
-
+        $rsp['code'] = $code;   //eg:999
         if ($result === true) {
             $rsp['result'] = true;
-            $rsp['message'] = self::$returnMessage[$code];
+            $rsp['message'] = self::$returnMessage[$code];  //eg:未知错误
             if ($ret) {
-                $rsp['ret'] = $ret;
+                $rsp['ret'] = $ret; //自己写的
             }
         } else {
             $rsp['result'] = false;
             if ($ret) {
-                $rsp['message'] = $ret;
+                $rsp['message'] = $ret; //自己写的
             } else {
-                if (array_key_exists($code, self::$returnMassage)) {
-                    $rsp['message'] = self::$returnMassage[$code];
+                if (array_key_exists($code, self::$returnMessage)) {
+                    $rsp['message'] = self::$returnMessage[$code];  //eg:未知错误
                 } else {
                     $rsp['message'] = 'undefind error code';
                 }
@@ -123,6 +122,5 @@ class ApiResponse
         }
         Utils::backLog(__METHOD__, $rsp);
         return response()->json($rsp);
-
     }
 }

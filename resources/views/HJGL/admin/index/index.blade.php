@@ -106,6 +106,18 @@
                         </ul>
                     </dd>
                 </dl>
+                <dl id="menu-article">
+                    <dt><i class="icon iconfont icon-yonghu1"></i>系统管理<i
+                                class="Hui-iconfont menu_dropdown-arrow">
+                            &#xe6d5;</i>
+                    </dt>
+                    <dd>
+                        <ul>
+                            <li><a data-href="{{ URL::asset('admin/systemParameter/index') }}" data-title="系统管理"
+                                   href="javascript:void(0)" target="'_blank">系统参数列表</a></li>
+                        </ul>
+                    </dd>
+                </dl>
             @endif
         </div>
     </aside>

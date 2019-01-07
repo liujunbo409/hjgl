@@ -30,6 +30,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::get('/index/index', 'HJGL\Admin\IndexController@info');  //首页-系统信息
     Route::get('/loginout', 'HJGL\Admin\LoginController@loginout');  //首页-登出
 
+    //系统参数管理
+    Route::any('/systemParameter/index', 'HJGL\Admin\SystemParameterController@index')->middleware('hjgl.AdminRole:超级管理员');  //系统参数管理首页
+    Route::get('/systemParameter/edit', 'HJGL\Admin\SystemParameterController@edit')->middleware('hjgl.AdminRole:超级管理员');  //新建或编辑系统参数
+    Route::post('/systemParameter/edit', 'HJGL\Admin\SystemParameterController@editPost')->middleware('hjgl.AdminRole:超级管理员');  //新建或编辑系统参数
+    Route::get('/systemParameter/del', 'HJGL\Admin\SystemParameterController@del')->middleware('hjgl.AdminRole:超级管理员');  //系统参数删除
+    Route::get('/systemParameter/setStatus/{id}', 'HJGL\Admin\SystemParameterController@setStatus')->middleware('hjgl.AdminRole:超级管理员');  //设置系统参数状态
+
     //管理员个人信息
     Route::get('/admin/editMySelf', 'HJGL\Admin\AdminController@editMySelf')->name('editMySelf');  //修改个人资料
     Route::post('/admin/editMySelf', 'HJGL\Admin\AdminController@editMySelfPost');  //修改个人资料

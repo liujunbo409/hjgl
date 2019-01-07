@@ -45,6 +45,14 @@ function articleType_delete(url, param, callBack) {
 function chooseArticleSave(url, param, callBack) {
     ajaxRequest(url + "admin/articleType/chooseArticleSave", param, "GET", callBack);
 }
+//系统参数删除
+function parameter_delete(url, param, callBack) {
+    ajaxRequest(url + "admin/systemParameter/del", param, "GET", callBack);
+}
+//设置系统参数状态
+function setParameterStatus(url, param, callBack) {
+    ajaxRequest(url + "admin/systemParameter/setStatus/" + param.id, param, "GET", callBack);
+}
 
 
 // //设置问卷状态
