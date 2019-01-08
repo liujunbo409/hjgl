@@ -53,6 +53,10 @@ function parameter_delete(url, param, callBack) {
 function setParameterStatus(url, param, callBack) {
     ajaxRequest(url + "admin/systemParameter/setStatus/" + param.id, param, "GET", callBack);
 }
+//设置设备处理状态
+function setToolDisposeStatus(url, param, callBack) {
+    ajaxRequest(url + "admin/toolDispose/setStatus/" + param.id, param, "GET", callBack);
+}
 
 
 // //设置问卷状态

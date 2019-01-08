@@ -73,8 +73,12 @@
                     </dt>
                     <dd>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/tool/index') }}" data-title="设备管理"
+                            <li><a data-href="{{ URL::asset('admin/tool/index') }}" data-title="设备列表"
                                    href="javascript:void(0)" target="'_blank">设备列表</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-href="{{ URL::asset('admin/toolDispose/index') }}" data-title="设备处理列表"
+                                   href="javascript:void(0)" target="'_blank">设备处理列表</a></li>
                         </ul>
                     </dd>
                 </dl>

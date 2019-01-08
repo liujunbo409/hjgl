@@ -63,6 +63,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::get('/tool/chooseShop', 'HJGL\Admin\ToolController@chooseShop')->middleware('hjgl.AdminRole:超级管理员');  //设备选择商家
     Route::get('/tool/chooseShopSave', 'HJGL\Admin\ToolController@chooseShopSave')->middleware('hjgl.AdminRole:超级管理员');  //设备选择商家
 
+    //设备处理
+    Route::any('/toolDispose/index', 'HJGL\Admin\ToolDisposeController@index')->middleware('hjgl.AdminRole:超级管理员');  //设备处理首页
+    Route::get('/toolDispose/info', 'HJGL\Admin\ToolDisposeController@info')->middleware('hjgl.AdminRole:超级管理员');  //设备详情
+    Route::get('/toolDispose/setStatus/{id}', 'HJGL\Admin\ToolDisposeController@setStatus')->middleware('hjgl.AdminRole:超级管理员');  //设置设备处理状态
+
     //商家管理
     Route::any('/shop/index', 'HJGL\Admin\ShopController@index')->middleware('hjgl.AdminRole:超级管理员');  //商家管理首页
     Route::get('/shop/setStatus/{id}', 'HJGL\Admin\ShopController@setStatus')->middleware('hjgl.AdminRole:超级管理员');  //设置商家状态

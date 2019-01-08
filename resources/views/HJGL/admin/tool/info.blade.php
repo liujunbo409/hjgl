@@ -26,7 +26,7 @@
             </div>
             <div style="float:right;margin-right:10px;width:300px;">
                 <span class="r"><a>检测结果</a></span><br/>
-                <div class="r" style="width:150px;height:100px;background-color: #75aa94">
+                <div class="r" style="width:150px;height:100px;border:1px solid">
                     <br/>
                     <span class="r">检测时长</span><br/>
                     <br/>
@@ -35,10 +35,10 @@
             </div>
         </div><br/>
         <div>
-            <div class="l" style="width:400px;height:280px;background-color: #a49ea3">
+            <div class="l" style="width:400px;height:280px;border:1px solid">
                 检测二维码
             </div>
-            <div class="l" style="margin-left:10px;width:400px;height:280px;background-color: #a49ea3">
+            <div class="l" style="margin-left:10px;width:400px;height:280px;border:1px solid">
                 租借信息
             </div>
         </div>
