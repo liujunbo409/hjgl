@@ -59,7 +59,7 @@ class AdminManager
                     ->orwhere('phone', 'like', "%{$keyword}%");
             });
         }
-        $admins = $admins->orderby('id', 'desc');
+        $admins = $admins->orderby('id', 'asc');
         //配置规则
         if ($is_paginate) {
             $admins = $admins->paginate(Utils::PAGE_SIZE);

@@ -46,6 +46,7 @@ class ApiResponse
     const INVITE_ZERO= 119;     //邀请码失效或使用次数达到上限
     const OPENID_LOST= 120;     //openid缺失
     const VERTIFY_LOST= 121;     //验证码缺失
+    const TOOL_IS_NOT_EXIST = 122;  //设备不存在
 
     //公共接口相关错误
     const API_PROCODE_ERROR = 201;  //公共接口授权失败
@@ -94,6 +95,8 @@ class ApiResponse
         self::NO_VALID_USERINFO => '没有进行个人信息认证',
 
         self::NO_ENTERPRISE => '暂无企业信息',
+
+        self::TOOL_IS_NOT_EXIST => '设备不存在',
 
     ];
 

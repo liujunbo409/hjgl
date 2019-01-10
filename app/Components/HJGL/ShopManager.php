@@ -41,26 +41,22 @@ class ShopManager{
     {
         $shops = new Shop();
         //相关条件
-        if (array_key_exists('number', $con_arr) && !Utils::isObjNull($con_arr['number'])) {
-            $shops = $shops->where('number', '=', $con_arr['number']);
+        if (array_key_exists('name', $con_arr) && !Utils::isObjNull($con_arr['name'])) {
+            $shops = $shops->where('name', '=', $con_arr['name']);
         }
-        if (array_key_exists('shop_id', $con_arr) && !Utils::isObjNull($con_arr['shop_id'])) {
-            $shops = $shops->where('shop_id', '=', $con_arr['shop_id']);
+        if (array_key_exists('phone', $con_arr) && !Utils::isObjNull($con_arr['phone'])) {
+            $shops = $shops->where('phone', '=', $con_arr['phone']);
         }
-        if (array_key_exists('code', $con_arr) && !Utils::isObjNull($con_arr['code'])) {
-            $shops = $shops->where('code', '=', $con_arr['code']);
+        if (array_key_exists('address', $con_arr) && !Utils::isObjNull($con_arr['address'])) {
+            $shops = $shops->where('address', '=', $con_arr['address']);
         }
         if (array_key_exists('status', $con_arr) && !Utils::isObjNull($con_arr['status'])) {
             $shops = $shops->where('status', '=', $con_arr['status']);
         }
-        if (array_key_exists('loan', $con_arr) && !Utils::isObjNull($con_arr['loan'])) {
-            $shops = $shops->where('loan', '=', $con_arr['loan']);
-        }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $shops = $shops->where(function ($query) use ($keyword) {
-                $query->where('number', 'like', "%{$keyword}%")
-                    ->orwhere('calibration_person', 'like', "%{$keyword}%");
+                $query->where('shop_name', 'like', "%{$keyword}%");
             });
         }
         $shops = $shops->orderby('id', 'desc');

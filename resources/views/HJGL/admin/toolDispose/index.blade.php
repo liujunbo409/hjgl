@@ -19,7 +19,7 @@
                         <select name="process" id="is_base" class="select" size="1">
                             <option value="" {{$con_arr['process']==null?'selected':''}}>未选择</option>
                             @foreach(\App\Components\Utils::tool_dispose_process as $key=>$value)
-                                <option value="{{$key}}" {{$con_arr['process'] == strval($key)?'selected':''}}>{{$value}}</option>
+                                <option value="{{$key}}" {{$con_arr['process']['0'] == strval($key)?'selected':''}}>{{$value}}</option>
                             @endforeach
                         </select>
                     </span>

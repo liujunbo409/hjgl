@@ -116,6 +116,11 @@
                             layer.msg('请输入确认密码！', {icon: 2, time: 1000});
                             return false;
                         }
+                        var re_password=/(?=.*[a-z])(?=.*[A-Z])(?=.*\d){5,14}/;
+                        if(!password.match(re_password)){
+                            layer.msg('密码至少长6位并包含大、小写字母和数字', {icon: 2, time: 1000});
+                            return false;
+                        }
                         if(password != confirm_password){
                             layer.msg('两次输入的密码不一致！', {icon: 2, time: 1000});
                             return false;

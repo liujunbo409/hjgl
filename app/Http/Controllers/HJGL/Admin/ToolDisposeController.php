@@ -39,9 +39,16 @@ class ToolDisposeController{
             $search_word = '';
         }
         if (array_key_exists('process', $data) && !Utils::isObjNull($data['process'])) {
-            $process = $data['process'];
+            $process = array(
+                "0" => $data['process'],
+            );
         }else{
-            $process = '';
+            $process = array(
+                "0" => 99,
+                "1" => 0,
+                "2" => 1,
+                "3" => 2,
+            );
         }
         $con_arr = array(
             'search_word' => $search_word,
@@ -64,13 +71,18 @@ class ToolDisposeController{
         if (is_numeric($id) !== true) {
             return ApiResponse::makeResponse(false, '合规校验失败，请检查参数设备id', ApiResponse::INNER_ERROR);
         }
-        $tool = ToolDisposeManager::getById($id);
-        if($tool->process >2){
+        $tooldispose = ToolDisposeManager::getById($id);
+        if($tooldispose->process >2){
             return ApiResponse::makeResponse(false, '已是最终状态,无法继续操作', ApiResponse::INNER_ERROR);
         }else{
-            $tool->process = $data['process']+1;
-            $tool->save();
-            return ApiResponse::makeResponse(true, $tool, ApiResponse::SUCCESS_CODE);
+            $tooldispose->process = $data['process']+1;
+            if($tooldispose->process == 3){
+                $tool = ToolManager::getById($id);
+                $tool->status = 1;
+                $tool->save();
+            }
+            $tooldispose->save();
+            return ApiResponse::makeResponse(true, $tooldispose, ApiResponse::SUCCESS_CODE);
         }
     }
 
@@ -88,9 +100,14 @@ class ToolDisposeController{
         }
         $tool = ToolManager::getById($data['id']);
         $toolDispose = ToolDisposeManager::getById($data['id']);
-        $con_arr = array(
-            'shop_id' => $data['id'],
-        );
-        return view('HJGL.admin.toolDispose.info', [ 'tool' => $tool ,'con_arr' => $con_arr , 'data' => $toolDispose]);
+        if(empty($tool)){
+            return '设备不存在';
+//            return ApiResponse::makeResponse(false, '设备不存在', ApiResponse::TOOL_IS_NOT_EXIST);
+        }else{
+            $con_arr = array(
+                'shop_id' => $data['id'],
+            );
+            return view('HJGL.admin.toolDispose.info', [ 'tool' => $tool ,'con_arr' => $con_arr , 'data' => $toolDispose]);
+        }
     }
 }

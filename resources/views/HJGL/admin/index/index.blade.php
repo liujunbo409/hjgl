@@ -122,6 +122,34 @@
                         </ul>
                     </dd>
                 </dl>
+                <dl id="menu-article">
+                    <dt><i class="icon iconfont icon-yonghu1"></i>订单管理<i
+                                class="Hui-iconfont menu_dropdown-arrow">
+                            &#xe6d5;</i>
+                    </dt>
+                    <dd>
+                        <ul>
+                            <li><a data-href="{{ URL::asset('admin/userOrder/index') }}" data-title="系统管理"
+                                   href="javascript:void(0)" target="'_blank">订单管理</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl id="menu-article">
+                    <dt><i class="icon iconfont icon-yonghu1"></i>账目管理<i
+                                class="Hui-iconfont menu_dropdown-arrow">
+                            &#xe6d5;</i>
+                    </dt>
+                    <dd>
+                        <ul>
+                            <li><a data-href="{{ URL::asset('admin/systemParameter/index') }}" data-title="系统管理"
+                                   href="javascript:void(0)" target="'_blank">租金管理</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-href="{{ URL::asset('admin/systemParameter/index') }}" data-title="系统管理"
+                                   href="javascript:void(0)" target="'_blank">押金管理</a></li>
+                        </ul>
+                    </dd>
+                </dl>
             @endif
         </div>
     </aside>

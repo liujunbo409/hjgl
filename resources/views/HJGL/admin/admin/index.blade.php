@@ -18,11 +18,9 @@
                     <span class="select-box" style="width:150px">
                         <select class="select" name="type" id="type" size="1">
                             <option value="" {{$con_arr['role']==null?'selected':''}}>全部角色</option>
-                            <option value="0" {{$con_arr['role']=='0'?'selected':''}}>超级管理员</option>
-                            <option value="1" {{$con_arr['role']=='1'?'selected':''}}>文章管理员</option>
-                            <option value="2" {{$con_arr['role']=='2'?'selected':''}}>设备管理员</option>
-                            <option value="3" {{$con_arr['role']=='3'?'selected':''}}>财务管理员</option>
-                            <option value="3" {{$con_arr['role']=='3'?'selected':''}}>商家管理员</option>
+                            @foreach(\App\Components\Utils::admin_role as $key=>$value)
+                                <option value="{{$key}}" {{$con_arr['role'] == strval($key)?'selected':''}}>{{$value}}</option>
+                            @endforeach
                         </select>
                     </span>
                     <button type="submit" class="btn btn-success" id="" name="">
@@ -138,14 +136,16 @@
                 //从后台设置管理员状态
                 setAdminStatus('{{URL::asset('')}}', param, function (ret) {
                     console.log("ret:" + JSON.stringify(ret));
-                    if (ret.status == true) {
-
+                    if (ret.result == true) {
+                        $(obj).parents("tr").find(".td-manage").prepend('<a onClick="start(this,' + id + ')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
+                        $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
+                        $(obj).remove();
+                        layer.msg('已禁用', {icon: 6, time: 1000});
+                    }else{
+                        layer.msg(ret.message, {icon: 2, time: 1000});
                     }
                 })
-                $(obj).parents("tr").find(".td-manage").prepend('<a onClick="start(this,' + id + ')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
-                $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
-                $(obj).remove();
-                layer.msg('已停用', {icon: 5, time: 1000});
+
             });
         }
 
@@ -160,14 +160,16 @@
                 }
                 //从后台设置管理员状态
                 setAdminStatus('{{URL::asset('')}}', param, function (ret) {
-                    if (ret.status == true) {
-
+                    if (ret.result == true) {
+                        $(obj).parents("tr").find(".td-manage").prepend('<a onClick="stop(this,' + id + ')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+                        $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+                        $(obj).remove();
+                        layer.msg('已启用', {icon: 6, time: 1000});
+                    }else{
+                        layer.msg(ret.message, {icon: 2, time: 1000});
                     }
                 })
-                $(obj).parents("tr").find(".td-manage").prepend('<a onClick="stop(this,' + id + ')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
-                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-                $(obj).remove();
-                layer.msg('已启用', {icon: 6, time: 1000});
+
             });
         }
 

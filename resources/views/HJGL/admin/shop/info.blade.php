@@ -51,7 +51,6 @@
                 <th width="50">设备编号</th>
                 <th width="100">归属商家ID</th>
                 <th width="120">加入时间</th>
-                <th width="50">设备现状</th>
                 <th width="50">状态</th>
                 <th width="60">操作</th>
             </tr>
@@ -64,13 +63,6 @@
                     <td>{{$data->number}}</td>
                     <td>{{$data->shop_id}}</td>
                     <td>{{$data->create_time}}</td>
-                    <td>
-                        @if($data->loan=="1")
-                            <span class="label label-success radius">已借出</span>
-                        @else
-                            <span class="label label-default radius">未借出</span>
-                        @endif
-                    </td>
                     <td class="td-status">
                         @if($data->status=="1")
                             <span class="label label-success radius">已启用</span>

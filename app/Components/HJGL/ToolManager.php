@@ -53,9 +53,6 @@ class ToolManager{
     {
         $tools = new Tool();
         //相关条件
-        if (array_key_exists('number', $con_arr) && !Utils::isObjNull($con_arr['number'])) {
-            $tools = $tools->where('number', '=', $con_arr['number']);
-        }
         if (array_key_exists('shop_id', $con_arr) && !Utils::isObjNull($con_arr['shop_id'])) {
             $tools = $tools->where('shop_id', '=', $con_arr['shop_id']);
         }
@@ -71,8 +68,7 @@ class ToolManager{
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $tools = $tools->where(function ($query) use ($keyword) {
-                $query->where('number', 'like', "%{$keyword}%")
-                    ->orwhere('calibration_person', 'like', "%{$keyword}%");
+                $query->where('number', 'like', "%{$keyword}%");
             });
         }
         $tools = $tools->orderby('id', 'desc');

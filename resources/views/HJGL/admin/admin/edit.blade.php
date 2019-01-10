@@ -18,7 +18,15 @@
                     <span class="select-box" style="width:350px">
                     <select id="role" name="role" class="select">
                         @foreach(\App\Components\Utils::admin_role as $key=>$value)
-                            <option value="{{$key}}" {{$data->role == $key? "selected":""}}>{{$value}}</option>
+                            @if(isset($data->role))
+                                @if($key != 0)
+                                    <option value="{{$key}}" {{$data->role == $key? "selected":""}}>{{$value}}</option>
+                                @endif
+                            @else
+                                @if($key != 0)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                @endif
+                            @endif
                         @endforeach
                     </select>
                     </span>
@@ -27,31 +35,22 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员姓名：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="name" name="name" type="text" class="input-text" style="width:350px" {{$data->id?'disabled':''}}
+                    <input id="name" name="name" type="text" class="input-text" style="width:350px" {{isset($data->id)?'disabled':''}}
                            value="{{ isset($data->name) ? $data->name : '' }}" placeholder="请输入管理员姓名">
                 </div>
             </div>
-            @if($data->id!="")
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员昵称：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="nick_name" name="nick_name" type="text" class="input-text" style="width:350px" {{$data->id?'disabled':''}}
-                    value="{{ isset($data->nick_name) ? $data->nick_name : '' }}" placeholder="请输入管理员昵称">
-                </div>
-            </div>
-            @endif
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="phone" name="phone" type="text" class="input-text" style="width:350px;"
-                           value="{{ isset($data->phone) ? $data->phone : '' }}" {{$data->id?'disabled':''}} placeholder="请输入联系电话">
+                           value="{{ isset($data->phone) ? $data->phone : '' }}" {{isset($data->id)?'disabled':''}} placeholder="请输入联系电话">
                 </div>
             </div>
-            @if($data->id=="")
+            @if(!isset($data->id) || $data->id=="")
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>初始密码：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="password" name="password" type="password" class="input-text" style="width: 400px;"
+                    <input id="password" name="password" type="password" class="input-text" style="width: 400px;" value="{{isset($data->id)?'disabled':''}}"
                            placeholder="请输入初始密码">
                 </div>
             </div>
@@ -62,7 +61,6 @@
                            placeholder="请输入确认密码">
                 </div>
             </div>
-
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2">头像：</label>
                 <div class="formControls col-xs-8 col-sm-9">
@@ -94,7 +92,6 @@
         $(function () {
             //获取七牛token
             initQNUploader();
-
             $("#form-edit").validate({
                 rules: {
                     name: {
@@ -144,6 +141,11 @@
                         var confirm_password = $("#confirm_password").val();
                         if(judgeIsAnyNullStr(confirm_password)){
                             layer.msg('请输入确认密码！', {icon: 2, time: 1000});
+                            return false;
+                        }
+                        var re_password=/(?=.*[a-z])(?=.*[A-Z])(?=.*\d){5,14}/;
+                        if(!password.match(re_password)){
+                            layer.msg('密码至少长6位并包含大、小写字母和数字', {icon: 2, time: 1000});
                             return false;
                         }
                         if (password != confirm_password) {

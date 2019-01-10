@@ -37,23 +37,19 @@
                 <th scope="col" colspan="8">设备列表</th>
             </tr>
             <tr class="text-c">
-                {{--<th width="25"><input type="checkbox" name="" value=""></th>--}}
-                <th width="40">设备ID</th>
-                <th width="50">设备编号</th>
-                <th width="100">归属商家ID</th>
-                <th width="120">加入时间</th>
-                <th width="50">设备现状</th>
-                <th width="50">状态</th>
-                <th width="60">操作</th>
+                <th>设备编号</th>
+                <th>归属商家</th>
+                <th>加入时间</th>
+                <th>设备现状</th>
+                <th>状态</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
             @foreach($datas as $data)
                 <tr class="text-c">
-                    {{--<td><input type="checkbox" value="1" name=""></td>--}}
-                    <td>{{$data->id}}</td>
                     <td>{{$data->number}}</td>
-                    <td>{{$data->shop_id}}</td>
+                    <td>{{$data->shop_name}}</td>
                     <td>{{$data->create_time}}</td>
                     <td>
                         @if($data->loan=="1")
@@ -86,7 +82,7 @@
                         <a title="编辑" href="javascript:;"
                            onclick="edit('管理员编辑','{{URL::asset('admin/tool/edit')}}?id={{$data->id}}',{{$data->id}})"
                            class="ml-5" style="text-decoration:none">
-                            <i class="Hui-iconfont">编辑</i>
+                            <i class="Hui-iconfont" style="color:blue;">编辑</i>
                         </a>
                             @if(!empty($data->shop_id))
                                 已有选择
@@ -94,11 +90,11 @@
                                 <a title="选择商家" href="javascript:;"
                                    onclick="edit('管理员编辑','{{URL::asset('admin/tool/chooseShop')}}?id={{$data->id}}',{{$data->id}})"
                                    class="ml-5" style="text-decoration:none">
-                                    <i class="Hui-iconfont">选择商家</i>
+                                    <i class="Hui-iconfont" style="color:blue;">选择商家</i>
                                 </a>
                             @endif
 
-                            <a href="{{URL::asset('admin/tool/info?id='.$data->id)}}">详情</a>
+                            <a href="{{URL::asset('admin/tool/info?id='.$data->id)}}" style="color:blue;">详情</a>
                     </td>
                 </tr>
             @endforeach

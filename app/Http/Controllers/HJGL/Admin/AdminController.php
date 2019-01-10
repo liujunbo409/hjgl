@@ -296,6 +296,9 @@ class AdminController
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数管理员id$id']);
         }
         $admin = AdminManager::getById($id);
+        if($admin->id == $curr_admin['id']){
+            return ApiResponse::makeResponse(false, '不能对自己进行操作', ApiResponse::INNER_ERROR);
+        }
         $admin->status = $data['status'];
         $admin->save();
         $re_arr=array(
@@ -306,7 +309,7 @@ class AdminController
             'role_id'=>$curr_admin['id'],
         );
         HandleRecordManager::record($re_arr);
-        return ApiResponse::makeResponse(true, $admin, ApiResponse::SUCCESS_CODE);
+        return ApiResponse::makeResponse(true, '成功', ApiResponse::SUCCESS_CODE);
     }
 
     /*
@@ -319,16 +322,18 @@ class AdminController
     public function edit(Request $request)
     {
         $data = $request->all();
-        $tool = new Admin();
+        $curr_admin = $request->session()->get('admin');
+        $admin = new Admin();
         if (array_key_exists('id', $data)) {
-            $tool = AdminManager::getById($data['id']);
+            $admin = AdminManager::getById($data['id']);
+            if(!empty($admin)){
+                if($admin->id == $curr_admin['id']){
+                    return('不能对自己操作');
+                }
+            }
         }
-        $admin = $request->session()->get('admin');
         $upload_token = QNManager::uploadToken();
-        $con_arr = array(
-            'type' => '3'
-        );
-        return view('HJGL.admin.admin.edit', ['admin' => $admin, 'data' => $tool,'upload_token' => $upload_token]);
+        return view('HJGL.admin.admin.edit', ['admin' => $curr_admin, 'data' => $admin,'upload_token' => $upload_token]);
     }
 
 
@@ -339,6 +344,9 @@ class AdminController
         $curr_admin = $request->session()->get('admin');
         if (!array_key_exists('role', $data) || $data['role'] == '') {
             return ApiResponse::makeResponse(false, '角色缺失', ApiResponse::MISSING_PARAM);
+        }
+        if ($data['role'] == 0) {
+            return ApiResponse::makeResponse(false, '添加错误的角色', ApiResponse::INNER_ERROR);
         }
         if(!array_key_exists('id', $data) || $data['id'] == ''){
             if (!array_key_exists('name', $data) || $data['name'] == '') {
@@ -367,6 +375,9 @@ class AdminController
             HandleRecordManager::record($re_arr);
         }else{
             $admin = AdminManager::getById($data['id']);
+            if($curr_admin['id'] == $admin->id){
+                return ApiResponse::makeResponse(false, "不能对自己操作", ApiResponse::INNER_ERROR);
+            }
             $admin->role = $data['role'];
             $admin->save();
             $re_arr=array(

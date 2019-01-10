@@ -98,8 +98,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::get('/articleType/moveTypeList', 'HJGL\Admin\ArticleTypeController@moveTypeList')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择根目录
     Route::post('/articleType/moveTypeSave', 'HJGL\Admin\ArticleTypeController@moveTypeSave')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择根目录
 
-
     //文章所属相关
     Route::get('/articleType/delArticle', 'HJGL\Admin\ArticleTypeController@delArticle')->middleware('hjgl.AdminRole:超级管理员');  //删除文章分类所属文章
 
+    //用户订单管理
+    Route::any('/userOrder/index', 'HJGL\Admin\UserOrderController@index')->middleware('hjgl.AdminRole:超级管理员');  //用户订单管理首页
+    Route::get('/userOrder/info', 'HJGL\Admin\UserOrderController@info')->middleware('hjgl.AdminRole:超级管理员');  //用户订单详细信息
 });

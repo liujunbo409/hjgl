@@ -49,7 +49,7 @@
                         <div class="formControls col-xs-8 col-sm-9">
                             <input id="new_password" name="new_password" type="password" class="input-text" style="width: 400px;"
                                    placeholder="请输入新密码">
-                            <span style="color:#ff0000;">密码至少长8位并包含大、小写字母、数字和特殊字符</span>
+                            <span style="color:#ff0000;">密码至少长6位并包含大、小写字母和数字</span>
                         </div>
                     </div>
                     <div class="row cl">
@@ -113,6 +113,11 @@
                             layer.msg('密码修改失败，确认密码与新密码不相符', {icon: 2, time: 2000});
                         }
                         else {
+                            var re_password=/(?=.*[a-z])(?=.*[A-Z])(?=.*\d){5,14}/;
+                            if(!new_password.match(re_password)){
+                                layer.msg('密码至少长6位并包含大、小写字母和数字', {icon: 2, time: 1000});
+                                return false;
+                            }
                             if (md5_status) {
                                 $('#password').val(hex_md5(password));
                                 $('#new_password').val(hex_md5(new_password));

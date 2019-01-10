@@ -14,7 +14,7 @@
                 {{csrf_field()}}
                 <div class="Huiform text-r">
                     <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px"
-                           placeholder="商家编号" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
+                           placeholder="商家名称" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
                     <button type="submit" class="btn btn-success" id="" name="">
                         <i class="Hui-iconfont">&#xe665;</i> 搜索
                     </button>
@@ -53,7 +53,7 @@
                     <td>{{$data->shop_name}}</td>
                     <td>{{$data->name}}</td>
                     <td>{{$data->phone}}</td>
-                    <td>xxxxx</td>
+                    <td>{{$data->tool_qty}}</td>
                     <td>{{$data->create_time}}</td>
                     <td class="td-status">
                         @if($data->status=="1")

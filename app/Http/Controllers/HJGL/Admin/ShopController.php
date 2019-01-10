@@ -209,6 +209,8 @@ class ShopController{
         $tool->shop_id = $data['shop_id'];
         $tool->loan = '1';
         $tool->save();
+        $shop->tool_qty = $shop->tool_qty + 1;
+        $shop->save();
         return ApiResponse::makeResponse(true, $tool, ApiResponse::SUCCESS_CODE);
     }
 

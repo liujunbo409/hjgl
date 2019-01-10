@@ -132,7 +132,7 @@ class ToolController{
     public function chooseShop(Request $request){
         $data = $request->all();
         if(!array_key_exists('id', $data) || $data['id'] == ''){
-            return '设备id缺失';
+            exit('设备id缺失');
         }
         $tool = ToolManager::getById($data['id']);
         $search_word = null;
@@ -174,12 +174,15 @@ class ToolController{
         if(empty($shop)){
             return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
         }
-        if($shop->status == 0){
+        if($shop->status != 1){
             return ApiResponse::makeResponse(false, '该商家未启用', ApiResponse::MISSING_PARAM);
         }
         $tool->shop_id = $data['shop_id'];
+        $tool->shop_name = $shop->shop_name;
         $tool->loan = '1';
         $tool->save();
+        $shop->tool_qty = $shop->tool_qty + 1;
+        $shop->save();
         return ApiResponse::makeResponse(true, $tool, ApiResponse::SUCCESS_CODE);
     }
 }

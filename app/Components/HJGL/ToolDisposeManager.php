@@ -48,7 +48,7 @@ class ToolDisposeManager{
             $toolDisposes = $toolDisposes->where('type', '=', $con_arr['type']);
         }
         if (array_key_exists('process', $con_arr) && !Utils::isObjNull($con_arr['process'])) {
-            $toolDisposes = $toolDisposes->where('process', '=', $con_arr['process']);
+            $toolDisposes = $toolDisposes->wherein('process', $con_arr['process']);
         }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];

@@ -26,7 +26,7 @@
             </div>
             <div style="float:right;margin-right:10px;width:300px;">
                 <span class="r"><a>检测结果</a></span><br/>
-                <div class="r" style="width:150px;height:100px;border:1px solid">
+                <div class="r" style="width:150px;height:100px;background-color: #75aa94">
                     <br/>
                     <span class="r">检测时长</span><br/>
                     <br/>

@@ -2,17 +2,13 @@
 
 @section('content')
 
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 设备管理 <span
-                class="c-gray en">&gt;</span> 设备选择<a class="btn btn-success radius r btn-refresh"
-                                                       style="line-height:1.6em;margin-top:3px"
-                                                       href="javascript:location.replace(location.href);" title="刷新"
-                                                       onclick="location.replace('{{URL::asset('admin/shop/chooseTool')}}');"><i
-                    class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <span style="margin-left:30px;">{{$shop->shop_name}} -- 添加新设备</span>
     <div class="page-container">
         <div class="text-c">
-            <form action="{{URL::asset('admin/shop/chooseTool')}}" method="post" class="form-horizontal">
+            <form action="{{URL::asset('admin/shop/chooseTool')}}" method="get" class="form-horizontal">
                 {{csrf_field()}}
                 <div class="Huiform text-r">
+                    <input name="id" value="{{$shop->id}}" hidden>
                     <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px"
                            placeholder="商家编号" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
                     <button type="submit" class="btn btn-success" id="" name="">
