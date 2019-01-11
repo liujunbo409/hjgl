@@ -174,7 +174,7 @@ class ToolController{
         if(empty($shop)){
             return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
         }
-        if($shop->status != 1){
+        if($shop->status != 2){
             return ApiResponse::makeResponse(false, '该商家未启用', ApiResponse::MISSING_PARAM);
         }
         $tool->shop_id = $data['shop_id'];
