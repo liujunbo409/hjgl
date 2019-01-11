@@ -23,11 +23,11 @@ class Utils
 
 
     //常量配置
-    const status = ['0' => '否', '1' => '是'];
+    const status = ['1' => '否', '2' => '是'];
     //生效类型
-    const status_str = ['0' => '不生效', '1' => '已生效'];
+    const status_str = ['1' => '不生效', '2' => '已生效'];
     //使用状态类型
-    const status_fasong = ['0' => '未发送', '1' => '已发送'];
+    const status_fasong = ['1' => '未发送', '2' => '已发送'];
     //性别
     const gender_val = ['1' => '男', '2' => '女'];
     //后台管理员类型

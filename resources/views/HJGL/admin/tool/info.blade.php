@@ -20,7 +20,7 @@
                 </div>
                 <div class="r"  style="width:300px;">
                     <br/>
-                    <span class="l">设备状态: {{\App\Components\Utils::tool_loan_status[$tool->status]}}</span>
+                    <span class="l">设备借出状态: {{\App\Components\Utils::tool_loan_status[$tool->loan_status]}}</span>
                 </div>
                 <br/>
             </div>

@@ -179,7 +179,7 @@ class ToolController{
         }
         $tool->shop_id = $data['shop_id'];
         $tool->shop_name = $shop->shop_name;
-        $tool->loan = '2';
+        $tool->loan_status = '2';
         $tool->save();
         $shop->tool_qty = $shop->tool_qty + 1;
         $shop->save();

@@ -52,9 +52,9 @@
                     <td>{{$data->shop_name}}</td>
                     <td>{{$data->create_time}}</td>
                     <td>
-                        @if($data->loan=="2")
+                        @if($data->loan_status=="2")
                             <span class="label label-success radius">已借出</span>
-                        @elseif($data->loan == 1)
+                        @elseif($data->loan_status == 1)
                             <span class="label label-default radius">未借出</span>
                         @else
                             <span class="label label-default radius">待校准</span>
@@ -68,7 +68,7 @@
                         @endif
                     </td>
                     <td class="td-manage">
-                        @if($data->status=="1")
+                        @if($data->status=="2")
                             <a style="text-decoration:none" onClick="stop(this,'{{$data->id}}')"
                                href="javascript:;"
                                title="停用">

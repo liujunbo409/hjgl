@@ -164,7 +164,7 @@ class ShopController{
         }
         $con_arr = array(
             'status' => '2',
-            'loan' => '1',
+            'loan_status' => '1',
             'search_word' => $search_word,
         );
         $my_con_arr = array(
@@ -207,7 +207,7 @@ class ShopController{
             return ApiResponse::makeResponse(false, '该商家未启用', ApiResponse::MISSING_PARAM);
         }
         $tool->shop_id = $data['shop_id'];
-        $tool->loan = '2';
+        $tool->loan_status = '2';
         $tool->save();
         $shop->tool_qty = $shop->tool_qty + 1;
         $shop->save();

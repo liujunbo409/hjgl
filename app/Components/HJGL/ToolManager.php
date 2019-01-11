@@ -62,8 +62,8 @@ class ToolManager{
         if (array_key_exists('status', $con_arr) && !Utils::isObjNull($con_arr['status'])) {
             $tools = $tools->where('status', '=', $con_arr['status']);
         }
-        if (array_key_exists('loan', $con_arr) && !Utils::isObjNull($con_arr['loan'])) {
-            $tools = $tools->where('loan', '=', $con_arr['loan']);
+        if (array_key_exists('loan_status', $con_arr) && !Utils::isObjNull($con_arr['loan_status'])) {
+            $tools = $tools->where('loan_status', '=', $con_arr['loan_status']);
         }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
