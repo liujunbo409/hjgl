@@ -88,19 +88,19 @@
          */
         function operate(id,process) {
             var text = '设备处理操作状态';
-            if(process == 0){
+            if(process == 1){
                 text = '设备是否已取回';
                 layer.confirm(text, function () {
                     //此处请求后台程序，下方是成功后的前台处理
                     operate_do(id,process);
                 });
-            }else if(process == 1){
+            }else if(process == 2){
                 text = '设备是否已处理';
                 layer.confirm(text, function () {
                     //此处请求后台程序，下方是成功后的前台处理
                     operate_do(id,process);
                 });
-            }else if(process == 2){
+            }else if(process == 3){
                 text = '设备是否已送回';
                 layer.confirm(text, function () {
                     //此处请求后台程序，下方是成功后的前台处理

@@ -163,8 +163,8 @@ class ShopController{
             $search_word = $data['search_word'];
         }
         $con_arr = array(
-            'status' => '1',
-            'loan' => '0',
+            'status' => '2',
+            'loan' => '1',
             'search_word' => $search_word,
         );
         $my_con_arr = array(
@@ -193,7 +193,7 @@ class ShopController{
             return ApiResponse::makeResponse(false, '设备ID缺失', ApiResponse::MISSING_PARAM);
         }
         $tool = ToolManager::getById($data['tool_id']);
-        if($tool->status == 0){
+        if($tool->status == 1){
             return ApiResponse::makeResponse(false, '该设备未启用', ApiResponse::MISSING_PARAM);
         }
         if(!empty($tool->shop_id)){
@@ -203,11 +203,11 @@ class ShopController{
         if(empty($shop)){
             return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
         }
-        if($shop->status == 0){
+        if($shop->status == 1){
             return ApiResponse::makeResponse(false, '该商家未启用', ApiResponse::MISSING_PARAM);
         }
         $tool->shop_id = $data['shop_id'];
-        $tool->loan = '1';
+        $tool->loan = '2';
         $tool->save();
         $shop->tool_qty = $shop->tool_qty + 1;
         $shop->save();

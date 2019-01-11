@@ -89,6 +89,9 @@
 <script type="text/javascript" src="{{ URL::asset('/js/doublebox-bootstrap.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/doublebox-bootstrap.css') }}"/>
 
+{{--二维码--}}
+<script type="text/javascript" src="{{ URL::asset('/js/qrcode/jquery.qrcode.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('/js/qrcode/qrcode.js') }}"></script>
 {{--</body>--}}
 </html>
 

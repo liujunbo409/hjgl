@@ -17,7 +17,7 @@ use App\Http\Controllers\ApiResponse;
 
 class UserOrderController{
     /*
-     * 设备列表
+     * 用户订单列表
      *
      * By Yuyang
      *
@@ -53,6 +53,16 @@ class UserOrderController{
         $user_order = UserOrderManager::getByOrderNumber($data['order_number']);
         $user_order->long_time = ceil((strtotime("now")-strtotime($user_order->create_time))/3600);
         $tool_loans = ToolLoanManager::getByOrderNumber($data['order_number']);
+        $con_arr_rent = array(
+            'order_number' => $data['order_number'],
+            'rent_status' => 1,
+        );
+        $con_arr_deposit = array(
+            'order_number' => $data['order_number'],
+            'deposit_status' => 1,
+        );
+        $user_order->rent_sum = ToolLoanManager::getBySumRent($con_arr_rent);
+        $user_order->deposit_sum = ToolLoanManager::getBySumDeposit($con_arr_deposit);
         return view('HJGL.admin.userOrder.info', [ 'user_order' => $user_order , 'datas' => $tool_loans]);
     }
 

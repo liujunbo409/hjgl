@@ -129,7 +129,7 @@
                     </dt>
                     <dd>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/userOrder/index') }}" data-title="系统管理"
+                            <li><a data-href="{{ URL::asset('admin/userOrder/index') }}" data-title="订单管理"
                                    href="javascript:void(0)" target="'_blank">订单管理</a></li>
                         </ul>
                     </dd>
@@ -141,11 +141,11 @@
                     </dt>
                     <dd>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/systemParameter/index') }}" data-title="系统管理"
+                            <li><a data-href="{{ URL::asset('admin/toolLoan/rent') }}" data-title="租金管理"
                                    href="javascript:void(0)" target="'_blank">租金管理</a></li>
                         </ul>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/systemParameter/index') }}" data-title="系统管理"
+                            <li><a data-href="{{ URL::asset('admin/toolLoan/deposit') }}" data-title="押金管理"
                                    href="javascript:void(0)" target="'_blank">押金管理</a></li>
                         </ul>
                     </dd>

@@ -104,7 +104,7 @@ class ToolController{
     }
 
     /*
-     * 设置设备状态
+     * 设备详情
      *
      * By Yuyang
      *
@@ -140,7 +140,7 @@ class ToolController{
             $search_word = $data['search_word'];
         }
         $con_arr = array(
-            'status' => '1',
+            'status' => '2',
             'search_word' => $search_word,
         );
         $shops = ShopManager::getListByCon($con_arr,true);
@@ -179,7 +179,7 @@ class ToolController{
         }
         $tool->shop_id = $data['shop_id'];
         $tool->shop_name = $shop->shop_name;
-        $tool->loan = '1';
+        $tool->loan = '2';
         $tool->save();
         $shop->tool_qty = $shop->tool_qty + 1;
         $shop->save();

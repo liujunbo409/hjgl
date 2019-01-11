@@ -104,4 +104,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     //用户订单管理
     Route::any('/userOrder/index', 'HJGL\Admin\UserOrderController@index')->middleware('hjgl.AdminRole:超级管理员');  //用户订单管理首页
     Route::get('/userOrder/info', 'HJGL\Admin\UserOrderController@info')->middleware('hjgl.AdminRole:超级管理员');  //用户订单详细信息
+
+    //账目管理
+    Route::any('/toolLoan/rent', 'HJGL\Admin\ToolLoanController@rent')->middleware('hjgl.AdminRole:超级管理员');//租金管理
+    Route::any('/toolLoan/deposit', 'HJGL\Admin\ToolLoanController@deposit')->middleware('hjgl.AdminRole:超级管理员');//押金管理
+
 });

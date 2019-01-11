@@ -56,14 +56,14 @@
                     <td>{{$data->tool_qty}}</td>
                     <td>{{$data->create_time}}</td>
                     <td class="td-status">
-                        @if($data->status=="1")
+                        @if($data->status=="2")
                             <span class="label label-success radius">已启用</span>
                         @else
                             <span class="label label-default radius">已禁用</span>
                         @endif
                     </td>
                     <td class="td-manage">
-                        @if($data->status=="1")
+                        @if($data->status=="2")
                             <a style="text-decoration:none" onClick="stop(this,'{{$data->id}}')"
                                href="javascript:;"
                                title="停用">
@@ -120,7 +120,7 @@
                 //此处请求后台程序，下方是成功后的前台处理
                 var param = {
                     id: id,
-                    status: 0,
+                    status: 1,
                     _token: "{{ csrf_token() }}"
                 }
                 //从后台设置设备状态
@@ -142,7 +142,7 @@
                 //此处请求后台程序，下方是成功后的前台处理
                 var param = {
                     id: id,
-                    status: 1,
+                    status: 2,
                     _token: "{{ csrf_token() }}"
                 }
                 //从后台设置管理员状态

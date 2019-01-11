@@ -40,21 +40,21 @@
             </div>
             <div class="l" style="margin-left:10px;width:400px;height:280px;border:1px solid">
                 <div style="margin:20%;">
-                    @if($data->process == 0)
+                    @if($data->process == 1)
                         &nbsp;&nbsp;&nbsp;<i class="Hui-iconfont">&#xe631;</i>----------
                         <i class="Hui-iconfont">&#xe631;</i>----------
                         <i class="Hui-iconfont">&#xe631;</i>&nbsp;&nbsp;&nbsp;<br/>
                         待取回&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         待处理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         待送回
-                    @elseif($data->process == 1)
+                    @elseif($data->process == 2)
                         &nbsp;&nbsp;&nbsp;<i class="Hui-iconfont" style="color:blue;">&#xe615;</i>----------
                         <i class="Hui-iconfont">&#xe631;</i>----------
                         <i class="Hui-iconfont">&#xe631;</i>&nbsp;&nbsp;&nbsp;<br/>
                         已取回&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         待处理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         待送回
-                    @elseif($data->process == 2)
+                    @elseif($data->process == 3)
                         &nbsp;&nbsp;&nbsp;<i class="Hui-iconfont" style="color:blue;">&#xe615;----------</i>
                         <i class="Hui-iconfont" style="color:blue;">&#xe615;</i>----------
                         <i class="Hui-iconfont">&#xe631;</i>&nbsp;&nbsp;&nbsp;<br/>
@@ -90,20 +90,20 @@
          * 2018-12-07
          */
         function operate(id,process) {
-            var text = '删除文章';
-            if(process == 0){
+            var text = '设备处理状态设置';
+            if(process == 1){
                 text = '设备是否已取回';
                 layer.confirm(text, function () {
                     //此处请求后台程序，下方是成功后的前台处理
                     operate_do(id,process);
                 });
-            }else if(process == 1){
+            }else if(process == 2){
                 text = '设备是否已处理';
                 layer.confirm(text, function () {
                     //此处请求后台程序，下方是成功后的前台处理
                     operate_do(id,process);
                 });
-            }else if(process == 2){
+            }else if(process == 3){
                 text = '设备是否已送回';
                 layer.confirm(text, function () {
                     //此处请求后台程序，下方是成功后的前台处理

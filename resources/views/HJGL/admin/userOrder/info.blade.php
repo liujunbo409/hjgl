@@ -12,7 +12,7 @@
             <div>
                 开启时间: {{$user_order->create_time}}&nbsp;&nbsp;&nbsp;&nbsp;结束时间:{{empty($user_order->end_time)?'未结束':$user_order->end_time}}<br/>
                 订单时长:{{$user_order->long_time}} &nbsp;&nbsp;&nbsp;&nbsp;  用户手机:<br/>
-                租金: &nbsp;&nbsp;&nbsp;&nbsp;  押金:
+                租金(待支付):{{$user_order->rent_sum}} &nbsp;&nbsp;&nbsp;&nbsp;  押金(待支付):{{$user_order->deposit_sum}}
             </div>
             <div>
                 <table class="table table-border table-bordered table-bg table-sort mt-10">
@@ -51,64 +51,6 @@
 
 @section('script')
     <script type="text/javascript">
-        /*设备-编辑*/
-        function edit(title, url, id) {
-            consoledebug.log("show_optRecord url:" + url);
-            var index = layer.open({
-                type: 2,
-                area: ['850px', '550px'],
-                fixed: false,
-                maxmin: true,
-                title: title,
-                content: url
-            });
-        }
-
-        /*设备-停用*/
-        function stop(obj, id) {
-            consoledebug.log("stop id:" + id);
-            layer.confirm('确认要停用吗？', function (index) {
-                //此处请求后台程序，下方是成功后的前台处理
-                var param = {
-                    id: id,
-                    status: 0,
-                    _token: "{{ csrf_token() }}"
-                }
-                //从后台设置设备状态
-                setToolStatus('{{URL::asset('')}}', param, function (ret) {
-                    console.log("ret:" + JSON.stringify(ret));
-                    if (ret.status == true) {
-
-                    }
-                })
-                $(obj).parents("tr").find(".td-manage").prepend('<a onClick="start(this,' + id + ')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
-                $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
-                $(obj).remove();
-                layer.msg('已停用', {icon: 5, time: 1000});
-            });
-        }
-
-        /*管理员-启用*/
-        function start(obj, id) {
-            layer.confirm('确认要启用吗？', function (index) {
-                //此处请求后台程序，下方是成功后的前台处理
-                var param = {
-                    id: id,
-                    status: 1,
-                    _token: "{{ csrf_token() }}"
-                }
-                //从后台设置管理员状态
-                setToolStatus('{{URL::asset('')}}', param, function (ret) {
-                    if (ret.status == true) {
-
-                    }
-                })
-                $(obj).parents("tr").find(".td-manage").prepend('<a onClick="stop(this,' + id + ')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
-                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-                $(obj).remove();
-                layer.msg('已启用', {icon: 6, time: 1000});
-            });
-        }
 
     </script>
 @endsection

@@ -87,4 +87,41 @@ class ToolLoanManager{
         return $tool_loan;
     }
 
+    /*
+     * 根据条搜索件获取设备借用总租金
+     *
+     * By Yuyang
+     *
+     * 2019-01-10
+     */
+    public static function getBySumRent($con_arr){
+        $sum = new ToolLoan();
+        if (array_key_exists('order_number', $con_arr) && !Utils::isObjNull($con_arr['order_number'])) {
+            $sum = $sum->where('order_number','=',$con_arr['order_number']);
+        }
+        if (array_key_exists('rent_status', $con_arr) && !Utils::isObjNull($con_arr['rent_status'])) {
+            $sum = $sum->where('rent_status','=',$con_arr['rent_status']);
+        }
+        $sum = $sum->sum('rent');
+        return $sum;
+    }
+    /*
+     * 根据条搜索件获取设备借用总押金
+     *
+     * By Yuyang
+     *
+     * 2019-01-10
+     */
+    public static function getBySumDeposit($con_arr){
+        $sum = new ToolLoan();
+        if (array_key_exists('order_number', $con_arr) && !Utils::isObjNull($con_arr['order_number'])) {
+            $sum = $sum->where('order_number','=',$con_arr['order_number']);
+        }
+        if (array_key_exists('deposit_status', $con_arr) && !Utils::isObjNull($con_arr['deposit_status'])) {
+            $sum = $sum->where('deposit_status','=',$con_arr['deposit_status']);
+        }
+        $sum = $sum->sum('deposit');
+        return $sum;
+    }
+
 }

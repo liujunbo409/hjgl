@@ -44,7 +44,7 @@ class LoginController
         if (!$admin) {
             return view('HJGL.admin.login.login', ['msg' => '账户名或密码错误']);
         }
-        if($admin->status != 1 && $admin->id != 1){
+        if($admin->status != 2 && $admin->id != 1){
             return view('HJGL.admin.login.login', ['msg' => '该账号已被禁用']);
         }
         $request->session()->put('admin', $admin);//写入session

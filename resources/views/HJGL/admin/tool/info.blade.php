@@ -15,12 +15,12 @@
                 <span class="l"><strong>{{$tool->number}}</strong></span><br/>
                 <div class="l" style="width:300px;">
                     <br/>
-                    <span class="l">商家名称: {{$tool->shop_id}}</span><br/><br/>
-                    <span class="l">加入时间: {{$tool->create_time}}</span>
+                    <span class="l">商家名称: {{isset($tool->shop_name)? $tool->shop_name : ''}}</span><br/><br/>
+                    <span class="l">加入时间: {{isset($tool->create_time)? $tool->create_time : ''}}</span>
                 </div>
                 <div class="r"  style="width:300px;">
                     <br/>
-                    <span class="l">设备状态: {{$tool->status}}</span>
+                    <span class="l">设备状态: {{\App\Components\Utils::tool_loan_status[$tool->status]}}</span>
                 </div>
                 <br/>
             </div>
@@ -35,8 +35,18 @@
             </div>
         </div><br/>
         <div>
+
             <div class="l" style="width:400px;height:280px;border:1px solid">
-                检测二维码
+                设备二维码<br/>
+                <input id="code" name="code" value="{{$tool->code}}" hidden>
+                @if(isset($tool->code) && !empty($tool->code))
+                    <div  id="qrcodeCanvas"></div><br/>
+                    <span>重新生成二维码</span>
+                @else
+                    <div style="width:200px;height:200px;"></div><br/>
+                    <span>生成二维码</span>
+                @endif
+
             </div>
             <div class="l" style="margin-left:10px;width:400px;height:280px;border:1px solid">
                 租借信息
@@ -48,6 +58,11 @@
 
 @section('script')
     <script type="text/javascript">
-
+        var code = $("#code").val();
+            jQuery('#qrcodeCanvas').qrcode({
+                text	: code,
+                width:200,
+                height:200
+            });
     </script>
 @endsection

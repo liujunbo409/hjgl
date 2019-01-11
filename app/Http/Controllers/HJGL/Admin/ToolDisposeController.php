@@ -45,9 +45,9 @@ class ToolDisposeController{
         }else{
             $process = array(
                 "0" => 99,
-                "1" => 0,
-                "2" => 1,
-                "3" => 2,
+                "1" => 1,
+                "2" => 2,
+                "3" => 3,
             );
         }
         $con_arr = array(
@@ -76,9 +76,9 @@ class ToolDisposeController{
             return ApiResponse::makeResponse(false, '已是最终状态,无法继续操作', ApiResponse::INNER_ERROR);
         }else{
             $tooldispose->process = $data['process']+1;
-            if($tooldispose->process == 3){
+            if($tooldispose->process == 4){
                 $tool = ToolManager::getById($id);
-                $tool->status = 1;
+                $tool->status = 2;
                 $tool->save();
             }
             $tooldispose->save();
