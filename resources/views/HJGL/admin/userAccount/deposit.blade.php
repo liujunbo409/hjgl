@@ -2,15 +2,16 @@
 
 @section('content')
 
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span
-                class="c-gray en">&gt;</span> 订单管理<a class="btn btn-success radius r btn-refresh"
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 账目管理 <span
+                class="c-gray en">&gt;</span> 押金管理<a class="btn btn-success radius r btn-refresh"
                                                        style="line-height:1.6em;margin-top:3px"
                                                        href="javascript:location.replace(location.href);" title="刷新"
-                                                       onclick="location.replace('{{URL::asset('admin/order/index')}}');"><i
+                                                       onclick="location.replace('{{URL::asset('admin/userLoan/deposit')}}');"><i
                     class="Hui-iconfont">&#xe68f;</i></a></nav>
+
     <div class="page-container">
         <div class="text-c">
-            <form action="{{URL::asset('admin/order/index')}}" method="post" class="form-horizontal">
+            <form action="{{URL::asset('admin/userLoan/deposit')}}" method="post" class="form-horizontal">
                 {{csrf_field()}}
                 <div class="Huiform text-r">
                     订单编号/商家: <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
@@ -40,7 +41,8 @@
             <tr class="text-c">
                 <th>订单号</th>
                 <th>商家</th>
-                <th>订单发起时间</th>
+                <th>总应支付押金</th>
+                <th>未支付押金</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -48,13 +50,10 @@
             <tbody>
             @foreach($datas as $data)
                 <tr class="text-c">
-                    <td>{{$data->order_number}}
-                    @if($data->is_notice == 2)
-                        <span style="color:red;">(有超时)</span>
-                    @endif
-                    </td>
+                    <td>{{$data->order_number}}</td>
                     <td>{{$data->shop_name}}</td>
-                    <td>{{$data->create_tieme}}</td>
+                    <td>{{$data->deposit_total}}</td>
+                    <td>{{$data->deposit_unpaid}}</td>
                     <td>{{$data->order_status}}</td>
                     <td class="td-manage">
                         <a href="{{URL::asset('admin/userOrder/info?order_number='.$data->order_number)}}">详情</a>

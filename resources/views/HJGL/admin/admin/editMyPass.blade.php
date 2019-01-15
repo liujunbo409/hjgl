@@ -113,7 +113,7 @@
                             layer.msg('密码修改失败，确认密码与新密码不相符', {icon: 2, time: 2000});
                         }
                         else {
-                            var re_password=/(?=.*[a-z])(?=.*[A-Z])(?=.*\d){5,14}/;
+                            var re_password=/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,16}/;
                             if(!new_password.match(re_password)){
                                 layer.msg('密码至少长6位并包含大、小写字母和数字', {icon: 2, time: 1000});
                                 return false;

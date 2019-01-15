@@ -76,6 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::get('/shop/info', 'HJGL\Admin\ShopController@info')->middleware('hjgl.AdminRole:超级管理员');  //商家详情
     Route::get('/shop/chooseTool', 'HJGL\Admin\ShopController@chooseTool')->middleware('hjgl.AdminRole:超级管理员');  //商家选择设备
     Route::get('/shop/chooseToolSave', 'HJGL\Admin\ShopController@chooseToolSave')->middleware('hjgl.AdminRole:超级管理员');  //商家选择设备
+    Route::get('/shop/removeTool', 'HJGL\Admin\ShopController@removeTool')->middleware('hjgl.AdminRole:超级管理员');  //设备移除
 
     //文章管理
     Route::any('/article/index', 'HJGL\Admin\ArticleController@index')->middleware('hjgl.AdminRole:超级管理员');  //文章管理首页
@@ -106,7 +107,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::get('/userOrder/info', 'HJGL\Admin\UserOrderController@info')->middleware('hjgl.AdminRole:超级管理员');  //用户订单详细信息
 
     //账目管理
-    Route::any('/toolLoan/rent', 'HJGL\Admin\ToolLoanController@rent')->middleware('hjgl.AdminRole:超级管理员');//租金管理
-    Route::any('/toolLoan/deposit', 'HJGL\Admin\ToolLoanController@deposit')->middleware('hjgl.AdminRole:超级管理员');//押金管理
+    Route::any('/userAccount/rent', 'HJGL\Admin\UserAccountController@rent')->middleware('hjgl.AdminRole:超级管理员');//租金管理
+    Route::any('/userAccount/deposit', 'HJGL\Admin\UserAccountController@deposit')->middleware('hjgl.AdminRole:超级管理员');//押金管理
 
 });

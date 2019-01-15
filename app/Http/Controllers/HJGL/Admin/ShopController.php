@@ -9,14 +9,15 @@
 
 namespace App\Http\Controllers\HJGL\Admin;
 
+use App\Components\HJGL\ShopLoanManager;
 use App\Components\HJGL\ShopManager;
 use App\Components\HJGL\ToolManager;
 use App\Models\HJGL\Shop;
+use App\Models\HJGL\ShopLoan;
 use Illuminate\Http\Request;
 use App\Components\Utils;
 use App\Components\QNManager;
 use App\Http\Controllers\ApiResponse;
-use App\Components\HJGL\HandleRecordManager;
 
 class ShopController{
     /*
@@ -203,15 +204,64 @@ class ShopController{
         if(empty($shop)){
             return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
         }
-        if($shop->status == 1){
+        if($shop->status != 2){
             return ApiResponse::makeResponse(false, '该商家未启用', ApiResponse::MISSING_PARAM);
         }
+
+        $shop_loan = new ShopLoan();
+        $shop_loan ->shop_id = $shop->id;
+        $shop_loan ->shop_name = $shop->shop_name;
+        $shop_loan ->tool_id = $tool->id;
+        $shop_loan ->tool_number = $tool->number;
+        $shop_loan->save();
+
         $tool->shop_id = $data['shop_id'];
-        $tool->loan_status = '2';
+        $tool->shop_name = $shop->shop_name;
         $tool->save();
         $shop->tool_qty = $shop->tool_qty + 1;
         $shop->save();
-        return ApiResponse::makeResponse(true, $tool, ApiResponse::SUCCESS_CODE);
+
+        return ApiResponse::makeResponse(true, '成功', ApiResponse::SUCCESS_CODE);
+    }
+
+    /*
+     * 设备移除
+     *
+     * By Yuyang
+     *
+     * 2018/12/28
+     */
+    public function removeTool(Request $request)
+    {
+        $data = $request->all();
+        if(!array_key_exists('shop_id', $data) || $data['shop_id'] == ''){
+            return ApiResponse::makeResponse(false, '商家ID缺失', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('tool_id', $data) || $data['tool_id'] == ''){
+            return ApiResponse::makeResponse(false, '设备ID缺失', ApiResponse::MISSING_PARAM);
+        }
+        $shop = ShopManager::getById($data['shop_id']);
+        if(empty($shop)){
+            return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
+        }
+        $tool = ToolManager::getById($data['tool_id']);
+        if(empty($tool)){
+            return ApiResponse::makeResponse(false, '不存在该设备', ApiResponse::MISSING_PARAM);
+        }
+        if($tool->loan_status != 1){
+            return ApiResponse::makeResponse(false, '该设备只有在"未借出"状态才能被移除', ApiResponse::INNER_ERROR);
+        }
+
+        $shop_loan = ShopLoanManager::getByConId($shop->id,$tool->id);
+        if(empty($shop_loan)){
+            return ApiResponse::makeResponse(false, '不存在所属关系', ApiResponse::MISSING_PARAM);
+        }
+        $shop_loan->status = 2;
+        $shop_loan->save();
+        $tool->shop_id = '0';
+        $tool->shop_name = '';
+        $tool->save();
+        return ApiResponse::makeResponse(true, $shop_loan, ApiResponse::SUCCESS_CODE);
     }
 
 }

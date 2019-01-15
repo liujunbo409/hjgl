@@ -28,9 +28,9 @@
                 <span class="r"><a>检测结果</a></span><br/>
                 <div class="r" style="width:150px;height:100px;border:1px solid">
                     <br/>
-                    <span class="r">检测时长</span><br/>
+                    <span class="r">检测总时长</span><br/>
                     <br/>
-                    <span class="r">xx小时</span><br/>
+                    <span class="r">{{isset($tool->detection_duration_total)? $tool->detection_duration_total : '0'}}小时</span><br/>
                 </div>
             </div>
         </div><br/>
@@ -39,9 +39,8 @@
             <div class="l" style="width:400px;height:280px;border:1px solid">
                 设备二维码<br/>
                 <input id="code" name="code" value="{{$tool->code}}" hidden>
-                @if(isset($tool->code) && !empty($tool->code))
-                    <div  id="qrcodeCanvas"></div><br/>
-                    <span>重新生成二维码</span>
+                @if(isset($tool->code_status) && $tool->code_status == 2 )
+                    <div  id="qrcodeCanvas"></div>
                 @else
                     <div style="width:200px;height:200px;"></div><br/>
                     <span>生成二维码</span>
@@ -49,7 +48,18 @@
 
             </div>
             <div class="l" style="margin-left:10px;width:400px;height:280px;border:1px solid">
-                租借信息
+                @if(empty($user_loan))
+                    未借出<br/>
+                    暂无信息
+                @else
+                    租借信息<br/>
+                    借出时间: {{isset($user_loan->create_time)? $user_loan->create_time :''}}<br/>
+                    借出时长: {{isset($user_loan->lease_duration)? $user_loan->create_time :''}}<br/>
+                    订单号: {{isset($user_loan->order_number)? $user_loan->create_time :''}}<br/>
+                    检测地点: {{isset($user_loan->detection_address)? $user_loan->create_time :''}}<br/>
+                    检测时长: {{isset($user_loan->detection_duration)? $user_loan->create_time :''}}<br/>
+                    用户手机: {{isset($user_loan->user_phone)? $user_loan->create_time :''}}<br/>
+                @endif
             </div>
         </div>
     </div>

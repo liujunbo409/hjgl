@@ -38,6 +38,7 @@ class Utils
     const tool_loan_status = ['1' => '未借出', '2' => '已借出 ', '3' => '待校准 '];
     //设备处理--处理过程
     const tool_dispose_process = ['1' => '待取回', '2' => '待处理 ', '3' => '待送回 ', '4' => '已完成 '];
+    const tool_dispose_loan_status = ['1' => '待归还', '2' => '已归还 ', '3' => '待送回 ', '4' => '已完成 '];
     //订单管理--订单状态
     const order_status = ['1' => '进行中', '2' => '已完成 '];
 

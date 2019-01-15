@@ -68,7 +68,8 @@ class ToolManager{
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $tools = $tools->where(function ($query) use ($keyword) {
-                $query->where('number', 'like', "%{$keyword}%");
+                $query->where('number', 'like', "%{$keyword}%")
+                ->orwhere('shop_name', 'like', "%{$keyword}%");
             });
         }
         $tools = $tools->orderby('id', 'desc');
@@ -100,8 +101,8 @@ class ToolManager{
         if (array_key_exists('code', $data)) {
             $tool->code = array_get($data, 'code');
         }
-        if (array_key_exists('monitoring_duration', $data)) {
-            $tool->monitoring_duration = array_get($data, 'monitoring_duration');
+        if (array_key_exists('detection_duration_total', $data)) {
+            $tool->detection_duration_total = array_get($data, 'detection_duration_total');
         }
         if (array_key_exists('calibration_time', $data)) {
             $tool->calibration_time = array_get($data, 'calibration_time');

@@ -12,7 +12,7 @@
                 <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                     <ul class="cl">
                         @foreach(\App\Components\Utils::admin_role as $key=>$index)
-                            @if($admin['type']==$key)
+                            @if($admin['role']==$key)
                                 <li>{{$index}}</li>
                             @endif
                         @endforeach
@@ -141,11 +141,11 @@
                     </dt>
                     <dd>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/toolLoan/rent') }}" data-title="租金管理"
+                            <li><a data-href="{{ URL::asset('admin/userAccount/rent') }}" data-title="租金管理"
                                    href="javascript:void(0)" target="'_blank">租金管理</a></li>
                         </ul>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/toolLoan/deposit') }}" data-title="押金管理"
+                            <li><a data-href="{{ URL::asset('admin/userAccount/deposit') }}" data-title="押金管理"
                                    href="javascript:void(0)" target="'_blank">押金管理</a></li>
                         </ul>
                     </dd>

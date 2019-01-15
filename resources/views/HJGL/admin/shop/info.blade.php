@@ -46,11 +46,8 @@
                 <th scope="col" colspan="8">设备列表</th>
             </tr>
             <tr class="text-c">
-                {{--<th width="25"><input type="checkbox" name="" value=""></th>--}}
-                <th width="40">设备ID</th>
                 <th width="50">设备编号</th>
-                <th width="100">归属商家ID</th>
-                <th width="120">加入时间</th>
+                <th width="100">检测时长</th>
                 <th width="50">状态</th>
                 <th width="60">操作</th>
             </tr>
@@ -58,11 +55,8 @@
             <tbody>
             @foreach($datas as $data)
                 <tr class="text-c">
-                    {{--<td><input type="checkbox" value="1" name=""></td>--}}
-                    <td>{{$data->id}}</td>
                     <td>{{$data->number}}</td>
-                    <td>{{$data->shop_id}}</td>
-                    <td>{{$data->create_time}}</td>
+                    <td><span style="color:yellow;">待商议</span></td>
                     <td class="td-status">
                         @if($data->status=="2")
                             <span class="label label-success radius">已启用</span>
@@ -72,64 +66,11 @@
                     </td>
                     <td class="td-manage">
                         <a title="详情" href="javascript:;"
-                           onclick="edit('管理员编辑','{{URL::asset('admin/tool/info')}}?id={{$data->id}}',{{$data->id}})"
+                           onclick="edit('设备详情','{{URL::asset('admin/tool/info')}}?id={{$data->id}}',{{$data->id}})"
                            class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">详情</i>
                         </a>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-        <div class="mt-20">
-            {{ $datas->appends($con_arr)->links() }}
-        </div>
-        <table class="table table-border table-bordered table-bg table-sort mt-10">
-            <thead>
-            <tr>
-                <th scope="col" colspan="8">二级管理员</th>
-            </tr>
-            <tr class="text-c">
-                <th width="40">姓名</th>
-                <th width="50">手机号</th>
-                <th width="120">加入时间</th>
-                <th width="50">状态</th>
-                <th width="60">操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($datas as $data)
-                <tr class="text-c">
-                    {{--<td><input type="checkbox" value="1" name=""></td>--}}
-                    <td>{{$data->id}}</td>
-                    <td>{{$data->number}}</td>
-                    <td>{{$data->create_time}}</td>
-                    <td class="td-status">
-                        @if($data->status=="2")
-                            <span class="label label-success radius">已启用</span>
-                        @else
-                            <span class="label label-default radius">已禁用</span>
-                        @endif
-                    </td>
-                    <td class="td-manage">
-                        @if($data->status=="1")
-                            <a style="text-decoration:none" onClick="stop(this,'{{$data->id}}')"
-                               href="javascript:;"
-                               title="停用">
-                                <i class="Hui-iconfont">&#xe631;</i>
-                            </a>
-                        @else
-                            <a style="text-decoration:none" onClick="start(this,'{{$data->id}}')"
-                               href="javascript:;"
-                               title="启用">
-                                <i class="Hui-iconfont">&#xe615;</i>
-                            </a>
-                        @endif
-                        <a title="编辑" href="javascript:;"
-                           onclick="edit('管理员编辑','{{URL::asset('admin/tool/edit')}}?id={{$data->id}}',{{$data->id}})"
-                           class="ml-5" style="text-decoration:none">
-                            <i class="Hui-iconfont">编辑</i>
-                        </a>
+                        <span style="color:blue;cursor: pointer;" onclick="remove('{{$data->id}}','{{$shop->id}}')">移除</span>
                     </td>
                 </tr>
             @endforeach
@@ -201,6 +142,30 @@
                 $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
                 $(obj).remove();
                 layer.msg('已启用', {icon: 6, time: 1000});
+            });
+        }
+
+        /*
+         * 设备移除
+         *
+         * By Yuyang
+         *
+         * 2019-01-14
+         */
+        function remove(tool_id, shop_id) {
+            var param = {
+                shop_id: shop_id,
+                tool_id: tool_id,
+            }
+            removeTool('{{URL::asset('')}}', param, function (ret) {
+                consoledebug.log(ret);
+                if (ret.result == true) {
+                    layer.msg('选择成功', {icon: 1, time: 1000});
+                    window.location.reload();
+                }
+                else{
+                    layer.msg(ret.message, {icon: 2, time: 1000});
+                }
             });
         }
 

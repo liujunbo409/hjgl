@@ -40,8 +40,8 @@ class AdminController
         if (array_key_exists('search_word', $data) && !Utils::isObjNull($data['search_word'])) {
             $search_word = $data['search_word'];
         }
-        if (array_key_exists('type', $data) && !Utils::isObjNull($data['type'])) {
-            $role = $data['type'];
+        if (array_key_exists('role', $data) && !Utils::isObjNull($data['role'])) {
+            $role = $data['role'];
         }
         $con_arr = array(
             'search_word' => $search_word,

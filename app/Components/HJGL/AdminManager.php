@@ -55,8 +55,7 @@ class AdminManager
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $admins = $admins->where(function ($query) use ($keyword) {
-                $query->where('nickname', 'like', "%{$keyword}%")
-                    ->orwhere('phone', 'like', "%{$keyword}%");
+                $query->where('name', 'like', "%{$keyword}%");
             });
         }
         $admins = $admins->orderby('id', 'asc');

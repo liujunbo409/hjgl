@@ -57,6 +57,10 @@ function setParameterStatus(url, param, callBack) {
 function setToolDisposeStatus(url, param, callBack) {
     ajaxRequest(url + "admin/toolDispose/setStatus/" + param.id, param, "GET", callBack);
 }
+//设备移除
+function removeTool(url, param, callBack) {
+    ajaxRequest(url + "admin/shop/removeTool", param, "GET", callBack);
+}
 
 
 // //设置问卷状态

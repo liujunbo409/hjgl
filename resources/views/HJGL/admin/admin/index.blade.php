@@ -16,7 +16,7 @@
                     <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px"
                            placeholder="管理员姓名/手机号码" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
                     <span class="select-box" style="width:150px">
-                        <select class="select" name="type" id="type" size="1">
+                        <select class="select" name="role" id="role" size="1">
                             <option value="" {{$con_arr['role']==null?'selected':''}}>全部角色</option>
                             @foreach(\App\Components\Utils::admin_role as $key=>$value)
                                 <option value="{{$key}}" {{$con_arr['role'] == strval($key)?'selected':''}}>{{$value}}</option>

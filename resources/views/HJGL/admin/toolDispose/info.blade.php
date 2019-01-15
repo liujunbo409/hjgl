@@ -13,15 +13,12 @@
         <div style="width:100%;height:120px;">
             <div style="float:left;margin-left:10px;width:600px;">
                 <span class="l"><strong>{{$tool->number}}</strong></span><br/>
-                <div class="l" style="width:300px;">
                     <br/>
-                    <span class="l">商家名称: {{$tool->shop_id}}</span><br/><br/>
-                    <span class="l">加入时间: {{$tool->create_time}}</span>
-                </div>
-                <div class="r"  style="width:300px;">
-                    <br/>
-                    <span class="l">设备状态: {{$tool->status}}</span>
-                </div>
+                    <span class="l">商家名称: {{$tool->shop_name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    校准问题:设备校准&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    处理进程:{{\App\Components\Utils::tool_dispose_process[$data->process]}}<br/><br/>
+                    停用时间: {{$data->stop_time}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    处理完成时间: {{$data->finish_time}}
                 <br/>
             </div>
             <div style="float:right;margin-right:10px;width:300px;">
@@ -30,13 +27,20 @@
                     <br/>
                     <span class="r">检测时长</span><br/>
                     <br/>
-                    <span class="r">xx小时</span><br/>
+                    <span class="r">{{isset($tool->detection_duration_total)? $tool->detection_duration_total : '0'}}小时小时</span><br/>
                 </div>
             </div>
         </div><br/>
         <div>
             <div class="l" style="width:400px;height:280px;border:1px solid">
-                检测二维码
+                设备二维码<br/>
+                <input id="code" name="code" value="{{$tool->code}}" hidden>
+                @if(isset($tool->code_status) && $tool->code_status == 2 )
+                    <div  id="qrcodeCanvas"></div>
+                @else
+                    <div style="width:200px;height:200px;"></div><br/>
+                    <span>生成二维码</span>
+                @endif
             </div>
             <div class="l" style="margin-left:10px;width:400px;height:280px;border:1px solid">
                 <div style="margin:20%;">
@@ -82,6 +86,12 @@
 
 @section('script')
     <script type="text/javascript">
+        var code = $("#code").val();
+        jQuery('#qrcodeCanvas').qrcode({
+            text	: code,
+            width:200,
+            height:200
+        });
         /*
          * 设备处理--操作确认框
          *

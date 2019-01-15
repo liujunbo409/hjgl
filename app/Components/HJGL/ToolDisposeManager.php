@@ -35,8 +35,8 @@ class ToolDisposeManager{
         if (array_key_exists('shop_id', $con_arr) && !Utils::isObjNull($con_arr['shop_id'])) {
             $toolDisposes = $toolDisposes->where('shop_id', '=', $con_arr['shop_id']);
         }
-        if (array_key_exists('monitoring_duration', $con_arr) && !Utils::isObjNull($con_arr['monitoring_duration'])) {
-            $toolDisposes = $toolDisposes->where('monitoring_duration', '=', $con_arr['monitoring_duration']);
+        if (array_key_exists('detection_duration', $con_arr) && !Utils::isObjNull($con_arr['detection_duration'])) {
+            $toolDisposes = $toolDisposes->where('detection_duration', '=', $con_arr['detection_duration']);
         }
         if (array_key_exists('calibration_time', $con_arr) && !Utils::isObjNull($con_arr['calibration_time'])) {
             $toolDisposes = $toolDisposes->where('calibration_time', '=', $con_arr['calibration_time']);
@@ -83,8 +83,8 @@ class ToolDisposeManager{
         if (array_key_exists('shop_id', $data)) {
             $toolDispose->shop_id = array_get($data, 'shop_id');
         }
-        if (array_key_exists('monitoring_duration', $data)) {
-            $tool->monitoring_duration = array_get($data, 'monitoring_duration');
+        if (array_key_exists('detection_duration', $data)) {
+            $tool->detection_duration = array_get($data, 'detection_duration');
         }
         if (array_key_exists('calibration_time', $data)) {
             $toolDispose->calibration_time = array_get($data, 'calibration_time');

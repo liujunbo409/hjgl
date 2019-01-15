@@ -13,8 +13,15 @@
             <form action="{{URL::asset('admin/tool/index')}}" method="post" class="form-horizontal">
                 {{csrf_field()}}
                 <div class="Huiform text-r">
-                    <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px"
-                           placeholder="设备编号" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
+                    设备编号/商家: <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
+                    <span class="select-box" style="width:150px">
+                        <select class="select" name="loan_status" id="loan_status" size="1">
+                            <option value="" {{$con_arr['loan_status']==null?'selected':''}}>未选择</option>
+                            @foreach(\App\Components\Utils::tool_loan_status as $key=>$value)
+                                <option value="{{$key}}" {{$con_arr['loan_status'] == strval($key)?'selected':''}}>{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </span>
                     <button type="submit" class="btn btn-success" id="" name="">
                         <i class="Hui-iconfont">&#xe665;</i> 搜索
                     </button>
@@ -38,7 +45,7 @@
             </tr>
             <tr class="text-c">
                 <th>设备编号</th>
-                <th>归属商家</th>
+                <th>分配商家</th>
                 <th>加入时间</th>
                 <th>设备现状</th>
                 <th>状态</th>
@@ -86,17 +93,16 @@
                            class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont" style="color:blue;">编辑</i>
                         </a>
-                            @if(!empty($data->shop_id))
-                                已有选择
-                            @else
-                                <a title="选择商家" href="javascript:;"
-                                   onclick="edit('管理员编辑','{{URL::asset('admin/tool/chooseShop')}}?id={{$data->id}}',{{$data->id}})"
-                                   class="ml-5" style="text-decoration:none">
-                                    <i class="Hui-iconfont" style="color:blue;">选择商家</i>
-                                </a>
-                            @endif
-
-                            <a href="{{URL::asset('admin/tool/info?id='.$data->id)}}" style="color:blue;">详情</a>
+                        <a href="{{URL::asset('admin/tool/info?id='.$data->id)}}" style="color:blue;">详情</a>
+                        @if(!empty($data->shop_id))
+                            已分配
+                        @else
+                            <a title="选择商家" href="javascript:;"
+                               onclick="edit('管理员编辑','{{URL::asset('admin/tool/chooseShop')}}?id={{$data->id}}',{{$data->id}})"
+                               class="ml-5" style="text-decoration:none">
+                                <i class="Hui-iconfont" style="color:blue;">分配商家</i>
+                            </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

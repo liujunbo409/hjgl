@@ -10,7 +10,7 @@
 namespace App\Http\Controllers\HJGL\Admin;
 
 use App\Components\HJGL\UserOrderManager;
-use App\Components\HJGL\ToolLoanManager;
+use App\Components\HJGL\UserLoanManager;
 use Illuminate\Http\Request;
 use App\Components\Utils;
 use App\Http\Controllers\ApiResponse;
@@ -40,6 +40,13 @@ class UserOrderController{
             'order_status' => $order_status,
         );
         $orders = UserOrderManager::getListByCon($con_arr,true);
+        foreach($orders as $order){
+            if(date('Y-m-d H:i:s') > $order->plan_minbacktime){
+                $order->is_notice = 2;//提示
+            }else{
+                $order->is_notice = 1;//不提示
+            }
+        }
         return view('HJGL.admin.userOrder.index', [ 'datas' => $orders, 'con_arr' => $con_arr]);
     }
 
@@ -52,7 +59,7 @@ class UserOrderController{
         }
         $user_order = UserOrderManager::getByOrderNumber($data['order_number']);
         $user_order->long_time = ceil((strtotime("now")-strtotime($user_order->create_time))/3600);
-        $tool_loans = ToolLoanManager::getByOrderNumber($data['order_number']);
+        $user_loans = UserLoanManager::getByOrderNumber($data['order_number']);
         $con_arr_rent = array(
             'order_number' => $data['order_number'],
             'rent_status' => 1,
@@ -61,9 +68,9 @@ class UserOrderController{
             'order_number' => $data['order_number'],
             'deposit_status' => 1,
         );
-        $user_order->rent_sum = ToolLoanManager::getBySumRent($con_arr_rent);
-        $user_order->deposit_sum = ToolLoanManager::getBySumDeposit($con_arr_deposit);
-        return view('HJGL.admin.userOrder.info', [ 'user_order' => $user_order , 'datas' => $tool_loans]);
+        $user_order->rent_sum = UserLoanManager::getBySumRent($con_arr_rent);
+        $user_order->deposit_sum = UserLoanManager::getBySumDeposit($con_arr_deposit);
+        return view('HJGL.admin.userOrder.info', [ 'user_order' => $user_order , 'datas' => $user_loans]);
     }
 
 

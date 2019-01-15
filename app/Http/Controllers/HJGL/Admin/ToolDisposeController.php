@@ -9,16 +9,11 @@
 
 namespace App\Http\Controllers\HJGL\Admin;
 
-use App\Components\HJGL\ShopManager;
 use App\Components\HJGL\ToolManager;
 use App\Components\HJGL\ToolDisposeManager;
-use App\Models\HJGL\Tool;
-use Hamcrest\Util;
 use Illuminate\Http\Request;
 use App\Components\Utils;
-use App\Components\QNManager;
 use App\Http\Controllers\ApiResponse;
-use App\Components\HJGL\VertifyManager;
 
 class ToolDisposeController{
     /*
@@ -69,15 +64,15 @@ class ToolDisposeController{
     {
         $data = $request->all();
         if (is_numeric($id) !== true) {
-            return ApiResponse::makeResponse(false, '合规校验失败，请检查参数设备id', ApiResponse::INNER_ERROR);
+            return ApiResponse::makeResponse(false, '合规校验失败，请检查参数设备处理id', ApiResponse::INNER_ERROR);
         }
         $tooldispose = ToolDisposeManager::getById($id);
-        if($tooldispose->process >2){
+        if($tooldispose->process >3){
             return ApiResponse::makeResponse(false, '已是最终状态,无法继续操作', ApiResponse::INNER_ERROR);
         }else{
             $tooldispose->process = $data['process']+1;
             if($tooldispose->process == 4){
-                $tool = ToolManager::getById($id);
+                $tool = ToolManager::getById($tooldispose->tool_id);
                 $tool->status = 2;
                 $tool->save();
             }
@@ -98,11 +93,10 @@ class ToolDisposeController{
         if(!array_key_exists('id', $data) || $data['id'] == ''){
             return ApiResponse::makeResponse(false, '设备id缺失', ApiResponse::MISSING_PARAM);
         }
-        $tool = ToolManager::getById($data['id']);
         $toolDispose = ToolDisposeManager::getById($data['id']);
+        $tool = ToolManager::getById($toolDispose->tool_id);
         if(empty($tool)){
             return '设备不存在';
-//            return ApiResponse::makeResponse(false, '设备不存在', ApiResponse::TOOL_IS_NOT_EXIST);
         }else{
             $con_arr = array(
                 'shop_id' => $data['id'],

@@ -96,8 +96,8 @@ class UserOrderManager{
         if (array_key_exists('order_duration', $data)) {
             $user_order->order_duration = array_get($data, 'order_duration');
         }
-        if (array_key_exists('is_notice', $data)) {
-            $user_order->is_notice = array_get($data, 'is_notice');
+        if (array_key_exists('plan_minbacktime', $data)) {
+            $user_order->plan_minbacktime = array_get($data, 'plan_minbacktime');
         }
         if (array_key_exists('order_status', $data)) {
             $user_order->order_status = array_get($data, 'order_status');

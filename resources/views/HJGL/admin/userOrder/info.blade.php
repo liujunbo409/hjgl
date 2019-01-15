@@ -37,7 +37,7 @@
                 <td>{{$data->detection_duration}}</td>
                 <td>{{$data->rent}}</td>
                 <td>{{$data->deposit}}</td>
-                <td>{{$data->loan_status}}</td>
+                <td>{{\App\Components\Utils::tool_dispose_loan_status[$data->loan_status]}}</td>
                 </tr>
                 @endforeach
                 </tbody>
