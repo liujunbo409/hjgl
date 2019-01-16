@@ -77,10 +77,10 @@
          */
         function chooseCon(id,type_id) {
             var param = {
-                medicine_id: id,
+                article_id: id,
                 type_id: type_id,
             }
-            medicineascription_choosesave('{{URL::asset('')}}', param, function (ret) {
+            chooseArticleSave('{{URL::asset('')}}', param, function (ret) {
                 if (ret.result == true) {
                     layer.msg('选择成功', {icon: 1, time: 1000});
                     window.location.reload();

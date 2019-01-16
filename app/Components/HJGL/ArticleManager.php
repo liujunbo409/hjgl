@@ -67,6 +67,9 @@ class ArticleManager
         if (array_key_exists('published_date', $con_arr) && !Utils::isObjNull($con_arr['published_date'])) {
             $infos = $infos->where('published_date', '=', $con_arr['published_date']);
         }
+        if (array_key_exists('status', $con_arr) && !Utils::isObjNull($con_arr['status'])) {
+            $infos = $infos->where('status', '=', $con_arr['status']);
+        }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $infos = $infos->where(function ($query) use ($keyword) {
@@ -127,26 +130,38 @@ class ArticleManager
         if (array_key_exists('oper_id', $data)) {
             $info->oper_id = array_get($data, 'oper_id');
         }
+        if (array_key_exists('oper_name', $data)) {
+            $info->oper_name = array_get($data, 'oper_name');
+        }
         return $info;
     }
 
     /*
-     * 根据id用or条件获取文章(暂时用这个)
+     * 根据id用or条件获取文章
      *
      * By yuyang
      *
      * 2019-01-03
      */
-    public static function getInfoByorId($info,$level = 0){
-        if(strpos($level,'0')!== false){
-            $ids = array();
-            foreach($info as $v){
-                $ids[] = $v->article_id;
+    public static function getInfoByorId($ids,$con_arr = array(),$is_paginate){
+            $re = new Article();
+            if (array_key_exists('status', $con_arr) && !Utils::isObjNull($con_arr['status'])) {
+                $re = $re->where('status', '=', $con_arr['status']);
             }
-            $re = Article::wherein('id',$ids)->get();
+            if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
+                $keyword = $con_arr['search_word'];
+                $re = $re->where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', "%{$keyword}%");
+                });
+            }
+            $re = $re->whereIn('id',$ids);
+            $re = $re->orderBy('id','desc');
+            //配置规则
+            if ($is_paginate) {
+                $re = $re->paginate();
+            } else {
+                $re = $re->get();
+            }
             return $re;
-        }else{
-            return false;
-        }
     }
 }

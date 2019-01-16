@@ -29,6 +29,10 @@ function setShopStatus(url, param, callBack) {
 function chooseTool(url, param, callBack) {
     ajaxRequest(url + "admin/shop/chooseToolSave", param, "GET", callBack);
 }
+//设置文章状态
+function setArticleStatus(url, param, callBack) {
+    ajaxRequest(url + "admin/article/setStatus/" + param.id, param, "GET", callBack);
+}
 //文章删除
 function article_delete(url, param, callBack) {
     ajaxRequest(url + "admin/article/del", param, "GET", callBack);

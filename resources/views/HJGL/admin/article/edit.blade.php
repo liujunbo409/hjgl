@@ -9,27 +9,27 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>id：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="id" name="id" type="text" class="input-text"
-                           value="{{ isset($data->id) ? $data->id : '' }}" placeholder="文章id">
+                           value="{{ isset($article->id) ? $article->id : '' }}" placeholder="文章id">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章标题：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="title" name="title" type="text" class="input-text"
-                           value="{{ isset($data->title) ? $data->title : '' }}" placeholder="请输入">
+                           value="{{ isset($article->title) ? $article->title : '' }}" placeholder="请输入">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>作者：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input id="author" name="author" type="text" class="input-text"
-                           value="{{ isset($data->author) ? $data->author : '' }}" placeholder="请输入">
+                           value="{{ isset($article->author) ? $article->author : '' }}" placeholder="请输入">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>内容：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <textarea id="html" name="html" rows="15" cols="65%" class="text">{{ isset($data->html) ? $data->html : '' }}</textarea>
+                    <textarea id="html" name="html" rows="15" cols="65%" class="text">{{ isset($article->html) ? $article->html : '' }}</textarea>
                 </div>
             </div>
             <div class="row cl">
@@ -45,7 +45,6 @@
 
 @section('script')
     <script type="text/javascript">
-
         $(function () {
             //获取七牛token
             $("#form-edit").validate({
@@ -63,14 +62,19 @@
                         type: 'POST',
                         url: "{{ URL::asset('admin/article/edit')}}",
                         success: function (ret) {
-                            consoledebug.log(JSON.stringify(ret));
                             if (ret.result) {
                                 layer.msg('保存成功', {icon: 1, time: 1000});
-                                setTimeout(function () {
+                                if("{{isset($data['is_type'])}}" && "{{!empty($data['is_type'])}}"){
                                     var index = parent.layer.getFrameIndex(window.name);
-                                    parent.$('.btn-refresh').click();
+                                    parent.click('{{$data['id']}}');
                                     parent.layer.close(index);
-                                }, 500)
+                                }else{
+                                    setTimeout(function () {
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        parent.$('.btn-refresh').click();
+                                        parent.layer.close(index);
+                                    }, 500)
+                                }
                             } else {
                                 layer.msg(ret.message, {icon: 2, time: 1000});
                             }

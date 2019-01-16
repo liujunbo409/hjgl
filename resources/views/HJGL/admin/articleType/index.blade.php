@@ -22,12 +22,12 @@
 
 </style>
 @section('content')
-    <div  style="width:30%;float:left">
+    <div  style="width:20%;float:left">
         <ul id="treeDemo" class="ztree" style="width:100%;float:left"></ul>
         <a id="addParent" href="#" title="添加根分类" onclick="return false;"> <div class="addRoot">添加根分类</div></a>
     </div>
     <input id="refurbish" value="" type="hidden" onclick="click(open_id)">
-    <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=NO width=65% height=AUTO
+    <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=YES width=75% height=AUTO
             SRC="{{ URL::asset('/admin/articleType/edit')}}" style="float:right;min-height: 500px;"></iframe>
 @endsection
 
@@ -124,8 +124,9 @@
                 },
                 success: function (data, sta) {
                     if (data.code == 200) {
+                        window.location.href = "{{ URL::asset('admin/articleType/index')}}?open_id="+treeNode.id;
                     } else {
-                        layer.alert('失败', function () {
+                        layer.alert(data.message, function () {
                         });
                     }
                 },
@@ -204,7 +205,7 @@
                         if (data.code == 200) {
                             window.location.href = "{{ URL::asset('admin/articleType/index')}}?open_id="+treeNode.id;
                         } else {
-                            layer.alert('失败', function () {
+                            layer.alert(data.message, function () {
                             });
                         }
                     },
@@ -247,10 +248,8 @@
                     '_token': '{{csrf_token()}}'
                 },
                 success: function (data, sta) {
-                    layer.alert('失败', function () {
-                    });
                     if (data.code == 200) {
-                        window.location.href = "{{ URL::asset('admin/articleType/index')}}";
+                        window.location.href = "{{ URL::asset('admin/articleType/index')}}?open_id="+treeNode.id;
                     } else {
                         layer.alert('失败', function () {
                         });

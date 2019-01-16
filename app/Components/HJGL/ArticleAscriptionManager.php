@@ -67,6 +67,25 @@ class ArticleAscriptionManager
         $info = ArticleAscription::where('type_id', '=', $type_id)->first();
         return $info;
     }
+    /*
+     * 根据type_id获取多个文章所属信息
+     *
+     * By yuyang
+     *
+     * 2019-01-03
+     */
+    public static function getByTypeIds($type_id,$is_paginate)
+    {
+        $info=new ArticleAscription();
+        $info = $info::where('type_id', '=', $type_id);
+        $info = $info->orderBy('seq','asc');
+        if ($is_paginate) {
+            $info = $info->paginate(Utils::PAGE_SIZE);
+        } else {
+            $info = $info->get();
+        }
+        return $info;
+    }
 
     /*
      * 根据多个type_id获取全部文章所属信息
@@ -134,6 +153,43 @@ class ArticleAscriptionManager
             $info->article_id = array_get($data, 'article_id');
         }
         return $info;
+    }
+
+    /*
+     * 通过article_id和type_id获取所属关系
+     *
+     * By Yuyang
+     *
+     * 2019-01-03
+     */
+    public static function getOneByCon($article_id,$type_id){
+        $info = ArticleAscription::where('type_id','=',$type_id)->where('article_id','=',$article_id)->first();
+        return $info;
+    }
+
+    /*
+     * 根据排序范围查找文章分类
+     *
+     * By Yuyang
+     *
+     * 2018-12-20
+     */
+    public static function getBySeq($con_arr, $type)
+    {
+        $type_info = new ArticleAscription();
+        //相关条件
+        if (array_key_exists('type_id', $con_arr) && !Utils::isObjNull($con_arr['type_id'])) {
+            $type_info = $type_info->where('type_id', '=', $con_arr['type_id']);
+        }
+        if ($type == 'down') {
+            $type_info = $type_info->where('seq', '>', $con_arr['seq']);
+            $type_info = $type_info->where('seq', '<=', $con_arr['seq_down']);
+        } else {
+            $type_info = $type_info->where('seq', '<', $con_arr['seq']);
+            $type_info = $type_info->where('seq', '>=', $con_arr['seq_up']);
+        }
+        $type_info = $type_info->get();
+        return $type_info;
     }
 
 
