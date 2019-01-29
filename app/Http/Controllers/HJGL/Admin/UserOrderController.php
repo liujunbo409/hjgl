@@ -31,9 +31,9 @@ class UserOrderController{
             $search_word = $data['search_word'];
         }
         if (array_key_exists('order_status', $data) && !Utils::isObjNull($data['order_status'])) {
-            $order_status = $data['order_status'];
+            $order_status[] = $data['order_status'];
         }else{
-            $order_status = '';
+            $order_status[] = '';
         }
         $con_arr = array(
             'search_word' => $search_word,

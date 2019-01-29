@@ -31,6 +31,18 @@ class UserLoanManager{
     }
 
     /*
+     * 根据多个order_number获取设备借用
+     *
+     * By Yuyang
+     *
+     * 2019-01-09
+     */
+    public static function getByOrderorNumber($order_number = array()){
+        $user_loans = UserLoan::whereIn('order_number',$order_number)->get();
+        return $user_loans;
+    }
+
+    /*
      * 根据tool_id获取单个设备借用信息
      *
      * By Yuyang

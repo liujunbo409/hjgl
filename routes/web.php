@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::any('/systemParameter/index', 'HJGL\Admin\SystemParameterController@index')->middleware('hjgl.AdminRole:超级管理员');  //系统参数管理首页
     Route::get('/systemParameter/edit', 'HJGL\Admin\SystemParameterController@edit')->middleware('hjgl.AdminRole:超级管理员');  //新建或编辑系统参数
     Route::post('/systemParameter/edit', 'HJGL\Admin\SystemParameterController@editPost')->middleware('hjgl.AdminRole:超级管理员');  //新建或编辑系统参数
-    Route::get('/systemParameter/del', 'HJGL\Admin\SystemParameterController@del')->middleware('hjgl.AdminRole:超级管理员');  //系统参数删除
+//    Route::get('/systemParameter/del', 'HJGL\Admin\SystemParameterController@del')->middleware('hjgl.AdminRole:超级管理员');  //系统参数删除
     Route::get('/systemParameter/setStatus/{id}', 'HJGL\Admin\SystemParameterController@setStatus')->middleware('hjgl.AdminRole:超级管理员');  //设置系统参数状态
 
     //管理员个人信息
@@ -116,6 +116,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
 
     //账目管理
     Route::any('/userAccount/rent', 'HJGL\Admin\UserAccountController@rent')->middleware('hjgl.AdminRole:超级管理员');//租金管理
+    Route::any('/userAccount/rent_total', 'HJGL\Admin\UserAccountController@rent_total')->middleware('hjgl.AdminRole:超级管理员');//租金总统计
+    Route::any('/userAccount/rent_month', 'HJGL\Admin\UserAccountController@rent_month')->middleware('hjgl.AdminRole:超级管理员');//租金月统计
+    Route::any('/userAccount/rent_day', 'HJGL\Admin\UserAccountController@rent_day')->middleware('hjgl.AdminRole:超级管理员');//租金日统计
+    Route::any('/userAccount/rent_range', 'HJGL\Admin\UserAccountController@rent_range')->middleware('hjgl.AdminRole:超级管理员');//租金范围统计
     Route::any('/userAccount/deposit', 'HJGL\Admin\UserAccountController@deposit')->middleware('hjgl.AdminRole:超级管理员');//押金管理
 
 });

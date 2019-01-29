@@ -104,20 +104,20 @@ class ApiResponse
     public static function makeResponse($result, $ret, $code, $mapping_function = null, $params = [])
     {
         $rsp = [];
-        $rsp['code'] = $code;   //eg:999
+        $rsp['code'] = $code;
         if ($result === true) {
             $rsp['result'] = true;
-            $rsp['message'] = self::$returnMessage[$code];  //eg:未知错误
+            $rsp['message'] = self::$returnMessage[$code];
             if ($ret) {
-                $rsp['ret'] = $ret; //自己写的
+                $rsp['ret'] = $ret;
             }
         } else {
             $rsp['result'] = false;
             if ($ret) {
-                $rsp['message'] = $ret; //自己写的
+                $rsp['message'] = $ret;
             } else {
                 if (array_key_exists($code, self::$returnMessage)) {
-                    $rsp['message'] = self::$returnMessage[$code];  //eg:未知错误
+                    $rsp['message'] = self::$returnMessage[$code];
                 } else {
                     $rsp['message'] = 'undefind error code';
                 }

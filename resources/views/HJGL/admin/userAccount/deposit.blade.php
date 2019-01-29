@@ -6,21 +6,21 @@
                 class="c-gray en">&gt;</span> 押金管理<a class="btn btn-success radius r btn-refresh"
                                                        style="line-height:1.6em;margin-top:3px"
                                                        href="javascript:location.replace(location.href);" title="刷新"
-                                                       onclick="location.replace('{{URL::asset('admin/userLoan/deposit')}}');"><i
+                                                       onclick="location.replace('{{URL::asset('admin/userAccount/deposit')}}');"><i
                     class="Hui-iconfont">&#xe68f;</i></a></nav>
 
     <div class="page-container">
         <div class="text-c">
-            <form action="{{URL::asset('admin/userLoan/deposit')}}" method="post" class="form-horizontal">
+            <form action="{{URL::asset('admin/userAccount/deposit')}}" method="post" class="form-horizontal">
                 {{csrf_field()}}
                 <div class="Huiform text-r">
                     订单编号/商家: <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
                     <span class="select-box" style="width:150px">
                         <select name="order_status" id="is_base" class="select" size="1">
-                            <option value="" {{$con_arr['order_status']==null?'selected':''}}>未选择</option>
                             @foreach(\App\Components\Utils::order_status as $key=>$value)
                                 <option value="{{$key}}" {{$con_arr['order_status'] == strval($key)?'selected':''}}>{{$value}}</option>
                             @endforeach
+                            <option value="0,1,2">全部</option>
                         </select>
                     </span>
                     <button type="submit" class="btn btn-success" id="" name="">

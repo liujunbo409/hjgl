@@ -211,7 +211,6 @@ class ArticleTypeManager
         }
         return $parent_id;
     }
-    
 
     /*
      * 根据排序范围查找文章分类
@@ -228,11 +227,9 @@ class ArticleTypeManager
             $type_info = $type_info->where('parent_id', '=', $con_arr['parent_id']);
         }
         if ($type == 'down') {
-            $type_info = $type_info->where('seq', '>', $con_arr['seq']);
-            $type_info = $type_info->where('seq', '<=', $con_arr['seq_down']);
+            $type_info = $type_info->whereBetween('seq', [$con_arr['seq']+1, $con_arr['seq_down']]);
         } else {
-            $type_info = $type_info->where('seq', '<', $con_arr['seq']);
-            $type_info = $type_info->where('seq', '>=', $con_arr['seq_up']);
+            $type_info = $type_info->whereBetween('seq', [$con_arr['seq_up'], $con_arr['seq']-1]);
         }
         $type_info = $type_info->orderby('seq', 'asc');
         $type_info = $type_info->get();

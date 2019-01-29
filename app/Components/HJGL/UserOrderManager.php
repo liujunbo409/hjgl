@@ -42,7 +42,7 @@ class UserOrderManager{
         $orders = new UserOrder();
         //相关条件
         if (array_key_exists('order_status', $con_arr) && !Utils::isObjNull($con_arr['order_status'])) {
-            $orders = $orders->where('order_status', '=', $con_arr['order_status']);
+            $orders = $orders->whereIn('order_status',$con_arr['order_status']);
         }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
@@ -51,8 +51,8 @@ class UserOrderManager{
                     ->orwhere('shop_name', 'like', "%{$keyword}%");
             });
         }
-        $orders = $orders->orderby('id', 'desc');
 
+        $orders = $orders->orderby('plan_minbacktime', 'asc');
         //配置规则
         if ($is_paginate) {
             $orders = $orders->paginate(Utils::PAGE_SIZE);
@@ -103,6 +103,22 @@ class UserOrderManager{
             $user_order->order_status = array_get($data, 'order_status');
         }
         return $user_order;
+    }
+
+    /*
+     * 根据条搜索件获取设备借用总租金
+     *
+     * By Yuyang
+     *
+     * 2019-01-18
+     */
+    public static function getByTimeRange($start_time,$end_time,$order_status = 1){
+        $orders = new UserOrder();
+        $orders->where('order_status','=',$order_status);
+        //相关条件
+        $orders = $orders->whereBetween('create_time', [$start_time, $end_time]);
+        $orders = $orders->get();
+        return $orders;
     }
 
 }

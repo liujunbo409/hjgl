@@ -81,7 +81,7 @@
                            class="ml-5" style="text-decoration:none">
                             编辑
                         </a>
-                        <span style="color:#ff0000;cursor: pointer;" onclick="deleteCon('{{$data->id}}','{{$data->name}}')">删除</span>
+                        {{--<span style="color:#ff0000;cursor: pointer;" onclick="deleteCon('{{$data->id}}','{{$data->name}}')">删除</span>--}}
                     </td>
                 </tr>
             @endforeach

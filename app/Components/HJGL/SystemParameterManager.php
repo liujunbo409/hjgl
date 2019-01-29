@@ -18,6 +18,18 @@ class SystemParameterManager{
     }
 
     /*
+    * 根据parameter获取系统参数
+    *
+    * By Yuyang
+    *
+    * 2019-01-07
+    */
+    public static function getByParameter($parameter){
+        $parameter = SystemParameter::where('parameter','=',$parameter)->first();
+        return $parameter;
+    }
+
+    /*
      * 根据条件获取列表
      *
      * By Yuyang
@@ -65,6 +77,25 @@ class SystemParameterManager{
             $info->parameter_val = array_get($data, 'parameter_val');
         }
         return $info;
+    }
+
+    /*
+     * 计算租金
+     *
+     * By Yuyang
+     *
+     * 2019-01-17
+     */
+    public static function getRent($start_time,$stop_time){
+        $retention_time = self::getByParameter('retention_time');
+        $rent_d = self::getByParameter('rent_d');
+        $rent = 0;
+        if((strtotime($stop_time)-strtotime($start_time))/3600 < 24){
+            $rent = $rent_d->parameter_val;
+        }else{
+            $rent =(ceil(((strtotime($stop_time)-strtotime($start_time))/3600-$retention_time->parameter_val)/24))*$rent_d->parameter_val;
+        }
+        return $rent;
     }
 
 }

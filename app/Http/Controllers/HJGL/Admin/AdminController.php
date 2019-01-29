@@ -33,6 +33,9 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
+        if(!isset($curr_admin['id']) || empty($curr_admin['id'])){
+            return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
+        }
         $curr_admin = AdminManager::getById($curr_admin['id']);
         //相关搜素条件
         $search_word = null;
@@ -64,6 +67,9 @@ class AdminController
     public function editMySelf(Request $request)
     {
         $admin = $request->session()->get('admin');
+        if(!isset($admin['id']) || empty($admin['id'])){
+            return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
+        }
         $admin = AdminManager::getById($admin['id']);
         $admin = AdminManager::getInfoByLevel($admin, '0');
         $upload_token = QNManager::uploadToken();
@@ -116,6 +122,9 @@ class AdminController
     public function editMyPass(Request $request)
     {
         $admin = $request->session()->get('admin');
+        if(!isset($admin['id']) || empty($admin['id'])){
+            return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
+        }
         $admin = AdminManager::getById($admin['id']);
         return view('HJGL.admin.admin.editMyPass', ['admin' => $admin]);
     }
@@ -132,6 +141,9 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
+        if(!isset($admin['id']) || empty($admin['id'])){
+            return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
+        }
         if (!array_key_exists('id', $data) || $data['id'] == '') {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }

@@ -15,15 +15,25 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系统参数名：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="parameter_name" name="parameter_name" type="text" class="input-text"
-                           value="{{ isset($data->parameter_name) ? $data->parameter_name : '' }}" placeholder="请输入">
+                    @if(isset($data->parameter_name))
+                        <input id="parameter_name" name="parameter_name" type="text" class="input-text"
+                               value="{{$data->parameter_name}}" readonly>
+                    @else
+                        <input id="parameter_name" name="parameter_name" type="text" class="input-text"
+                               value="" placeholder="请输入">
+                    @endif
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>系统参数标识：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="parameter" name="parameter" type="text" class="input-text"
-                           value="{{ isset($data->parameter) ? $data->parameter : '' }}" placeholder="请输入">
+                    @if(isset($data->parameter))
+                        <input id="parameter" name="parameter" type="text" class="input-text"
+                               value="{{ $data->parameter }}" readonly>
+                    @else
+                        <input id="parameter" name="parameter" type="text" class="input-text"
+                               value="" placeholder="请输入">
+                    @endif
                 </div>
             </div>
             <div class="row cl">

@@ -99,28 +99,29 @@ class SystemParameterController{
      *
      * 2019-01-07
      */
-    public function del(Request $request)
-    {
-        $data = $request->all();
-        $admin = $request->session()->get('admin');
-        if (!array_key_exists('id', $data) || $data['id'] == '') {
-            return ApiResponse::makeResponse(false, 'id缺失', ApiResponse::MISSING_PARAM);
-        }
-        $parameter = SystemParameterManager::getById($data['id']);
-        if (!$parameter) {
-            return ApiResponse::makeResponse(false, '不存在的系统参数', ApiResponse::PARAM_ERROR);
-        }
-        $parameter->delete();
-        $re_arr=array(
-            't_table'=>'system_parameter',
-            't_id'=>$data['id'],
-            'type'=>'delete',
-            'role'=>$admin['role'],
-            'role_id'=>$admin['id'],
-        );
-        HandleRecordManager::record($re_arr);
-        return ApiResponse::makeResponse(true, '删除成功', ApiResponse::SUCCESS_CODE);
-    }
+//    public function del(Request $request)
+//    {
+//        return ApiResponse::makeResponse(false, '不能删除', ApiResponse::MISSING_PARAM);
+//        $data = $request->all();
+//        $admin = $request->session()->get('admin');
+//        if (!array_key_exists('id', $data) || $data['id'] == '') {
+//            return ApiResponse::makeResponse(false, 'id缺失', ApiResponse::MISSING_PARAM);
+//        }
+//        $parameter = SystemParameterManager::getById($data['id']);
+//        if (!$parameter) {
+//            return ApiResponse::makeResponse(false, '不存在的系统参数', ApiResponse::PARAM_ERROR);
+//        }
+//        $parameter->delete();
+//        $re_arr=array(
+//            't_table'=>'system_parameter',
+//            't_id'=>$data['id'],
+//            'type'=>'delete',
+//            'role'=>$admin['role'],
+//            'role_id'=>$admin['id'],
+//        );
+//        HandleRecordManager::record($re_arr);
+//        return ApiResponse::makeResponse(true, '删除成功', ApiResponse::SUCCESS_CODE);
+//    }
 
     /*
      * 设置系统参数状态
