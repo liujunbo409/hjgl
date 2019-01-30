@@ -59,7 +59,10 @@ class UserOrderController{
         }
         $user_order = UserOrderManager::getByOrderNumber($data['order_number']);
         $user_order->long_time = ceil((strtotime("now")-strtotime($user_order->create_time))/3600);
-        $user_loans = UserLoanManager::getByOrderNumber($data['order_number']);
+        $con = array(
+            'order_number'=>$data['order_number'],
+        );
+        $user_loans = UserLoanManager::getListByCon($con,true);
         $con_arr_rent = array(
             'order_number' => $data['order_number'],
             'rent_status' => 1,

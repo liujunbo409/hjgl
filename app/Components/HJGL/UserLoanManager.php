@@ -19,30 +19,6 @@ class UserLoanManager{
     }
 
     /*
-     * 根据order_number获取设备借用
-     *
-     * By Yuyang
-     *
-     * 2019-01-09
-     */
-    public static function getByOrderNumber($order_number){
-        $user_loans = UserLoan::where('order_number','=',$order_number)->paginate(Utils::PAGE_SIZE);
-        return $user_loans;
-    }
-
-    /*
-     * 根据多个order_number获取设备借用
-     *
-     * By Yuyang
-     *
-     * 2019-01-09
-     */
-    public static function getByOrderorNumber($order_number = array()){
-        $user_loans = UserLoan::whereIn('order_number',$order_number)->get();
-        return $user_loans;
-    }
-
-    /*
      * 根据tool_id获取单个设备借用信息
      *
      * By Yuyang
@@ -65,6 +41,9 @@ class UserLoanManager{
     {
         $user_loans = new UserLoan();
         //相关条件
+        if (array_key_exists('order_number_s', $con_arr) && !Utils::isObjNull($con_arr['order_number_s'])) {
+            $user_loans = $user_loans->whereIn('order_number',$con_arr['order_number_s']);
+        }
         if (array_key_exists('order_number', $con_arr) && !Utils::isObjNull($con_arr['order_number'])) {
             $user_loans = $user_loans->where('order_number', '=', $con_arr['order_number']);
         }

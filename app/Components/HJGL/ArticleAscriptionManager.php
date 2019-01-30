@@ -28,6 +28,7 @@ class ArticleAscriptionManager
         $info = ArticleAscription::where('id', '=', $id)->first();
         return $info;
     }
+
     /*
      * 根据article_id获取首个文章所属文章分类
      *
@@ -41,19 +42,7 @@ class ArticleAscriptionManager
         $info = ArticleAscription::where('article_id', '=', $article_id)->first();
         return $info;
     }
-    /*
-     * 根据article_id获取全部文章所属文章分类
-     *
-     * By yuyang
-     *
-     * 2019-01-03
-     */
-    public static function getByCon($article_id)
-    {
-        $info=new ArticleAscription();
-        $info = ArticleAscription::where('article_id', '=', $article_id)->get();
-        return $info;
-    }
+
     /*
      * 根据type_id获取首个文章所属信息
      *
@@ -67,6 +56,7 @@ class ArticleAscriptionManager
         $info = ArticleAscription::where('type_id', '=', $type_id)->first();
         return $info;
     }
+
     /*
      * 根据type_id获取多个文章所属信息
      *

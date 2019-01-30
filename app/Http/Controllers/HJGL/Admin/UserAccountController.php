@@ -47,11 +47,13 @@ class UserAccountController{
             'order_status' => $order_status,
         );
         $orders = UserOrderManager::getListByCon($con_arr,true);
-        $order_ids = array();
+        $con = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders as $v){
-            $order_ids[] = $v->order_number;
+            $con['order_number_s'][] = $v->order_number;
         }
-        $user_loans = UserLoanManager::getByOrderorNumber($order_ids);
+        $user_loans = UserLoanManager::getListByCon($con,false);
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
@@ -87,11 +89,13 @@ class UserAccountController{
             'order_status' => ['1'],
         );
         $orders = UserOrderManager::getListByCon($con_arr,false);
-        $order_ids = array();
+        $con = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders as $v){
-            $order_ids[] = $v->order_number;
+            $con['order_number_s'][] = $v->order_number;
         }
-        $user_loans = UserLoanManager::getByOrderorNumber($order_ids);
+        $user_loans = UserLoanManager::getListByCon($con,false);
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
@@ -135,11 +139,13 @@ class UserAccountController{
         $start_time = date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m")+1-$data['month_i'],1,date("Y")));
         $end_time = date("Y-m-d H:i:s",mktime(23,59,59,date("m")+2-$data['month_i'] ,0,date("Y")));
         $orders = UserOrderManager::getByTimeRange($start_time,$end_time);
-        $order_ids = array();
+        $con = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders as $v){
-            $order_ids[] = $v->order_number;
+            $con['order_number_s'][] = $v->order_number;
         }
-        $user_loans = UserLoanManager::getByOrderorNumber($order_ids);
+        $user_loans = UserLoanManager::getListByCon($con,false);
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
@@ -169,11 +175,13 @@ class UserAccountController{
         $start_time_front = date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m")-$data['month_i'],1,date("Y")));
         $end_time_front = date("Y-m-d H:i:s",mktime(23,59,59,date("m")+1-$data['month_i'] ,0,date("Y")));
         $orders_front = UserOrderManager::getByTimeRange($start_time_front,$end_time_front);
-        $order_ids_front = array();
+        $con_front = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders_front as $v){
-            $order_ids_front[] = $v->order_number;
+            $con_front['order_number_s'][]= $v->order_number;
         }
-        $user_loans_front = UserLoanManager::getByOrderorNumber($order_ids_front);
+        $user_loans_front = UserLoanManager::getListByCon($con_front,false);
         $rent_account_front = array();
         foreach($user_loans_front as $v){
             if(isset($rent_account_front[$v->order_number])){
@@ -210,11 +218,13 @@ class UserAccountController{
         $start_time = date("Y-m-d H:i:s",mktime(0, 0, 0, date('m'), date('d')+1-$data['day_i'], date('Y')));
         $end_time = date("Y-m-d H:i:s",mktime(23, 59, 59, date('m'), date('d')+1-$data['day_i'], date('Y')));
         $orders = UserOrderManager::getByTimeRange($start_time,$end_time);
-        $order_ids = array();
+        $con = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders as $v){
-            $order_ids[] = $v->order_number;
+            $con['order_number_s'][] = $v->order_number;
         }
-        $user_loans = UserLoanManager::getByOrderorNumber($order_ids);
+        $user_loans = UserLoanManager::getListByCon($con,false);
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
@@ -244,11 +254,13 @@ class UserAccountController{
         $start_time_front = date("Y-m-d H:i:s",mktime(0, 0, 0, date('m'), date('d')-$data['day_i'], date('Y')));
         $end_time_front = date("Y-m-d H:i:s",mktime(23, 59, 59, date('m'), date('d')-$data['day_i'], date('Y')));
         $orders_front = UserOrderManager::getByTimeRange($start_time_front,$end_time_front);
-        $order_ids_front = array();
+        $con_front = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders_front as $v){
-            $order_ids_front[] = $v->order_number;
+            $con_front['order_number_s'][] = $v->order_number;
         }
-        $user_loans_front = UserLoanManager::getByOrderorNumber($order_ids_front);
+        $user_loans_front = UserLoanManager::getListByCon($con_front,false);
         $rent_account_front = array();
         foreach($user_loans_front as $v){
             if(isset($rent_account_front[$v->order_number])){
@@ -278,11 +290,13 @@ class UserAccountController{
             return ApiResponse::makeResponse(false, '结束时间参数缺失', ApiResponse::MISSING_PARAM);
         }
         $orders = UserOrderManager::getByTimeRange($data['start_time'],$data['end_time']);
-        $order_ids = array();
+        $con = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders as $v){
-            $order_ids[] = $v->order_number;
+            $con['order_number_s'][] = $v->order_number;
         }
-        $user_loans = UserLoanManager::getByOrderorNumber($order_ids);
+        $user_loans = UserLoanManager::getListByCon($con,false);
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
@@ -331,11 +345,13 @@ class UserAccountController{
             'order_status' => $order_status,
         );
         $orders = UserOrderManager::getListByCon($con_arr,true);
-        $order_ids = array();
+        $con = array(
+            'order_number_s'=>array(),
+        );
         foreach($orders as $v){
-            $order_ids[] = $v->order_number;
+            $con['order_number_s'][] = $v->order_number;
         }
-        $user_loans = UserLoanManager::getByOrderorNumber($order_ids);
+        $user_loans = UserLoanManager::getListByCon($con,false);
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){

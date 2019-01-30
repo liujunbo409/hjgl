@@ -16,27 +16,6 @@ use Qiniu\Auth;
 class ArticleTypeManager
 {
     /*
-     * 根据id用or条件获取文章分类
-     *
-     * By yuyang
-     *
-     * 2018-12-17
-     */
-    public static function getInfoByorId($info,$level = 0){
-        if(strpos($level,'0')!== false){
-            $ids = array();
-            foreach($info as $v){
-                $ids[] = $v->type_id;
-            }
-            $re = ArticleType::whereIn('id',$ids)->get();
-            return $re;
-        }else{
-            return false;
-        }
-    }
-
-
-    /*
      * 根据id获取文章分类
      *
      * By Yuyang
@@ -63,19 +42,6 @@ class ArticleTypeManager
     }
 
     /*
-     * 根据parent_id获取文章分类
-     *
-     * By yulong
-     *
-     * 2018-12-04
-     */
-    public static function getByFIdCon($parent_id)
-    {
-        $type = ArticleType::where('parent_id', '=', $parent_id)->get();
-        return $type;
-    }
-
-    /*
      * 根据条件检索文章分类
      *
     * By Yuyang
@@ -92,10 +58,10 @@ class ArticleTypeManager
                     $query->where('title', 'like', "%{$keyword}%");
             });
         }
-        if (array_key_exists('title', $con_arr)) {
+        if (array_key_exists('title', $con_arr) && !Utils::isObjNull($con_arr['title'])) {
             $types = $types->where('title', '=', $con_arr['title']);
         }
-        if (array_key_exists('author', $con_arr)) {
+        if (array_key_exists('author', $con_arr) && !Utils::isObjNull($con_arr['author'])) {
             $types = $types->where('author', '=', $con_arr['author']);
         }
         if (array_key_exists('parent_id', $con_arr) && !Utils::isObjNull($con_arr['parent_id'])) {
@@ -146,36 +112,8 @@ class ArticleTypeManager
         if (array_key_exists('ill_id', $data)) {
             $type->ill_id = array_get($data, 'ill_id');
         }
-        if (array_key_exists('create_time', $data)) {
-            $type->create_time = array_get($data, 'create_time');
-        }
-        if (array_key_exists('update_time', $data)) {
-            $type->update_time = array_get($data, 'update_time');
-        }
-        if (array_key_exists('delete_time', $data)) {
-            $type->delete_time = array_get($data, 'delete_time');
-        }
         return $type;
     }
-
-    /*
-    * 递归查询所有父文章分类
-    *
-    * By yulong
-     *
-     * 2018-12-04
-        */
-//    public static function getfatherills($ids,$parent_ids)
-//    {
-//        foreach ($ids as $id) {
-//            $parent_id=ArticleType::where('id', '=', $id)->first()->parent_id;
-//            if($parent_id!='0'&&$parent_id!=""){
-//            array_push($medicine_fa_ids, $parent_id);
-//                self::getfatherills([$medicine_fa_ids],$medicine_fa_ids);
-//            }
-//        }
-//        return $medicine_fa_ids;
-//    }
 
     /*
      * 根据最高父类id,查询其下所有子类的id

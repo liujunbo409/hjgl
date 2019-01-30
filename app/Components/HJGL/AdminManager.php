@@ -82,23 +82,6 @@ class AdminManager
         return $admin;
     }
 
-
-    /*
-    * 搜索管理员信息
-         *
-         * By Yuyang
-         *
-         * 2018-12-27
-         *
-         */
-    public static function searchByNameAndPhone($search_word)
-    {
-        $admins = Admin::where('name', 'like', '%' . $search_word . '%')
-            ->orwhere('phone', 'like', '%' . $search_word . '%')->orderby('id', 'desc')->get();
-        return $admins;
-    }
-
-
     /*
      * 设置管理员信息，用于编辑
      *

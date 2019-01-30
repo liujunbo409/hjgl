@@ -31,18 +31,6 @@ class ToolManager{
     }
 
     /*
-     * 根据shop_id获取设备
-     *
-     * By Yuyang
-     *
-     * 2018-12-27
-     */
-    public static function getByShopid($Shopid){
-        $tools = Tool::where('shop_id','=',$Shopid)->get();
-        return $tools;
-    }
-
-    /*
      * 根据条件获取列表
      *
      * By Yuyang
