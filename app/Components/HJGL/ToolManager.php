@@ -72,7 +72,7 @@ class ToolManager{
                 ->orwhere('shop_name', 'like', "%{$keyword}%");
             });
         }
-        $tools = $tools->orderby('id', 'desc');
+        $tools = $tools->orderBy('id', 'desc');
         //配置规则
         if ($is_paginate) {
             $tools = $tools->paginate(Utils::PAGE_SIZE);

@@ -52,7 +52,7 @@ class UserOrderManager{
             });
         }
 
-        $orders = $orders->orderby('plan_minbacktime', 'asc');
+        $orders = $orders->orderBy('plan_minbacktime', 'asc');
         //配置规则
         if ($is_paginate) {
             $orders = $orders->paginate(Utils::PAGE_SIZE);

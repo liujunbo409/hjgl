@@ -300,14 +300,17 @@ class AdminController
      *
      * 2018/12/27
      */
-    public function setStatus(Request $request, $id)
+    public function setStatus(Request $request)
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
-        if (is_numeric($id) !== true) {
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return ApiResponse::makeResponse(false, '管理员ID未获取', ApiResponse::MISSING_PARAM);
+        }
+        if (is_numeric($data['id']) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数管理员id$id']);
         }
-        $admin = AdminManager::getById($id);
+        $admin = AdminManager::getById($data['id']);
         if($admin->id == $curr_admin['id']){
             return ApiResponse::makeResponse(false, '不能对自己进行操作', ApiResponse::INNER_ERROR);
         }
@@ -315,7 +318,7 @@ class AdminController
         $admin->save();
         $re_arr=array(
             't_table'=>'admin',
-            't_id'=>$id,
+            't_id'=>$data['id'],
             'type'=>'update',
             'role'=>$curr_admin['role'],
             'role_id'=>$curr_admin['id'],
@@ -336,7 +339,7 @@ class AdminController
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
         $admin = new Admin();
-        if (array_key_exists('id', $data)) {
+        if (array_key_exists('id', $data) && !Utils::isObjNull($data['id'])) {
             $admin = AdminManager::getById($data['id']);
             if(!empty($admin)){
                 if($admin->id == $curr_admin['id']){
@@ -360,7 +363,7 @@ class AdminController
         if ($data['role'] == 0) {
             return ApiResponse::makeResponse(false, '添加错误的角色', ApiResponse::INNER_ERROR);
         }
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
+        if(!array_key_exists('id', $data) ||  Utils::isObjNull($data['id'])){
             if (!array_key_exists('name', $data) || $data['name'] == '') {
                 return ApiResponse::makeResponse(false, '姓名缺失', ApiResponse::MISSING_PARAM);
             }

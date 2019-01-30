@@ -48,7 +48,7 @@ class ToolDisposeManager{
             $toolDisposes = $toolDisposes->where('type', '=', $con_arr['type']);
         }
         if (array_key_exists('process', $con_arr) && !Utils::isObjNull($con_arr['process'])) {
-            $toolDisposes = $toolDisposes->wherein('process', $con_arr['process']);
+            $toolDisposes = $toolDisposes->whereIn('process', $con_arr['process']);
         }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
@@ -57,7 +57,7 @@ class ToolDisposeManager{
                     ->orwhere('shop_name', 'like', "%{$keyword}%");
             });
         }
-        $toolDisposes = $toolDisposes->orderby('id', 'desc');
+        $toolDisposes = $toolDisposes->orderBy('id', 'desc');
         //配置规则
         if ($is_paginate) {
             $toolDisposes = $toolDisposes->paginate(Utils::PAGE_SIZE);

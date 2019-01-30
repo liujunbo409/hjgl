@@ -83,7 +83,7 @@ class UserLoanManager{
         if (array_key_exists('loan_status', $con_arr) && !Utils::isObjNull($con_arr['loan_status'])) {
             $user_loans = $user_loans->where('loan_status', '=', $con_arr['loan_status']);
         }
-        $user_loans = $user_loans->orderby('id', 'desc');
+        $user_loans = $user_loans->orderBy('id', 'desc');
         //配置规则
         if ($is_paginate) {
             $user_loans = $user_loans->paginate(Utils::PAGE_SIZE);

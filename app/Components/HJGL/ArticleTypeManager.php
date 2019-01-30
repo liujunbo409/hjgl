@@ -28,7 +28,7 @@ class ArticleTypeManager
             foreach($info as $v){
                 $ids[] = $v->type_id;
             }
-            $re = ArticleType::wherein('id',$ids)->get();
+            $re = ArticleType::whereIn('id',$ids)->get();
             return $re;
         }else{
             return false;
@@ -98,10 +98,10 @@ class ArticleTypeManager
         if (array_key_exists('author', $con_arr)) {
             $types = $types->where('author', '=', $con_arr['author']);
         }
-        if (array_key_exists('parent_id', $con_arr)) {
+        if (array_key_exists('parent_id', $con_arr) && !Utils::isObjNull($con_arr['parent_id'])) {
             $types = $types->where('parent_id', '=', $con_arr['parent_id']);
         }
-        $types = $types->orderby('seq', 'asc')->orderby('id', 'desc');
+        $types = $types->orderBy('seq', 'asc')->orderBy('id', 'desc');
         if ($is_paginate) {
             $types = $types->paginate(Utils::PAGE_SIZE);
         } else {
@@ -231,7 +231,7 @@ class ArticleTypeManager
         } else {
             $type_info = $type_info->whereBetween('seq', [$con_arr['seq_up'], $con_arr['seq']-1]);
         }
-        $type_info = $type_info->orderby('seq', 'asc');
+        $type_info = $type_info->orderBy('seq', 'asc');
         $type_info = $type_info->get();
         return $type_info;
     }

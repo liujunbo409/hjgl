@@ -59,7 +59,7 @@ class ShopManager{
                 $query->where('shop_name', 'like', "%{$keyword}%");
             });
         }
-        $shops = $shops->orderby('id', 'desc');
+        $shops = $shops->orderBy('id', 'desc');
         //配置规则
         if ($is_paginate) {
             $shops = $shops->paginate(Utils::PAGE_SIZE);

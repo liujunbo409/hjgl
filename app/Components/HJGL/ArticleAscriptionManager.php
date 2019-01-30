@@ -105,7 +105,7 @@ class ArticleAscriptionManager
         }else if($level = 1){
             $type_ids = $info;
         }
-        $articles = ArticleAscription::wherein('type_id',$type_ids)->get();
+        $articles = ArticleAscription::whereIn('type_id',$type_ids)->get();
         return $articles;
     }
 
@@ -126,7 +126,7 @@ class ArticleAscriptionManager
         if (array_key_exists('article_id', $con_arr) && !Utils::isObjNull($con_arr['article_id'])) {
             $infos = $infos->where('article_id', '=', $con_arr['article_id']);
         }
-        $infos = $infos->orderby('id', 'desc');
+        $infos = $infos->orderBy('id', 'desc');
         //配置规则
         if ($is_paginate) {
             $infos = $infos->paginate(Utils::PAGE_SIZE);

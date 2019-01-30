@@ -48,7 +48,7 @@ class SystemParameterManager{
                     ->orwhere('parameter_val', 'like', "%{$keyword}%");
             });
         }
-        $infos = $infos->orderby('id', 'desc');
+        $infos = $infos->orderBy('id', 'desc');
         //配置规则
         if ($is_paginate) {
             $infos = $infos->paginate(Utils::PAGE_SIZE);
