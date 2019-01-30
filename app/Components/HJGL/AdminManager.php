@@ -29,6 +29,19 @@ class AdminManager
     }
 
     /*
+     * 根据手机号获取用户信息
+     *
+     * By Yuyang
+     *
+     * 2018-12-27
+     */
+    public static function getByPhone($phone)
+    {
+        $admin = Admin::where('phone', '=', $phone)->first();
+        return $admin;
+    }
+
+    /*
      * 根据条件获取列表
      *
      * By Yuyang
@@ -67,19 +80,6 @@ class AdminManager
         }
 
         return $admins;
-    }
-
-    /*
-     * 根据手机号获取用户信息
-     *
-     * By Yuyang
-     *
-     * 2018-12-27
-     */
-    public static function getByPhone($phone)
-    {
-        $admin = Admin::where('phone', '=', $phone)->first();
-        return $admin;
     }
 
     /*

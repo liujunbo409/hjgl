@@ -55,7 +55,7 @@ class ShopController{
         if (array_key_exists('id', $data)) {
             $shop = ShopManager::getById($data['id']);
         }
-        $upload_token = QNManager::uploadToken();
+		$upload_token = QNManager::uploadToken();
         $admin = $request->session()->get('admin');
         return view('HJGL.admin.shop.edit', ['admin' => $admin, 'data' => $shop,'upload_token' => $upload_token]);
     }
@@ -66,23 +66,23 @@ class ShopController{
     {
         $data = $request->all();
         $admin = $request->session()->get('admin');
-        if (!array_key_exists('shop_name', $data) || $data['shop_name'] == '') {
+        if (!array_key_exists('shop_name', $data) || Utils::isObjNull($data['shop_name'])) {
             return ApiResponse::makeResponse(false, '商家名称缺失', ApiResponse::MISSING_PARAM);
         }
-        if (!array_key_exists('address', $data) || $data['address'] == '') {
+        if (!array_key_exists('address', $data) || Utils::isObjNull($data['address'])) {
             return ApiResponse::makeResponse(false, '商家地址缺失', ApiResponse::MISSING_PARAM);
         }
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
-            if (!array_key_exists('name', $data) || $data['name'] == '') {
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
+            if (!array_key_exists('name', $data) || Utils::isObjNull($data['name'])) {
                 return ApiResponse::makeResponse(false, '管理员姓名缺失', ApiResponse::MISSING_PARAM);
             }
-            if (!array_key_exists('phone', $data) || $data['phone'] == '') {
+            if (!array_key_exists('phone', $data) || Utils::isObjNull($data['phone'])) {
                 return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::MISSING_PARAM);
             }
-            if (!array_key_exists('password', $data) || $data['password'] == '') {
+            if (!array_key_exists('password', $data) || Utils::isObjNull($data['password'])) {
                 return ApiResponse::makeResponse(false, '登录密码缺失', ApiResponse::MISSING_PARAM);
             }
-            if (!array_key_exists('confirm_password', $data) || $data['confirm_password'] == '') {
+            if (!array_key_exists('confirm_password', $data) || Utils::isObjNull($data['confirm_password'])) {
                 return ApiResponse::makeResponse(false, '确认密码缺失', ApiResponse::MISSING_PARAM);
             }
             if($data['password'] != $data['confirm_password']){
@@ -97,6 +97,9 @@ class ShopController{
             $shop->save();
         }else{
             $shop = ShopManager::getById($data['id']);
+            if(empty($shop)){
+                return ApiResponse::makeResponse(false, "不存在该商家", ApiResponse::INNER_ERROR);
+            }
             $shop->shop_name = $data['shop_name'];
             $shop->address = $data['address'];
             $shop->save();
@@ -112,14 +115,21 @@ class ShopController{
      *
      * 2018/12/28
      */
-    public function setStatus(Request $request, $id)
+    public function setStatus(Request $request)
     {
         $data = $request->all();
         $admin = $request->session()->get('admin');
+        if (!array_key_exists('id',$data) || Utils::isObjNull($data['id'])) {
+            return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数商家id$id']);
+        }
+        $id = $data['id'];
         if (is_numeric($id) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数商家id$id']);
         }
         $shop = ShopManager::getById($id);
+        if(empty($shop)){
+            return ApiResponse::makeResponse(false, "不存在该商家", ApiResponse::INNER_ERROR);
+        }
         $shop->status = $data['status'];
         $shop->save();
         return ApiResponse::makeResponse(true, $shop, ApiResponse::SUCCESS_CODE);
@@ -135,7 +145,7 @@ class ShopController{
     public function info(Request $request)
     {
         $data = $request->all();
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
             return ApiResponse::makeResponse(false, '商家id缺失', ApiResponse::MISSING_PARAM);
         }
         $shop = ShopManager::getById($data['id']);
@@ -155,9 +165,6 @@ class ShopController{
      */
     public function chooseTool(Request $request){
         $data = $request->all();
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
-            return '商家id缺失';
-        }
         $shop = ShopManager::getById($data['id']);
         $search_word = null;
         if(array_key_exists('search_word',$data) && !Utils::isObjNull($data['search_word'])){
@@ -187,10 +194,10 @@ class ShopController{
     public function chooseToolSave(Request $request)
     {
         $data = $request->all();
-        if(!array_key_exists('shop_id', $data) || $data['shop_id'] == ''){
+        if(!array_key_exists('shop_id', $data) || Utils::isObjNull($data['shop_id'])){
             return ApiResponse::makeResponse(false, '商家ID缺失', ApiResponse::MISSING_PARAM);
         }
-        if(!array_key_exists('tool_id', $data) || $data['tool_id'] == ''){
+        if(!array_key_exists('tool_id', $data) || Utils::isObjNull($data['tool_id'])){
             return ApiResponse::makeResponse(false, '设备ID缺失', ApiResponse::MISSING_PARAM);
         }
         $tool = ToolManager::getById($data['tool_id']);
@@ -234,10 +241,10 @@ class ShopController{
     public function removeTool(Request $request)
     {
         $data = $request->all();
-        if(!array_key_exists('shop_id', $data) || $data['shop_id'] == ''){
+        if(!array_key_exists('shop_id', $data) || Utils::isObjNull($data['shop_id'])){
             return ApiResponse::makeResponse(false, '商家ID缺失', ApiResponse::MISSING_PARAM);
         }
-        if(!array_key_exists('tool_id', $data) || $data['tool_id'] == ''){
+        if(!array_key_exists('tool_id', $data) || Utils::isObjNull($data['tool_id'])){
             return ApiResponse::makeResponse(false, '设备ID缺失', ApiResponse::MISSING_PARAM);
         }
         $shop = ShopManager::getById($data['shop_id']);
@@ -251,7 +258,6 @@ class ShopController{
         if($tool->loan_status != 1){
             return ApiResponse::makeResponse(false, '该设备只有在"未借出"状态才能被移除', ApiResponse::INNER_ERROR);
         }
-
         $shop_loan = ShopLoanManager::getByConId($shop->id,$tool->id);
         if(empty($shop_loan)){
             return ApiResponse::makeResponse(false, '不存在所属关系', ApiResponse::MISSING_PARAM);

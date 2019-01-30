@@ -33,7 +33,7 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
-        if(!isset($curr_admin['id']) || empty($curr_admin['id'])){
+        if(!isset($curr_admin->id) || Utils::isObjNull($curr_admin->id)){
             return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
         }
         $curr_admin = AdminManager::getById($curr_admin['id']);
@@ -67,8 +67,8 @@ class AdminController
     public function editMySelf(Request $request)
     {
         $admin = $request->session()->get('admin');
-        if(!isset($admin['id']) || empty($admin['id'])){
-            return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
+        if(!isset($admin->id) || Utils::isObjNull($admin->id)){
+            return('身份信息丢失');
         }
         $admin = AdminManager::getById($admin['id']);
         $admin = AdminManager::getInfoByLevel($admin, '0');
@@ -87,18 +87,18 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
-        if (!array_key_exists('id', $data) || $data['id'] == '') {
+        if (!array_key_exists('id', $data) || Utils::isObjNull($data['id'])) {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }
-        if (!array_key_exists('name', $data) || $data['name'] == '') {
+        if (!array_key_exists('name', $data) || Utils::isObjNull($data['name'])) {
             return ApiResponse::makeResponse(false, '姓名缺失', ApiResponse::MISSING_PARAM);
         }
-        if (!array_key_exists('avatar', $data) || $data['avatar'] == '') {
+        if (!array_key_exists('avatar', $data) || Utils::isObjNull($data['avatar'])) {
             return ApiResponse::makeResponse(false, '头像缺失', ApiResponse::MISSING_PARAM);
         }
         $admin = AdminManager::getById($data['id']);
-        $admin->name = isset($data['name']) ? $data['name'] : '';
-        $admin->avatar = isset($data['avatar']) ? $data['avatar'] : '';
+        $admin->name = $data['name'];
+        $admin->avatar = $data['avatar'];
         $admin->save();
         $re_arr=array(
             't_table'=>'admin',
@@ -122,7 +122,7 @@ class AdminController
     public function editMyPass(Request $request)
     {
         $admin = $request->session()->get('admin');
-        if(!isset($admin['id']) || empty($admin['id'])){
+        if(!isset($admin->id) || empty($admin->id)){
             return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
         }
         $admin = AdminManager::getById($admin['id']);
@@ -141,19 +141,19 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
-        if(!isset($admin['id']) || empty($admin['id'])){
+        if(!isset($curr_admin->id) || empty($curr_admin->id)){
             return ApiResponse::makeResponse(false, '身份信息丢失', ApiResponse::MISSING_PARAM);
         }
-        if (!array_key_exists('id', $data) || $data['id'] == '') {
+        if (!array_key_exists('id', $data) || Utils::isObjNull($data['id'])) {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }
-        if (!array_key_exists('password', $data) || $data['password'] == '') {
+        if (!array_key_exists('password', $data) || Utils::isObjNull($data['password'])) {
             return ApiResponse::makeResponse(false, '密码缺失', ApiResponse::PASSWORD_LOST);
         }
-        if (!array_key_exists('new_password', $data) || $data['new_password'] == '') {
+        if (!array_key_exists('new_password', $data) || Utils::isObjNull($data['new_password'])) {
             return ApiResponse::makeResponse(false, '密码缺失', ApiResponse::PASSWORD_LOST);
         }
-        if (!array_key_exists('confirm_password', $data) || $data['confirm_password'] == '') {
+        if (!array_key_exists('confirm_password', $data) || Utils::isObjNull($data['confirm_password'])) {
             return ApiResponse::makeResponse(false, '密码缺失', ApiResponse::PASSWORD_LOST);
         }
         if ($data['new_password'] != $data['confirm_password']) {
@@ -193,7 +193,9 @@ class AdminController
     public function editMyTel(Request $request)
     {
         $admin = $request->session()->get('admin');
-        $ys_sm = VertifyManager::judgeVertifyCode('13644197638', '2938');
+        if(!isset($admin->id) || empty($admin->id)){
+            return('身份信息丢失');
+        }
         $admin = AdminManager::getById($admin['id']);
         return view('HJGL.admin.admin.editMyTel', ['admin' => $admin]);
 
@@ -210,13 +212,13 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
-        if (!array_key_exists('id', $data) || $data['id'] == '') {
+        if (!array_key_exists('id', $data) || Utils::isObjNull($data['id'])) {
             return ApiResponse::makeResponse(false, '没有用户id', ApiResponse::USER_ID_LOST);
         }
-        if (!array_key_exists('phone', $data) || $data['phone'] == '') {
+        if (!array_key_exists('phone', $data) || Utils::isObjNull($data['phone'])) {
             return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::PHONE_LOST);
         }
-        if (!array_key_exists('sm_validate', $data) || $data['sm_validate'] == '') {
+        if (!array_key_exists('sm_validate', $data) || Utils::isObjNull($data['sm_validate'])) {
             return ApiResponse::makeResponse(false, '短信验证码缺失', ApiResponse::SM_VERTIFY_LOST);
         }
         $id=$data['id'];
@@ -256,7 +258,7 @@ class AdminController
     public function validateNewPhone(Request $request)
     {
         $data = $request->all();
-        if (!array_key_exists('phone', $data) || $data['phone'] == '') {
+        if (!array_key_exists('phone', $data) || Utils::isObjNull($data['phone'])) {
             return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::PHONE_LOST);
         }
         $is_have=AdminManager::getByPhone($data['phone']);
@@ -357,20 +359,20 @@ class AdminController
     {
         $data = $request->all();
         $curr_admin = $request->session()->get('admin');
-        if (!array_key_exists('role', $data) || $data['role'] == '') {
+        if (!array_key_exists('role', $data) || Utils::isObjNull($data['role'])) {
             return ApiResponse::makeResponse(false, '角色缺失', ApiResponse::MISSING_PARAM);
         }
         if ($data['role'] == 0) {
             return ApiResponse::makeResponse(false, '添加错误的角色', ApiResponse::INNER_ERROR);
         }
-        if(!array_key_exists('id', $data) ||  Utils::isObjNull($data['id'])){
-            if (!array_key_exists('name', $data) || $data['name'] == '') {
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
+            if (!array_key_exists('name', $data) || Utils::isObjNull($data['name'])) {
                 return ApiResponse::makeResponse(false, '姓名缺失', ApiResponse::MISSING_PARAM);
             }
-            if (!array_key_exists('phone', $data) || $data['phone'] == '') {
+            if (!array_key_exists('phone', $data) || Utils::isObjNull($data['phone'])) {
                 return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::MISSING_PARAM);
             }
-            if (!array_key_exists('password', $data) || $data['password'] == '') {
+            if (!array_key_exists('password', $data) || Utils::isObjNull($data['password'])) {
                 return ApiResponse::makeResponse(false, '密码缺失', ApiResponse::MISSING_PARAM);
             }
             $admin = new Admin();

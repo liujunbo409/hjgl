@@ -54,13 +54,13 @@ class SystemParameterController{
     {
         $data = $request->all();
         $admin = $request->session()->get('admin');
-        if (!array_key_exists('parameter_name', $data) || $data['parameter_name'] == '') {
+        if (!array_key_exists('parameter_name', $data) || Utils::isObjNull($data['parameter_name'])) {
             return ApiResponse::makeResponse(false, '系统参数名缺失', ApiResponse::MISSING_PARAM);
         }
-        if (!array_key_exists('parameter', $data) || $data['parameter'] == '') {
+        if (!array_key_exists('parameter', $data) || Utils::isObjNull($data['parameter'])) {
             return ApiResponse::makeResponse(false, '系统参数标识缺失', ApiResponse::MISSING_PARAM);
         }
-        if (!array_key_exists('parameter_val', $data) || $data['parameter_val'] == '') {
+        if (!array_key_exists('parameter_val', $data) || Utils::isObjNull($data['parameter_val'])) {
             return ApiResponse::makeResponse(false, '系统参数值缺失', ApiResponse::MISSING_PARAM);
         }
         $parameter = new SystemParameter();
@@ -130,10 +130,14 @@ class SystemParameterController{
      *
      * 2019/01/07
      */
-    public function setStatus(Request $request, $id)
+    public function setStatus(Request $request)
     {
         $data = $request->all();
         $admin = $request->session()->get('admin');
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数系统参数id$id']);
+        }
+        $id = $data['id'];
         if (is_numeric($id) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数系统参数id$id']);
         }

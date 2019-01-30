@@ -72,8 +72,8 @@ class ToolController{
     public function editPost(Request $request)
     {
         $data = $request->all();
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
-            if (!array_key_exists('number', $data) || $data['number'] == '') {
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
+            if (!array_key_exists('number', $data) || Utils::isObjNull($data['number'])) {
                 return ApiResponse::makeResponse(false, '设备编号缺失', ApiResponse::MISSING_PARAM);
             }
             $tool = new Tool();
@@ -97,9 +97,13 @@ class ToolController{
      *
      * 2018/12/27
      */
-    public function setStatus(Request $request, $id)
+    public function setStatus(Request $request)
     {
         $data = $request->all();
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数设备id$id']);
+        }
+        $id = $data['id'];
         if (is_numeric($id) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查参数设备id$id']);
         }
@@ -118,13 +122,10 @@ class ToolController{
      */
     public function info(Request $request){
         $data = $request->all();
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
             return ApiResponse::makeResponse(false, '设备id缺失', ApiResponse::MISSING_PARAM);
         }
         $tool = ToolManager::getById($data['id']);
-        if(empty($tool)){
-            return('设备不存在');
-        }
         $user_loan = UserLoanManager::getByToolId($data['id'],1);
         if(empty($user_loan)){
             $order = array();
@@ -144,7 +145,7 @@ class ToolController{
      */
     public function chooseShop(Request $request){
         $data = $request->all();
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
             exit('设备id缺失');
         }
         $tool = ToolManager::getById($data['id']);
@@ -171,10 +172,10 @@ class ToolController{
     {
         $data = $request->all();
         $admin = $request->session()->get('admin');
-        if(!array_key_exists('shop_id', $data) || $data['shop_id'] == ''){
+        if(!array_key_exists('shop_id', $data) || Utils::isObjNull($data['shop_id'])){
             return ApiResponse::makeResponse(false, '商家ID缺失', ApiResponse::MISSING_PARAM);
         }
-        if(!array_key_exists('tool_id', $data) || $data['tool_id'] == ''){
+        if(!array_key_exists('tool_id', $data) || Utils::isObjNull($data['tool_id'])){
             return ApiResponse::makeResponse(false, '设备ID缺失', ApiResponse::MISSING_PARAM);
         }
         $tool = ToolManager::getById($data['tool_id']);

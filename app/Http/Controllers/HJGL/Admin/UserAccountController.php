@@ -281,6 +281,13 @@ class UserAccountController{
         return ApiResponse::makeResponse(true, $re, ApiResponse::SUCCESS_CODE);
     }
 
+    /*
+     * 范围租金统计
+     *
+     * By Yuyang
+     *
+     * 2019/01/29
+     */
     public function rent_range(Request $request){
         $data = $request->all();
         if(!array_key_exists('start_time',$data) || Utils::isObjNull($data['start_time'])){
@@ -324,6 +331,13 @@ class UserAccountController{
         return ApiResponse::makeResponse(true, $re, ApiResponse::SUCCESS_CODE);
     }
 
+    /*
+     * 押金统计
+     *
+     * By Yuyang
+     *
+     * 2019/01/29
+     */
     public function deposit(Request $request){
         $data = $request->all();
         //条件搜索

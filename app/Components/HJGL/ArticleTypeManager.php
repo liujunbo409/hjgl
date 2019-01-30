@@ -31,7 +31,7 @@ class ArticleTypeManager
     /*
      * 根据parent_id获取文章分类
      *
-     * By yulong
+     * By Yuyang
      *
      * 2018-12-04
      */
@@ -79,7 +79,7 @@ class ArticleTypeManager
     /*
      * 设置文章分类信息，用于编辑
      *
-    * By yulong
+    * By Yuyang
      *
      * 2018-12-04
      */

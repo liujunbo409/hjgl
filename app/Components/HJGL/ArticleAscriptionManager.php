@@ -58,6 +58,18 @@ class ArticleAscriptionManager
     }
 
     /*
+     * 通过article_id和type_id获取所属关系
+     *
+     * By Yuyang
+     *
+     * 2019-01-03
+     */
+    public static function getOneByCon($article_id,$type_id){
+        $info = ArticleAscription::where('type_id','=',$type_id)->where('article_id','=',$article_id)->first();
+        return $info;
+    }
+
+    /*
      * 根据type_id获取多个文章所属信息
      *
      * By yuyang
@@ -145,17 +157,7 @@ class ArticleAscriptionManager
         return $info;
     }
 
-    /*
-     * 通过article_id和type_id获取所属关系
-     *
-     * By Yuyang
-     *
-     * 2019-01-03
-     */
-    public static function getOneByCon($article_id,$type_id){
-        $info = ArticleAscription::where('type_id','=',$type_id)->where('article_id','=',$article_id)->first();
-        return $info;
-    }
+
 
     /*
      * 根据排序范围查找文章分类

@@ -88,25 +88,6 @@ class ArticleManager
     }
 
     /*
-     * 根据级别获取信息
-     *
-     * By TerryQi
-     *
-     * 2018-06-15
-     */
-//    public static function getInfoByLevel($info, $level)
-//    {
-//        $info->jixing_str = Utils::medicine_jixing_val[$info->jixing];
-//        $info->type_str = Utils::medicine_type_val[$info->type];
-//        $info->class_str = Utils::medicine_class_val[$info->class];
-//        // $info->medicineType = MedicineTypeManager::getById($info->medicineType_id);
-////        dd($info);
-//
-//        return $info;
-//    }
-
-
-    /*
      * 设置文章信息，用于编辑
      *
      * By Yuyang

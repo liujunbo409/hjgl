@@ -89,7 +89,7 @@ class ArticleController
         $data = $request->all();
         $admin = $request->session()->get('admin');
         $article = new Article();
-        if (array_key_exists('id', $data)) {
+        if (array_key_exists('id', $data) && !Utils::isObjNull($data['id'])) {
             $article = ArticleManager::getById($data['id']);
         }
         return view('HJGL.admin.article.edit', ['admin' => $admin, 'article' => $article , 'data' => $data]);
@@ -150,7 +150,7 @@ class ArticleController
      */
     public function info(Request $request){
         $data = $request->all();
-        if (!array_key_exists('id', $data) || $data['id'] == '') {
+        if (!array_key_exists('id', $data) || Utils::isObjNull($data['id'])) {
             return('文章ID缺失');
         }
         $article_info = ArticleManager::getById($data['id']);
@@ -212,9 +212,13 @@ class ArticleController
      *
      * 2019/01/15
      */
-    public function setStatus(Request $request, $id)
+    public function setStatus(Request $request)
     {
         $data = $request->all();
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查文章id$id']);
+        }
+        $id = $data['id'];
         if (is_numeric($id) !== true) {
             return redirect()->action('\App\Http\Controllers\HJGL\Admin\IndexController@error', ['msg' => '合规校验失败，请检查文章id$id']);
         }

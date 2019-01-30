@@ -199,6 +199,9 @@ class ArticleTypeController
     public static function addTypeFather(Request $request){
         $data = $request->all();
         $admin = $request->session()->get('admin');
+        if(!array_key_exists('name',$data) || Utils::isObjNull($data['name'])){
+            return ApiResponse::makeResponse(false, '名字缺失', ApiResponse::MISSING_PARAM);
+        }
         $type = new ArticleType();
         $con_arr=array(
             'parent_id'=>"0",
@@ -228,6 +231,9 @@ class ArticleTypeController
     public static function upType(Request $request)
     {
         $data = $request->all();
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return ApiResponse::makeResponse(false,  '移动id缺失', ApiResponse::MISSING_PARAM);
+        }
         $tag_id = $data['id'];
         $tag = ArticleTypeManager::getById($tag_id);
         $seq=1;
@@ -269,6 +275,9 @@ class ArticleTypeController
     {
         $data = $request->all();
         $admin = $request->session()->get('admin');
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return ApiResponse::makeResponse(false,  '移动id缺失', ApiResponse::MISSING_PARAM);
+        }
         $tag_id = $data['id'];
         $tag = ArticleTypeManager::getById($tag_id);
         $seq=1;
@@ -413,7 +422,9 @@ class ArticleTypeController
     public function addArticlePost(Request $request){
     	$data = $request->all();
         $admin = $request->session()->get('admin');
-
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return ApiResponse::makeResponse(false, '文章分类id缺失', ApiResponse::MISSING_PARAM);
+        }
         $article = new Article();
         $data['oper_type'] = $admin->name;
         $data['oper_id'] = $admin->id;
@@ -597,6 +608,9 @@ class ArticleTypeController
     public static function moveTypeList(Request $request){
         $data = $request->all();
         $admin = $request->session()->get('admin');
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return('文章分类id未获取到');
+        }
         $from_id=$data['id'];
         $con_arr = array(
         );
@@ -634,6 +648,12 @@ class ArticleTypeController
     public static function moveTypeSave(Request $request){
         $data = $request->all();
         $admin = $request->session()->get('admin');
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return ApiResponse::makeResponse(false, '主体文章分类id未获取', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('move_id',$data) || Utils::isObjNull($data['move_id'])){
+            return ApiResponse::makeResponse(false, '目标文章分类id未获取', ApiResponse::MISSING_PARAM);
+        }
         $type_id = $data['id'];
         $parent_id = $data['move_id'];
         $type = ArticleTypeManager::getById($type_id);

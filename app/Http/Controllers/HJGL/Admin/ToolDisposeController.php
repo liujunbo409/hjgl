@@ -90,13 +90,13 @@ class ToolDisposeController{
      */
     public function info(Request $request){
         $data = $request->all();
-        if(!array_key_exists('id', $data) || $data['id'] == ''){
+        if(!array_key_exists('id', $data) || Utils::isObjNull($data['id'])){
             return ApiResponse::makeResponse(false, '设备id缺失', ApiResponse::MISSING_PARAM);
         }
         $toolDispose = ToolDisposeManager::getById($data['id']);
         $tool = ToolManager::getById($toolDispose->tool_id);
         if(empty($tool)){
-            return '设备不存在';
+            return('设备不存在');
         }else{
             $con_arr = array(
                 'shop_id' => $data['id'],
