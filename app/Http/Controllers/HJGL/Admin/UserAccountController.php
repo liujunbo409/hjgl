@@ -366,6 +366,7 @@ class UserAccountController{
             $con['order_number_s'][] = $v->order_number;
         }
         $user_loans = UserLoanManager::getListByCon($con,false);
+        $deposit_total = UserLoanManager::getListByCon([],false)->sum('deposit');
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
@@ -386,7 +387,7 @@ class UserAccountController{
             $v['deposit_total'] = $rent_account[$v->order_number]['deposit_total'];
             $v['deposit_unpaid'] = $rent_account[$v->order_number]['deposit_unpaid'];
         }
-        return view('HJGL.admin.userAccount.deposit', [ 'datas' => $orders, 'con_arr' => $con_arr]);
+        return view('HJGL.admin.userAccount.deposit', [ 'datas' => $orders, 'con_arr' => $con_arr,'deposit_total'=>$deposit_total]);
     }
 
 

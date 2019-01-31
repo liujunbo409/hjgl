@@ -14,6 +14,7 @@
             <form action="{{URL::asset('admin/userAccount/deposit')}}" method="post" class="form-horizontal">
                 {{csrf_field()}}
                 <div class="Huiform text-r">
+                    <span class="l">总押金:{{$deposit_total}}</span>
                     订单编号/商家: <input id="search_word" name="search_word" type="text" class="input-text" style="width:350px" value="{{$con_arr['search_word']?$con_arr['search_word']:''}}">
                     <span class="select-box" style="width:150px">
                         <select name="order_status" id="is_base" class="select" size="1">
