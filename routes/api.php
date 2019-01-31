@@ -12,8 +12,11 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::any('/wechat', 'HJGL\API\WeChatController@serve');
+Route::any('/test',function(){
+    return redirect()->to('admin/login');
 });
-Route::any('wechat', 'HJGL/API/WeChatController@serve');
+Route::get('/user', function () {
+    $user = session('wechat.oauth_user'); // 拿到授权用户资料
+    return redirect()->to('/home#/index'); //這時候已經拿到用戶資料了，跳轉到想要的路由
+});

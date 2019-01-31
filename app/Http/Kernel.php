@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'hjgl.checkToken' => \App\Http\Middleware\HJGLCheckToken::class, //接口校验token中间件，不用项目使用不同中间件
         'hjgl.adminLogin' => \App\Http\Middleware\HJGLCheckAdminLogin::class,//后台登录中间件
         'hjgl.AdminRole' => \App\Http\Middleware\HJGLCheckAdminRole::class,//后台权限判断中间件
+        'wechat.oauth' => \Overtrue\LaravelWechat\Middleware\OAuthAuthenticate::class,
 
     ];
 }
