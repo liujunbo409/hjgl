@@ -5,10 +5,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 
 class WeChatController extends Controller{
+    public function test(){
+        dd('到达');
+    }
 
-        public function serve()
-        {
-            dd('13456');
+    public function serve()
+    {
+        dd('13456');
 //            Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
 //            $user = session('wechat.oauth_user'); // 拿到授权用户资料
 //            Log::info($user);
@@ -18,6 +21,6 @@ class WeChatController extends Controller{
 //            });
 //
 //            return $app->server->serve();
-        }
+    }
 
 }
