@@ -3,6 +3,7 @@ namespace App\Http\Controllers\HJGL\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class WeChatController extends Controller{
     public function test(Request $request){
