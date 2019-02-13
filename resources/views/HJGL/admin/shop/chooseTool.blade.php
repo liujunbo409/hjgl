@@ -41,7 +41,7 @@
                 <tr class="text-c">
                     <td>{{$my_tool->id}}</td>
                     <td>{{$my_tool->number}}</td>
-                    <td>{{$my_tool->create_time}}</td>
+                    <td>{{$my_tool->created_at}}</td>
                     <td class="td-manage">
                         @if($my_tool->shop_id == $shop->id)
                             <span>已被选择</span>
@@ -58,7 +58,7 @@
                 <tr class="text-c">
                     <td>{{$data->id}}</td>
                     <td>{{$data->number}}</td>
-                    <td>{{$data->create_time}}</td>
+                    <td>{{$data->created_at}}</td>
                     <td class="td-manage">
                         @if($data->shop_id == $shop->id)
                             <span>已被选择</span>

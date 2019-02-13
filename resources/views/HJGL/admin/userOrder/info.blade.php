@@ -10,7 +10,7 @@
         <div>
             订单详情<br/>
             <div>
-                开启时间: {{$user_order->create_time}}&nbsp;&nbsp;&nbsp;&nbsp;结束时间:{{empty($user_order->end_time)?'未结束':$user_order->end_time}}<br/>
+                开启时间: {{$user_order->created_at}}&nbsp;&nbsp;&nbsp;&nbsp;结束时间:{{empty($user_order->end_time)?'未结束':$user_order->end_time}}<br/>
                 订单时长:{{$user_order->long_time}} &nbsp;&nbsp;&nbsp;&nbsp;  用户手机:<br/>
                 租金(待支付):{{$user_order->rent_sum}} &nbsp;&nbsp;&nbsp;&nbsp;  押金(待支付):{{$user_order->deposit_sum}}
             </div>

@@ -142,12 +142,12 @@ class ArticleTypeController
                 if(isset($articles_show[$v->article_id])){
                     $v->article_title = $articles_show[$v->article_id]->title;
                     $v->article_oper_name = $articles_show[$v->article_id]->oper_name;
-                    $v->article_create_time = $articles_show[$v->article_id]->create_time;
+                    $v->article_created_at = $articles_show[$v->article_id]->created_at;
                     $v->article_status = $articles_show[$v->article_id]->status;
                 }else{
                     $v->title = '未获取';
                     $v->article_oper_name = '未获取';
-                    $v->article_create_time = '未获取';
+                    $v->article_created_at = '未获取';
                     $v->article_status = '未获取';
                 }
             }

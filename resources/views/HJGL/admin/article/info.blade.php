@@ -6,7 +6,7 @@
             {{csrf_field()}}
                 文章标题：{{$data->title}}<br/><br/><br/>
                 录入人：{{$data->oper_name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                录入时间：{{$data->create_time}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                录入时间：{{$data->created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 文章分类：{{$data->oper_name}}<br/><br/><br/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$data->html}}<br/><br/><br/>
                 <a title="编辑"  href="javascript:;"

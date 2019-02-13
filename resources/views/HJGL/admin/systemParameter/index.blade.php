@@ -58,9 +58,9 @@
                             <span class="label label-default radius">已禁用</span>
                         @endif
                     </td>
-                    <td>{{$data->create_time}}</td>
+                    <td>{{$data->created_at}}</td>
                     <td>{{$data->create_person}}</td>
-                    <td>{{$data->update_time}}</td>
+                    <td>{{$data->updated_at}}</td>
                     <td>{{$data->update_person}}</td>
                     <td class="td-manage">
                         @if($data->status=="2")

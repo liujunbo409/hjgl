@@ -62,7 +62,7 @@
             <td>{{$ascription->article_id}}</td>
             <td>{{$ascription->article_title}}</td>
             <td>{{$ascription->article_oper_name}}</td>
-            <td>{{$ascription->article_create_time}}</td>
+            <td>{{$ascription->article_created_at}}</td>
             <td class="td-status">
                 @if($ascription->article_status=="2")
                     <span class="label label-success radius">已启用</span>

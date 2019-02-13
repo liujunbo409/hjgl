@@ -57,14 +57,14 @@ class UserAccountController{
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
-                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }
             }else{
-                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }else{
                     $rent_account[$v->order_number]['rent_unpaid'] = 0;
                 }
@@ -99,14 +99,14 @@ class UserAccountController{
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
-                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }
             }else{
-                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }else{
                     $rent_account[$v->order_number]['rent_unpaid'] = 0;
                 }
@@ -149,14 +149,14 @@ class UserAccountController{
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
-                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }
             }else{
-                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }else{
                     $rent_account[$v->order_number]['rent_unpaid'] = 0;
                 }
@@ -185,9 +185,9 @@ class UserAccountController{
         $rent_account_front = array();
         foreach($user_loans_front as $v){
             if(isset($rent_account_front[$v->order_number])){
-                $rent_account_front[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account_front[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
             }else{
-                $rent_account_front[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account_front[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
             }
         }
         $re_front = array(
@@ -228,14 +228,14 @@ class UserAccountController{
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
-                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }
             }else{
-                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_unpaid'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }else{
                     $rent_account[$v->order_number]['rent_unpaid'] = 0;
                 }
@@ -264,9 +264,9 @@ class UserAccountController{
         $rent_account_front = array();
         foreach($user_loans_front as $v){
             if(isset($rent_account_front[$v->order_number])){
-                $rent_account_front[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account_front[$v->order_number]['rent_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
             }else{
-                $rent_account_front[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account_front[$v->order_number]['rent_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
             }
         }
         $re_front = array(
@@ -307,14 +307,14 @@ class UserAccountController{
         $rent_account = array();
         foreach($user_loans as $v){
             if(isset($rent_account[$v->order_number])){
-                $rent_account[$v->order_number]['rent_range_total'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_range_total'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_range_unpaid'] += SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_range_unpaid'] += SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }
             }else{
-                $rent_account[$v->order_number]['rent_range_total'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                $rent_account[$v->order_number]['rent_range_total'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 if($v->rent_status == 1){
-                    $rent_account[$v->order_number]['rent_range_unpaid'] = SystemParameterManager::getRent($v->create_time,date('Y-m-d H:i:s'));
+                    $rent_account[$v->order_number]['rent_range_unpaid'] = SystemParameterManager::getRent($v->created_at,date('Y-m-d H:i:s'));
                 }else{
                     $rent_account[$v->order_number]['rent_range_unpaid'] = 0;
                 }

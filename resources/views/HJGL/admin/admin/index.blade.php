@@ -68,7 +68,7 @@
                     <td>{{$data->name}}</td>
                     <td>{{$data->phone}}</td>
                     <td>{{\App\Components\Utils::admin_role[$data->role]}}</td>
-                    <td>{{$data->create_time}}</td>
+                    <td>{{$data->created_at}}</td>
                     <td class="td-status">
                         @if($data->status=="2")
                             <span class="label label-success radius">已启用</span>

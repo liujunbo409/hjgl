@@ -11,5 +11,5 @@ class UserOrder extends Model
     protected $connection = 'hjgldb';   //环境监测管理数据库名
     protected $table = 't_user_order';
     public $timestamps = true;
-	protected $dates = ['delete_time'];  //软删除
+	protected $dates = ['deleted_at'];  //软删除
 }

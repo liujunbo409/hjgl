@@ -116,7 +116,7 @@ class UserOrderManager{
         $orders = new UserOrder();
         $orders->where('order_status','=',$order_status);
         //相关条件
-        $orders = $orders->whereBetween('create_time', [$start_time, $end_time]);
+        $orders = $orders->whereBetween('created_at', [$start_time, $end_time]);
         $orders = $orders->get();
         return $orders;
     }

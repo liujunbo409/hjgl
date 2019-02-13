@@ -57,7 +57,7 @@
                 <tr class="text-c">
                     <td>{{$data->number}}</td>
                     <td>{{$data->shop_name}}</td>
-                    <td>{{$data->create_time}}</td>
+                    <td>{{$data->created_at}}</td>
                     <td>
                         @if($data->loan_status=="2")
                             <span class="label label-success radius">已借出</span>

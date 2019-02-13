@@ -47,7 +47,7 @@
                     <td>{{$data->name}}</td>
                     <td>{{$data->phone}}</td>
                     <td>xxxxx</td>
-                    <td>{{$data->create_time}}</td>
+                    <td>{{$data->created_at}}</td>
                     <td class="td-manage">
                         @if(!empty($tool->shop_id))
                             已选择商家

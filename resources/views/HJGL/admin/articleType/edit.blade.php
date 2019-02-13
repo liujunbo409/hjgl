@@ -93,7 +93,7 @@
             <td>{{$article->id}}</td>
             <td>{{$article->title}}</td>
             <td>{{$article->oper_name}}</td>
-            <td>{{$article->create_time}}</td>
+            <td>{{$article->created_at}}</td>
             <td class="td-status">
                 @if($article->status=="2")
                     <span class="label label-success radius">已启用</span>

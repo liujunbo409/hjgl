@@ -17,5 +17,5 @@ class UserLoan extends Model
     protected $connection = 'hjgldb';   //慢病管理数据库名
     protected $table = 't_user_loan';
     public $timestamps = true;
-    protected $dates = ['delete_time'];  //软删除
+    protected $dates = ['deleted_at'];  //软删除
 }

@@ -19,7 +19,7 @@
                 </div>
                 <div class="r"  style="width:300px;">
                     <span class="l">联系电话: {{$shop->phone}}</span><br/>
-                    <span class="l">加入时间: {{$shop->create_time}}</span>
+                    <span class="l">加入时间: {{$shop->created_at}}</span>
                 </div>
                 <br/>
             </div>

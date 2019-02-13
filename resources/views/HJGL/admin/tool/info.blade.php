@@ -16,7 +16,7 @@
                 <div class="l" style="width:300px;">
                     <br/>
                     <span class="l">商家名称: {{isset($tool->shop_name)? $tool->shop_name : ''}}</span><br/><br/>
-                    <span class="l">加入时间: {{isset($tool->create_time)? $tool->create_time : ''}}</span>
+                    <span class="l">加入时间: {{isset($tool->created_at)? $tool->created_at : ''}}</span>
                 </div>
                 <div class="r"  style="width:300px;">
                     <br/>
@@ -53,12 +53,12 @@
                     暂无信息
                 @else
                     租借信息<br/>
-                    借出时间: {{isset($user_loan->create_time)? $user_loan->create_time :''}}<br/>
-                    借出时长: {{isset($user_loan->lease_duration)? $user_loan->create_time :''}}<br/>
-                    订单号: {{isset($user_loan->order_number)? $user_loan->create_time :''}}<br/>
-                    检测地点: {{isset($user_loan->detection_address)? $user_loan->create_time :''}}<br/>
-                    检测时长: {{isset($user_loan->detection_duration)? $user_loan->create_time :''}}<br/>
-                    用户手机: {{isset($user_loan->user_phone)? $user_loan->create_time :''}}<br/>
+                    借出时间: {{isset($user_loan->created_at)? $user_loan->created_at :''}}<br/>
+                    借出时长: {{isset($user_loan->lease_duration)? $user_loan->created_at :''}}<br/>
+                    订单号: {{isset($user_loan->order_number)? $user_loan->created_at :''}}<br/>
+                    检测地点: {{isset($user_loan->detection_address)? $user_loan->created_at :''}}<br/>
+                    检测时长: {{isset($user_loan->detection_duration)? $user_loan->created_at :''}}<br/>
+                    用户手机: {{isset($user_loan->user_phone)? $user_loan->created_at :''}}<br/>
                 @endif
             </div>
         </div>

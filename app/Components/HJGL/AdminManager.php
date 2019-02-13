@@ -78,7 +78,6 @@ class AdminManager
         } else {
             $admins = $admins->get();
         }
-
         return $admins;
     }
 

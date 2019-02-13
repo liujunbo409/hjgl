@@ -58,7 +58,7 @@ class UserOrderController{
             return '订单号缺失';
         }
         $user_order = UserOrderManager::getByOrderNumber($data['order_number']);
-        $user_order->long_time = ceil((strtotime("now")-strtotime($user_order->create_time))/3600);
+        $user_order->long_time = ceil((strtotime("now")-strtotime($user_order->created_at))/3600);
         $con = array(
             'order_number'=>$data['order_number'],
         );
