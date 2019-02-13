@@ -5,8 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 
 class WeChatController extends Controller{
-    public function test(){
-        dd('到达');
+    public function test(Request $request){
+        $data = $request->all();
+        dd($data);
     }
 
     public function serve()
