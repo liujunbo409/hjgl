@@ -8,7 +8,21 @@ use Illuminate\Http\Request;
 class WeChatController extends Controller{
     public function test(Request $request){
         $data = $request->all();
-        dd($data);
+        Log::info($data);
+        $echostr = isset($data["echostr"])? $data["echostr"]:'';
+        $timestamp = isset($data["timestamp"])?$data["timestamp"]:'';
+        $nonce = isset($data["nonce"])?$data["nonce"]:'';
+        $signature  = isset($data["signature"])?$data["signature"]:'';
+        $token = 'Token1234';
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr,SORT_STRING);
+        $tmpStr = implode($tmpArr);
+        $tmpStr = sha1( $tmpStr );
+        if($tmpStr==$signature){
+            return($echostr);
+        }else{
+            return('');
+        }
     }
 
     public function serve()
