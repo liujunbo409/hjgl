@@ -35,11 +35,6 @@ return [
             'level' => env('WECHAT_LOG_LEVEL', 'debug'),
             'file' => env('WECHAT_LOG_FILE', storage_path('logs/wechat.log')),
         ],
-        'oauth' => [
-            'only_wechat_browser' => false,
-            'scopes'   => ['snsapi_userinfo'],
-            'callback' => '',
-        ],
     ],
 
     /*
