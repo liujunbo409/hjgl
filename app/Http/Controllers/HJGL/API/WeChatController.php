@@ -10,16 +10,14 @@ use EasyWeChat\OfficialAccount\Application;
 
 class WeChatController extends Controller{
 
-    public function serve()
-    {
-        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
+    public function serve(){
 
-        $wechat = app('wechat');
-        $wechat->server->setMessageHandler(function($message){
-            return "欢迎关注 overtrue！";
+        Log::info('wechat request arrived.');
+        $wechat = app('wechat.official_account');
+
+        $wechat->server->push(function($message){
+            return "12121212";    //这里返回的内容是别人给你的微信公众号发消息返回的消息内容
         });
-
-        Log::info('return response.');
 
         return $wechat->server->serve();
     }
