@@ -10,6 +10,17 @@ use EasyWeChat\OfficialAccount\Application;
 
 class WeChatController extends Controller{
 
+    public function serve()
+    {
+        $wechat = app('wechat');
+        $wechat->server->setMessageHandler(function($message){
+            return "欢迎关注 overtrue！";
+        });
+
+        $this->menu_add();
+        return $wechat->server->serve();
+    }
+
     public  function  menu_add(){
         $app = app('wechat');
         $menu = $app->menu;
@@ -23,17 +34,7 @@ class WeChatController extends Controller{
         $menu->add($buttons);
     }
 
-    public function serve(){
 
-        Log::info('wechat request arrived.');
-        $wechat = app('wechat.official_account');
-
-        $wechat->server->push(function($message){
-            return "12121212";    //这里返回的内容是别人给你的微信公众号发消息返回的消息内容
-        });
-
-        return $wechat->server->serve();
-    }
 
 //array(2) { ["access_token"]=> string(136) "18_JG5lzp4nOwqjdCqK6SXMHw2a6X8_JJla8MR-C1qTu9PJQqUQT9z87wSmiaKB4de71eT1fAdkRRR2QrDp3E9TfvCaZG_8MRz3CTSybHFKY2Hr6wny4C1FegiCpPwNZRcABACOG" ["expires_in"]=> int(7200) }
     public function getAccessToken(){

@@ -18,7 +18,6 @@ Route::get('test/index', 'HJGL\Test\TestController@index');  //登录
 Route::get('admin/login', 'HJGL\Admin\LoginController@login');  //登录
 Route::post('admin/login', 'HJGL\Admin\LoginController@loginPost');  //登录-post
 
-
 Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], function () {
 
     //错误页面
