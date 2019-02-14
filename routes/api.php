@@ -22,9 +22,10 @@ Route::any('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');
 
 
 Route::group(['middleware'=>['web','wechat.oauth']],function(){
+    Route::any('/wechat', 'HJGL\API\WeChatController@serve');
     Route::any('/menu_add', 'HJGL\API\WeChatController@menu_add');
 });
-Route::any('/wechat', 'HJGL\API\WeChatController@serve');
+
 
 
 
