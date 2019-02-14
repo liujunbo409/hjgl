@@ -21,4 +21,14 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
     ];
+
+    public function handle($request,\Closure $next){
+        //todo:需要在添加了登录验证之后,取消
+        if($request->method() == 'POST')
+        {
+            return $next($request);
+        }
+
+        return parent::handle($request,$next);
+    }
 }
