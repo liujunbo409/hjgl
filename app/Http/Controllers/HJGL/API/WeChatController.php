@@ -28,7 +28,7 @@ class WeChatController extends Controller{
             [
                 "type"=>"view",
                 "name"=>"进入课堂",
-                "url"=>BASE_URL."/wx_student#/main"
+                "url"=>"/wx_student#/main"
             ],
         ];
         $menu->add($buttons);
