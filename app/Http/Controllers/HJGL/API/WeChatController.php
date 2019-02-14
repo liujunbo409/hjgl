@@ -22,7 +22,7 @@ class WeChatController extends Controller{
     }
 
     public  function  menu_add(){
-        $app = app('wechat');
+        $app = app('wechat.official_account');
         $menu = $app->menu;
         $buttons = [
             [
@@ -31,7 +31,7 @@ class WeChatController extends Controller{
                 "url"=>"/wx_student#/main"
             ],
         ];
-        $menu->add($buttons);
+        $menu->create($buttons);
     }
 
 
