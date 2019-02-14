@@ -64,6 +64,5 @@ class Kernel extends HttpKernel
         'hjgl.adminLogin' => \App\Http\Middleware\HJGLCheckAdminLogin::class,//后台登录中间件
         'hjgl.AdminRole' => \App\Http\Middleware\HJGLCheckAdminRole::class,//后台权限判断中间件
         'wechat.oauth' => \Overtrue\LaravelWechat\Middleware\OAuthAuthenticate::class,
-
     ];
 }
