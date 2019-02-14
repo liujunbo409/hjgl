@@ -5,7 +5,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
+use EasyWeChat;
+use EasyWeChat\OfficialAccount\Application;
+
 class WeChatController extends Controller{
+
+    public function serve(){
+
+        Log::info('wechat request arrived.');
+        $wechat = app('wechat.official_account');
+
+        $wechat->server->push(function($message){
+            return "12121212";    //这里返回的内容是别人给你的微信公众号发消息返回的消息内容
+        });
+
+        return $wechat->server->serve();
+    }
+
 //array(2) { ["access_token"]=> string(136) "18_JG5lzp4nOwqjdCqK6SXMHw2a6X8_JJla8MR-C1qTu9PJQqUQT9z87wSmiaKB4de71eT1fAdkRRR2QrDp3E9TfvCaZG_8MRz3CTSybHFKY2Hr6wny4C1FegiCpPwNZRcABACOG" ["expires_in"]=> int(7200) }
     public function getAccessToken(){
         dd('1');
@@ -48,18 +64,6 @@ class WeChatController extends Controller{
         }
     }
 
-    public function serve()
-    {
-        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
 
-        $wechat = app('wechat');
-        $wechat->server->setMessageHandler(function($message){
-            return "欢迎关注 overtrue！";
-        });
-
-        Log::info('return response.');
-
-        return $wechat->server->serve();
-    }
 
 }
