@@ -22,7 +22,7 @@ class WeChatController extends Controller{
     }
 
     public  function  menu_add(){
-        $app = app('wechat.oauth');
+        $app = app('wechat');
         $menu = $app->menu;
         $buttons = [
             [
