@@ -10,6 +10,19 @@ use EasyWeChat\OfficialAccount\Application;
 
 class WeChatController extends Controller{
 
+    public  function  menu_add(){
+        $app = app('wechat');
+        $menu = $app->menu;
+        $buttons = [
+            [
+                "type"=>"view",
+                "name"=>"进入课堂",
+                "url"=>BASE_URL."/wx_student#/main"
+            ],
+        ];
+        $menu->add($buttons);
+    }
+
     public function serve(){
 
         Log::info('wechat request arrived.');
