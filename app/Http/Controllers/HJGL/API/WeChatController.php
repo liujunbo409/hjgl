@@ -5,10 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
-use EasyWeChat;
-use EasyWeChat\OfficialAccount\Application;
-use EasyWeChat\Factory;
-use Illuminate\Support\Facades\Config;
+use App\Services\WeChat;
 
 class WeChatController extends Controller{
 
@@ -22,33 +19,8 @@ class WeChatController extends Controller{
         return $app->server->serve();
     }
 
-    public static function sendAlertMsg($title, $service, $status, $message, $remark) {
-        $config = Config::get("wechat.official_account.default");
-        date_default_timezone_set('Asia/Shanghai');
-        $app = Factory::officialAccount($config); // 公众号
-        $templateId = "yKeLl9ouZasvoz258RQyZ41YT7w-L1JVpufpcAkSiyo";   //这里是模板ID，自行去公众号获取
-        $currentTime = date('Y-m-d H:i:s',time());
-        $host = "hj.lljiankang.top";   //你的域名
-
-        $openids = ["1256456965252"];   //关注微信公众号的openid，前往公众号获取
-        foreach ($openids as $v) {
-            $result = $app->template_message->send([
-                'touser' => $v,
-                'template_id' => $templateId,
-                'url' => 'baidu.com',  //上边的域名
-                'data' => [
-                    'first' => $title,
-                    'keyword1' => $currentTime,
-                    'keyword2' => $host,
-                    'keyword3' => $service,
-                    'keyword4' => $status,
-                    'keyword5' =>$message,
-                    'remark' => $remark,
-                ]
-            ]);
-            Log::info("template send result:", $result);
-        }
-        return Config::get("error.0");
+    public function sendAlertMsg() {
+        WeChat::sendAlertMsg("param1", "param2", "param3", "param4", "param5");
     }
 
 
