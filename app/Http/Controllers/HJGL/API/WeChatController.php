@@ -55,8 +55,8 @@ class WeChatController extends Controller{
         // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
         $_SESSION['wechat_user'] = $user->toArray();
-        dd($user);
         $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+        header('location:'. $targetUrl); // 跳转到 user/profile
     }
 
     //网页授权
@@ -67,14 +67,15 @@ class WeChatController extends Controller{
 //        dd($oauth);
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
+            dd('2');
             $_SESSION['target_url'] = 'user/profile';
             return $oauth->redirect();
             // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
             // $oauth->redirect()->send();
         }
-
         // 已经登录过
         $user = $_SESSION['wechat_user'];
+        dd('2');
     }
 
     //自定义菜单查询
