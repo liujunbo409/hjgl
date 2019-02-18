@@ -51,13 +51,11 @@ class WeChatController extends Controller{
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $oauth = $app->oauth;
-
         // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
-        $_SESSION['wechat_user'] = $user->toArray();
-        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
-        Log::info($_SESSION);
-        Log::info($targetUrl);
+        $request->session()->put('wechat_user', $user->toArray());//写入session
+        $session=$request->session('wechat_user');
+        $targetUrl = empty($session->target_url) ? '/' : $session->target_url;
         header('location:'. $targetUrl); // 跳转到 user/profile
     }
 
@@ -66,20 +64,17 @@ class WeChatController extends Controller{
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $oauth = $app->oauth;
-//        dd($oauth);
-        // 未登录
 
-$session=$request->session('wechat_user');
-//        Log::info($session);
+        // 未登录
+        $session=$request->session('wechat_user');
         if (empty($session)) {
-            $_SESSION['target_url'] = '/api/webScope';
-//            Log::info($_SESSION);
+            $request->session()->put('target_url', '/api/webScope');//写入session
             return $oauth->redirect();
             // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
             // $oauth->redirect()->send();
         }
         // 已经登录过
-        $user = $_SESSION['wechat_user'];
+        $user = $session;
         dd('2');
     }
 
