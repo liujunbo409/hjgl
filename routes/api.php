@@ -21,7 +21,7 @@ Route::get('/user', function () {
 Route::any('/test', 'HJGL\API\WeChatController@test');
 Route::any('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');
 
-Route::group(['middleware'=>['web','wechat.oauth']],function(){
+Route::group(['middleware'=>['web']],function(){
     Route::any('/sendAlertMsg', 'HJGL\API\WeChatController@sendAlertMsg');
     Route::any('/wechat', 'HJGL\API\WeChatController@serve');
     Route::get('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');//获取access_token
@@ -31,7 +31,7 @@ Route::group(['middleware'=>['web','wechat.oauth']],function(){
     Route::get('/webScope', 'HJGL\API\WeChatController@webScope');//网页授权
     Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
 
-    
+
     Route::get('/hjjc', 'HJGL\API\WeChatController@hjjc');//环境检测
 });
 
