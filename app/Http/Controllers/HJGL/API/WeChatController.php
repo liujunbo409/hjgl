@@ -62,13 +62,16 @@ class WeChatController extends Controller{
     }
 
     //网页授权
-    public function webScope(){
+    public function webScope(Request $request){
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $oauth = $app->oauth;
 //        dd($oauth);
         // 未登录
-        if (empty($_SESSION['wechat_user'])) {
+
+$session=$request->session('wechat_user');
+        Log::info($_SESSION);
+        if (empty($session)) {
             $_SESSION['target_url'] = '/api/webScope';
             Log::info($_SESSION);
             return $oauth->redirect();
