@@ -4,8 +4,11 @@ namespace App\Http\Controllers\HJGL\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Config;
 use App\Services\WeChat;
+use EasyWeChat\Factory;
+use App\Components\HJGL\AccessTokenManager;
+use App\Models\HJGL\AccessToken;
 
 class WeChatController extends Controller{
 
@@ -19,54 +22,178 @@ class WeChatController extends Controller{
         return $app->server->serve();
     }
 
+    //获取token
+    public function getAccessToken(){
+        $access_token = AccessTokenManager::getOne();
+        if(empty($access_token) || date('Y-m-d H:i:s') > $access_token->max_time){
+            $config = Config::get("wechat.official_account.default");
+            $app = Factory::officialAccount($config); // 公众号
+            $accessToken = $app->access_token;
+            $token = $accessToken->getToken();
+            if(isset($token['errcode'])){
+                return('系统繁忙，此时请开发者稍候再试');
+            }
+            if(!isset($token['access_token']) || empty($token['access_token'])){
+                return('参数缺失');
+            }
+            $info = new AccessToken();
+            $info->access_token = $token['access_token'];
+            $info->get_time = date('Y-m-d H:i:s');
+            $info->max_time = date('Y-m-d H:i:s',time()+5400);
+            $re = AccessTokenManager::setInfo($info,$info);
+            $re->save();
+            return $re;
+        }
+        return $access_token;
+    }
+
+    public function getInfo(Request $request){
+        $data = $request->all();
+        dd($data);
+    }
+
+    //网页授权
+    public function webScope(){
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config); // 公众号
+        $oauth = $app->oauth;
+//        dd($oauth);
+        // 未登录
+        if (empty($_SESSION['wechat_user'])) {
+
+            $_SESSION['target_url'] = 'user/profile';
+
+            return $oauth->redirect();
+            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
+            // $oauth->redirect()->send();
+        }
+
+        // 已经登录过
+        $user = $_SESSION['wechat_user'];
+    }
+
+    //自定义菜单查询
+    public function getMenu(){
+        $access = self::getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=".$access->access_token;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($curl);
+        curl_close($curl);
+        dd($output);
+    }
+
+    //自定义菜单创建
+    public function createMenu(){
+        $access = self::getAccessToken();
+        $data = '{
+      "button":[
+      {
+            "name":"菜单",
+           "sub_button":[
+            {
+                "type":"view",
+                "name":"进入网页",
+                "url":"http://www.baidu.com"
+            }]
+       },
+       {
+            "name":"菜单",
+           "sub_button":[
+            {
+                "type":"view",
+                "name":"进入网页",
+                "url":"http://www.baidu.com"
+            }]
+       }]
+ }';
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access->access_token;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($curl);
+        curl_close($curl);
+        dd($output);
+    }
+
+    //删除自定义菜单
+    public function delMenu(){
+        $access = self::getAccessToken();
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/delete?access_token='.$access->access_token;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($curl);
+        curl_close($curl);
+        dd($output);
+    }
+
+    //发送模板消息
     public function sendAlertMsg() {
         WeChat::sendAlertMsg("param1", "param2", "param3", "param4", "param5");
     }
 
+    public function hjjc(Request $request){
 
-
-//array(2) { ["access_token"]=> string(136) "18_JG5lzp4nOwqjdCqK6SXMHw2a6X8_JJla8MR-C1qTu9PJQqUQT9z87wSmiaKB4de71eT1fAdkRRR2QrDp3E9TfvCaZG_8MRz3CTSybHFKY2Hr6wny4C1FegiCpPwNZRcABACOG" ["expires_in"]=> int(7200) }
-    public function getAccessToken(){
-        dd('1');
-        //请求url地址
-        $appId = 'wxa683153d92d8a626';
-        $appSecret = 'fd91eb650fe3aa85439fcacb40e1393a';
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$appId."&secret=".$appSecret;
-        //初始化curl
-        $ch = curl_init($url);
-        //3.设置参数
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        //4.调用接口
-        $res = curl_exec($ch);
-        if(curl_errno($ch)){
-            var_dump(curl_error($ch));
-        }
-        $resArr = json_decode($res,1);
-        var_dump($resArr);
-        //5.关闭curl
-        curl_close($ch);
-    }
-
-
-    public function test(Request $request){
         $data = $request->all();
-        Log::info($data);
-        $echostr = isset($data["echostr"])? $data["echostr"]:'';
-        $timestamp = isset($data["timestamp"])?$data["timestamp"]:'';
-        $nonce = isset($data["nonce"])?$data["nonce"]:'';
-        $signature  = isset($data["signature"])?$data["signature"]:'';
-        $token = 'Token1234';
-        $tmpArr = array($token, $timestamp, $nonce);
-        sort($tmpArr,SORT_STRING);
-        $tmpStr = implode($tmpArr);
-        $tmpStr = sha1( $tmpStr );
-        if($tmpStr==$signature){
-            return($echostr);
-        }else{
-            return('');
-        }
+        $infos = array(
+            'ordernumber'=>'123456',
+            'time1'=>'2019-01-01 00:00:00',
+            'tool_ss' => array(
+                array(
+                    'toolid'=>'111111',
+                    'time2'=>'2019-01-01 00:00:00',
+                    'time_long'=>'24',
+                    'about'=>'',
+                    'CH2O'=>json_encode(array('1','2','3','4','5','6','7'),true),
+                    'C6H6'=>array('31','61','20','61'),
+                    'C8H10'=>array('12','56','75','12'),
+                    'voc'=>array('12','46','23','86'),
+                ),
+                array(
+                    'toolid'=>'222222',
+                    'time2'=>'2019-01-01 00:00:00',
+                    'time_long'=>'24',
+                    'about'=>'',
+                    'CH2O'=>"[123,456,78,48,48,49]",
+                    'C6H6'=>array('31','61','20','61'),
+                    'C8H10'=>array('12','56','75','12'),
+                    'voc'=>array('12','46','23','86'),
+                ),
+                array(
+                    'toolid'=>'333333',
+                    'time2'=>'2019-01-01 00:00:00',
+                    'time_long'=>'24',
+                    'about'=>'',
+                    'CH2O'=>"[111,222,333,444,555,49]",
+                    'C6H6'=>array('31','61','20','61'),
+                    'C8H10'=>array('12','56','75','12'),
+                    'voc'=>array('12','46','23','86'),
+                ),
+            ),
+        );
+        $a = json_encode(array('1111','2222','3333'),true);
+        return view('HJGL.user.hjjc.index', ['infos'=>$infos,'a'=>$a]);
     }
-
 
 
 }

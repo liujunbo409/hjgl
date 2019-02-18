@@ -90,25 +90,25 @@ class AdminManager
      */
     public static function setAdmin($admin, $data)
     {
-        if (array_key_exists('role', $data)) {
+        if (array_key_exists('role', $data) && !Utils::isObjNull($data['role'])) {
             $admin->role = array_get($data, 'role');
         }
-        if (array_key_exists('phone', $data)) {
+        if (array_key_exists('phone', $data) && !Utils::isObjNull($data['phone'])) {
             $admin->phone = array_get($data, 'phone');
         }
-        if (array_key_exists('name', $data)) {
+        if (array_key_exists('name', $data) && !Utils::isObjNull($data['name'])) {
             $admin->name = array_get($data, 'name');
         }
-        if (array_key_exists('status', $data)) {
+        if (array_key_exists('status', $data) && !Utils::isObjNull($data['status'])) {
             $admin->status = array_get($data, 'status');
         }
-        if (array_key_exists('password', $data)) {
+        if (array_key_exists('password', $data) && !Utils::isObjNull($data['password'])) {
             $admin->password = array_get($data, 'password');
         }
-        if (array_key_exists('nickname', $data)) {
+        if (array_key_exists('nickname', $data) && !Utils::isObjNull($data['nickname'])) {
             $admin->nickname = array_get($data, 'nickname');
         }
-        if (array_key_exists('avatar', $data)) {
+        if (array_key_exists('avatar', $data) && !Utils::isObjNull($data['avatar'])) {
             $admin->avatar = array_get($data, 'avatar');
         }
         return $admin;
