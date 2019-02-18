@@ -54,7 +54,7 @@ class WeChatController extends Controller{
         // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
         $request->session()->put('wechat_user', $user->toArray());//写入session
-        $session=$request->session('wechat_user');
+        $session=$request->session();
         $targetUrl = empty($session->target_url) ? '/' : $session->target_url;
         header('location:'. $targetUrl); // 跳转到 user/profile
     }
@@ -65,7 +65,7 @@ class WeChatController extends Controller{
         $app = Factory::officialAccount($config); // 公众号
         $oauth = $app->oauth;
         // 未登录
-        $session=$request->session('wechat_user');
+        $session=$request->session();
         dd($session);
         if (empty($session)) {
             $request->session()->put('target_url', '/api/webScope');//写入session
