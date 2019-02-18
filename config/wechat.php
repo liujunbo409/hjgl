@@ -71,7 +71,7 @@ return [
              */
              'oauth' => [
                  'scopes'   => array_map('trim', explode(',', env('WECHAT_OFFICIAL_ACCOUNT_OAUTH_SCOPES', 'snsapi_base'))),
-                 'callback' => env('WECHAT_OFFICIAL_ACCOUNT_OAUTH_CALLBACK', '/hjgl/api/getInfo'),
+                 'callback' => env('WECHAT_OFFICIAL_ACCOUNT_OAUTH_CALLBACK', '/api/getInfo'),
              ],
         ],
     ],
