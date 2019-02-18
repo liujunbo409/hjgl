@@ -70,7 +70,7 @@ class WeChatController extends Controller{
         // 未登录
 
 $session=$request->session('wechat_user');
-        Log::info($_SESSION);
+        Log::info($session);
         if (empty($session)) {
             $_SESSION['target_url'] = '/api/webScope';
             Log::info($_SESSION);
