@@ -48,8 +48,15 @@ class WeChatController extends Controller{
     }
 
     public function getInfo(Request $request){
-        $data = $request->all();
-        dd($data);
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config); // 公众号
+        $oauth = $app->oauth;
+
+        // 获取 OAuth 授权结果用户信息
+        $user = $oauth->user();
+        $_SESSION['wechat_user'] = $user->toArray();
+        dd($user);
+        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
     }
 
     //网页授权
@@ -60,9 +67,7 @@ class WeChatController extends Controller{
 //        dd($oauth);
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
-
             $_SESSION['target_url'] = 'user/profile';
-
             return $oauth->redirect();
             // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
             // $oauth->redirect()->send();
