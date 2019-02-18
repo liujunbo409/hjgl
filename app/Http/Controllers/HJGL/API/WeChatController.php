@@ -75,7 +75,7 @@ class WeChatController extends Controller{
         }
         // 已经登录过
         $user = $session;
-        dd('2');
+        dd($user);
     }
 
     //自定义菜单查询
