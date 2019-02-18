@@ -64,9 +64,9 @@ class WeChatController extends Controller{
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $oauth = $app->oauth;
-
         // 未登录
         $session=$request->session('wechat_user');
+        dd($session);
         if (empty($session)) {
             $request->session()->put('target_url', '/api/webScope');//写入session
             return $oauth->redirect();
