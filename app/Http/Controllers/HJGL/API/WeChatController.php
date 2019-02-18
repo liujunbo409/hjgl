@@ -54,9 +54,8 @@ class WeChatController extends Controller{
         // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
         $request->session()->put('wechat_user', $user->toArray());//写入session
-        $session=$request->session();
-        $targetUrl = empty($session->target_url) ? '/' : $session->target_url;
-        header('location:'. $targetUrl); // 跳转到 user/profile
+        $targetUrl=$request->session()->get('target_url','/');
+        return redirect($targetUrl); // 跳转到 user/profile
     }
 
     //网页授权
@@ -65,16 +64,16 @@ class WeChatController extends Controller{
         $app = Factory::officialAccount($config); // 公众号
         $oauth = $app->oauth;
         // 未登录
-        $session=$request->session();
-        dd($session);
-        if (empty($session)) {
+        $wechat_user=$request->session()->get('wechat_user','');
+        if (empty($wechat_user)) {
             $request->session()->put('target_url', '/api/webScope');//写入session
             return $oauth->redirect();
             // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
             // $oauth->redirect()->send();
         }
         // 已经登录过
-        $user = $session;
+        $session2=$request->session()->get('wechat_user');
+        $user = $session2;
         dd($user);
     }
 
