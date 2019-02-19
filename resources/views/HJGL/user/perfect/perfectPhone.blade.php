@@ -51,8 +51,8 @@
                     <div class="s2" style="float:right;line-height: 30px;width: 110px;text-align: center;cursor: pointer;" id="getVcode"
                          onclick="sendMsg()">获取短信验证码
                     </div>
-                </div>
-                <div class="s2" style="float:left;width:30%;display: none;line-height: 30px;text-align: center;background: #9a9898 !important" id="cannotgetVcode">获取短信验证码
+                    <div class="s2" style="float:right;width:110px;display: none;line-height: 30px;text-align: center;background: #9a9898 !important" id="cannotgetVcode">获取短信验证码
+                    </div>
                 </div>
                 <input class="s1" type="submit" value="确定">
             </form>
