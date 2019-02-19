@@ -17,6 +17,8 @@ use App\Models\HJGL\UserInfo;
 
 class PerfectController extends Controller{
     public function perfect_phone(Request $request){
+        return view('HJGL.user.perfect.perfectPhone');
+        return redirect('/api/perfect_info');
         $session = $request->session()->get('wechat_user','');
         $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
         $user = UserInfoManager::getByOpenId($openid);
@@ -28,13 +30,6 @@ class PerfectController extends Controller{
     }
 
     public function perfect_info(Request $request){
-        dd('2');
-        $config = Config::get("wechat.official_account.default");
-        $app = Factory::officialAccount($config); // 公众号
-
-        $user = $app->oauth->user();
-        $session = $request->session();
-        dd($session);
-        dd($user);
+        return view('HJGL.user.perfect.perfectInfo');
     }
 }

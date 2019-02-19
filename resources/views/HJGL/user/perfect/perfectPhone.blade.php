@@ -1,43 +1,116 @@
 @extends('HJGL.user.layouts.app')
-
+<style type="text/css">
+    .input1{
+        border: solid 1px #555555;
+        height:30px;
+        margin-bottom: 30px;
+    }
+    .s1{
+        width:80%;
+        height:35px;
+        border: solid 1px #555555;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .s2{
+        margin-left: 10px;
+        border: solid 1px #555555;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .f1{
+        margin-left: 10%;
+        margin-top: 15%;
+        font-size:30px;
+    }
+    .f2{
+        margin-left: 10%;
+        margin-top: 15px;
+    }
+    .from1{
+        width:100%;
+        margin-left: 10%;
+        margin-top: 15px;
+    }
+</style>
 @section('content')
-
-    <div class="hui-wrap">
-        <div class="line"></div>
-        <div class="hui-title">
-            通用标题
-        </div>
-        <div class="line"></div>
-        <div class="hui-title hui-primary-txt">
-            通用标题 + More
-            <div class="hui-more"><a href="javascript:hui.toast('more...')">More...</a></div>
-        </div>
-        <div class="line"></div>
-        <div class="hui-center-title">
-            <h1>居中的标题</h1>
-        </div>
-        <div class="line"></div>
-        <div class="hui-common-title" style="margin-top:15px;">
-            <div class="hui-common-title-line"></div>
-            <div class="hui-common-title-txt">带有修饰的标题</div>
-            <div class="hui-common-title-line"></div>
-        </div>
-        <div class="hui-content" style="padding:10px;">
-            <h2>文本段落演示</h2>
-            是啊，春风十里不及你。后来，你们单位的事太多，我陪着你回到了你的宿舍。
-            <p>使用P标记会缩进！你的宿舍简单到只有一张床一套沙发和一个衣柜。我说，你这是一箪食一瓢饮的颜回，你点头，我就喜欢这样安静的生活，人不堪其忧，我也不改其乐。</p>
-            <br/>手机绑定<br/>
-            请输入您的手机号码,<br/>
-            绑定您的环境检测帐号<br/>
-        </div>
-
-
-
-
+    <div class="hui-header">
+        <h1>绑定手机号</h1>
+    </div>
+    <div class="hui-wrap" style="width:100%;">
+            <div class="f1">手机绑定</div>
+            <div class="f2">请输入您的手机号码，</div>
+            <div class="f2">绑定您的环境检测帐号</div>
+            <form class="from1">
+                <input id="phone" name="phone"  class="input1" placeholder="请输入手机号码" style="width:80%;"><br/>
+                <input class="input1" placeholder="验证码" style="width:47%;float:left">
+                <div class="s2" style="float:left;line-height: 30px;width: 30%;text-align: center;cursor: pointer;" id="getVcode"
+                     onclick="sendMsg()">获取短信验证码
+                </div>
+                <div class="s2" style="float:left;width:30%;display: none;line-height: 30px;text-align: center;background: #9a9898 !important" id="cannotgetVcode">获取短信验证码
+                </div>
+                <input class="s1" type="submit" value="确定">
+            </form>
+    </div>
 @endsection
 
 @section('script')
-
-
-
+    <script type="text/javascript">
+        var countdown = 60;
+        function sendMsg(){
+            alert('1232132');
+        }
+        /*
+        * 倒计时
+        * */
+        function settime() {
+            if (countdown == 0) {
+                $("#getVcode").css('display','block');
+                $("#cannotgetVcode").css('display','none');
+                countdown = 60;
+            } else {
+                $("#getVcode").css('display','none');
+                $("#cannotgetVcode").css('display','block');
+                $("#cannotgetVcode").html("重新发送(" + countdown + ")");
+                countdown--;
+                setTimeout(function() {
+                    settime()
+                },1000)
+            }
+        }
+        //进行表单校验
+        function sendMsg() {
+            consoledebug.log("sendMsg");
+            layer.msg('发送中...', {icon: 1, time: 1000});
+            settime();
+            // var id = $("#id").val();
+            // //手机号是否为空
+            // if (judgeIsAnyNullStr(id)) {
+            //     layer.msg('账号不能为空！', {icon: 2, time: 1000});
+            //     return false;
+            // }
+            // var  phone= $("#phone").val();
+            // if (phone == null || phone.length == 0 || judgeIsNullStr(phone)) {
+            //     layer.msg('新手机号不能为空！', {icon: 2, time: 1000});
+            //     return false;
+            // }
+            {{--sendMassage('{{ URL::asset('admin/admin/validateNewPhone')}}', {phone: phone},--}}
+                {{--function (res) {--}}
+                    {{--consoledebug.log("发送验证码接口的返回为", res);--}}
+                    {{--toast_hide();--}}
+                    {{--if (res.result) {--}}
+                        {{--layer.msg('发送中...', {icon: 1, time: 1000});--}}
+                        {{--settime();--}}
+                    {{--}--}}
+                    {{--else{--}}
+                        {{--layer.msg(res.message, {icon: 2, time: 1000});--}}
+                        {{--return false;--}}
+                    {{--}--}}
+                {{--})--}}
+        }
+    </script>
 @endsection

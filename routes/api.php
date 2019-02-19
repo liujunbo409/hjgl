@@ -32,8 +32,10 @@ Route::group(['middleware'=>['web']],function(){
     Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
 
 
-    Route::any('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//获取信息
-    Route::any('/perfect_info', 'HJGL\API\PerfectController@perfect_info');//获取信息
+    Route::any('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//是否绑定手机号码
+    Route::post('/perfect_phone_save', 'HJGL\API\PerfectController@perfect_phone_save');//完善手机号码
+    Route::any('/perfect_info', 'HJGL\API\PerfectController@perfect_info');//是否完善个人信息
+    Route::post('/perfect_info_save', 'HJGL\API\PerfectController@perfect_info_save');//完善个人信息
 
 
     Route::get('/hjjc', 'HJGL\API\WeChatController@hjjc');//环境检测

@@ -61,6 +61,9 @@
 <script type="text/javascript" src="{{ URL::asset('/js/common.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/js/hjgl/apiTool.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/dist/lib/HUI-master/js/hui.js') }}" ></script>
+<script type="text/javascript" src="{{ URL::asset('/dist/lib/HUI-master/js/hui-picker.js') }}" ></script>
+<script type="text/javascript" src="{{ URL::asset('/dist/lib/HUI-master/js/cities.js') }}" ></script>
+
 <script type="text/javascript" src="{{ URL::asset('/js/hjgl/echarts.common.min.js') }}"></script>
 {{--layer--}}
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('/dist/lib/layer/2.4/skin/layer.css')}}"/>
