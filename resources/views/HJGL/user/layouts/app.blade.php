@@ -20,7 +20,11 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/common.css') }}"/>
 </head>
 <body>
-
+<style type="text/css">
+    html{
+        touch-action:none;
+    }
+</style>
 @yield('content')
 
 </body>
