@@ -15,7 +15,6 @@
         border-bottom-right-radius: 5px;
     }
     .s2{
-        margin-left: 10px;
         border: solid 1px #555555;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
@@ -33,7 +32,7 @@
     }
     .from1{
         width:100%;
-        margin-left: 10%;
+        margin: 10%;
         margin-top: 15px;
     }
 </style>
@@ -48,8 +47,8 @@
             <form class="from1">
                 <input id="phone" name="phone"  class="input1" placeholder="请输入手机号码" style="width:80%;"><br/>
                 <div style="width:80%;">
-                    <input class="input1" placeholder="验证码" style="width:45%;float:left">
-                    <div class="s2" style="float:right;line-height: 30px;width: 35%;text-align: center;cursor: pointer;" id="getVcode"
+                    <input class="input1" placeholder="验证码" style="float:left">
+                    <div class="s2" style="float:right;line-height: 30px;width: 110px;text-align: center;cursor: pointer;" id="getVcode"
                          onclick="sendMsg()">获取短信验证码
                     </div>
                 </div>
