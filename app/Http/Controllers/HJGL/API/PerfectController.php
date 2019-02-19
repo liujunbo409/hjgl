@@ -24,10 +24,13 @@ class PerfectController extends Controller{
         return $response;
     }
 
-    public function perfect_info(){
+    public function perfect_info(Request $request){
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
+
         $user = $app->oauth->user();
+        $session = $request->session();
+        dd($session);
         dd($user);
     }
 }

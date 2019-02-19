@@ -11,10 +11,8 @@ use App\Components\HJGL\AccessTokenManager;
 use App\Models\HJGL\AccessToken;
 
 class WeChatController extends Controller{
-
     public function serve(){
         Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
-
         $app = app('wechat.official_account');
         dd($app);
         $app->server->push(function($message){
@@ -23,8 +21,27 @@ class WeChatController extends Controller{
         return $app->server->serve();
     }
 
+    //网页授权
+    public function webScope(Request $request){
+        $session = $request->session();
+//        dd($session);
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config); // 公众号
+        $response = $app->oauth->scopes(['snsapi_userinfo'])->setRequest($request)->redirect();
+        return $response;
+    }
+
+    public function getInfo(Request $request){
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config); // 公众号
+        $user = $app->oauth->user();
+        $request->session()->put('wechat_user', $user->toArray());//写入session
+        return redirect('/api/perfect_phone'); // 跳转
+    }
+
     //获取token
     public function getAccessToken(){
+        exit;
         $access_token = AccessTokenManager::getOne();
         if(empty($access_token) || date('Y-m-d H:i:s') > $access_token->max_time){
             $config = Config::get("wechat.official_account.default");
@@ -48,35 +65,9 @@ class WeChatController extends Controller{
         return $access_token;
     }
 
-    public function getInfo(Request $request){
-        $config = Config::get("wechat.official_account.default");
-        $app = Factory::officialAccount($config); // 公众号
-        $oauth = $app->oauth;
-        // 获取 OAuth 授权结果用户信息
-        $user = $oauth->user();
-        $request->session()->put('wechat_user', $user->toArray());//写入session
-        $targetUrl=$request->session()->get('target_url','/');
-        return redirect($targetUrl); // 跳转到 user/profile
-    }
 
-    //网页授权
-    public function webScope(Request $request){
-        $config = Config::get("wechat.official_account.default");
-        $app = Factory::officialAccount($config); // 公众号
-        $oauth = $app->oauth;
-        // 未登录
-        $wechat_user=$request->session()->get('wechat_user','');
-        if (empty($wechat_user)) {
-            $request->session()->put('target_url', '/api/webScope');//写入session
-            return $oauth->redirect();
-            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
-            // $oauth->redirect()->send();
-        }
-        // 已经登录过
-        $session2=$request->session()->get('wechat_user');
-        $user = $session2;
-        dd($user);
-    }
+
+
 
     //自定义菜单查询
     public function getMenu(){
