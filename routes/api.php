@@ -32,7 +32,8 @@ Route::group(['middleware'=>['web']],function(){
     Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
 
 
-    Route::get('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//获取信息
+    Route::any('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//获取信息
+    Route::any('/perfect_info', 'HJGL\API\PerfectController@perfect_info');//获取信息
 
 
     Route::get('/hjjc', 'HJGL\API\WeChatController@hjjc');//环境检测
