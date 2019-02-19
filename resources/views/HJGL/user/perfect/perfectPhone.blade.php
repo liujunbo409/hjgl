@@ -62,9 +62,6 @@
 @section('script')
     <script type="text/javascript">
         var countdown = 60;
-        function sendMsg(){
-            alert('1232132');
-        }
         /*
         * 倒计时
         * */
