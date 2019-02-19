@@ -16,6 +16,7 @@ class WeChatController extends Controller{
         Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
 
         $app = app('wechat.official_account');
+        dd($app);
         $app->server->push(function($message){
             return "欢迎关注 overtrue！";
         });
@@ -79,20 +80,10 @@ class WeChatController extends Controller{
 
     //自定义菜单查询
     public function getMenu(){
-        $access = self::getAccessToken();
-        $url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=".$access->access_token;
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        if (!empty($data)){
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($curl);
-        curl_close($curl);
-        dd($output);
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config); // 公众号
+        $list = $app->menu->list();
+        dd($list);
     }
 
     //自定义菜单创建
@@ -158,7 +149,6 @@ class WeChatController extends Controller{
     }
 
     public function hjjc(Request $request){
-
         $data = $request->all();
         $infos = array(
             'ordernumber'=>'123456',

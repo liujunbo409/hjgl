@@ -4,6 +4,7 @@ namespace App\Components\HJGL;
 
 use App\Models\HJGL\Tool;
 use App\Components\Utils;
+use App\Models\HJGL\UserInfo;
 
 class ToolManager{
     /*
@@ -80,35 +81,26 @@ class ToolManager{
      */
     public static function setTool($tool, $data)
     {
-        if (array_key_exists('number', $data)) {
+        if (array_key_exists('number', $data) && !Utils::isObjNull($data['number'])) {
             $tool->number = array_get($data, 'number');
         }
-        if (array_key_exists('shop_id', $data)) {
+        if (array_key_exists('shop_id', $data) && !Utils::isObjNull($data['shop_id'])) {
             $tool->shop_id = array_get($data, 'shop_id');
         }
-        if (array_key_exists('code', $data)) {
+        if (array_key_exists('code', $data) && Utils::isObjNull($data['code'])) {
             $tool->code = array_get($data, 'code');
         }
-        if (array_key_exists('detection_duration_total', $data)) {
+        if (array_key_exists('detection_duration_total', $data) && !Utils::isObjNull($data['detection_duration_total'])) {
             $tool->detection_duration_total = array_get($data, 'detection_duration_total');
         }
-        if (array_key_exists('calibration_time', $data)) {
+        if (array_key_exists('calibration_time', $data) && !Utils::isObjNull($data['calibration_time'])) {
             $tool->calibration_time = array_get($data, 'calibration_time');
         }
-        if (array_key_exists('calibration_person', $data)) {
+        if (array_key_exists('calibration_person', $data) && !Utils::isObjNull($data['calibration_person'])) {
             $tool->calibration_person = array_get($data, 'calibration_person');
         }
-        if (array_key_exists('status', $data)) {
+        if (array_key_exists('status', $data) && !Utils::isObjNull($data['status'])) {
             $tool->status = array_get($data, 'status');
-        }
-        if (array_key_exists('create_person', $data)) {
-            $tool->create_person = array_get($data, 'create_person');
-        }
-        if (array_key_exists('update_person', $data)) {
-            $tool->update_person = array_get($data, 'update_person');
-        }
-        if (array_key_exists('delete_person', $data)) {
-            $tool->delete_person = array_get($data, 'delete_person');
         }
         return $tool;
     }

@@ -117,7 +117,7 @@ return [
     // ],
 
     /*
-     * 企业微信
+     * 企业微信official_account
      */
     // 'work' => [
     //     'default' => [
