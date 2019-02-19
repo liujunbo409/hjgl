@@ -47,9 +47,11 @@
             <div class="f2">绑定您的环境检测帐号</div>
             <form class="from1">
                 <input id="phone" name="phone"  class="input1" placeholder="请输入手机号码" style="width:80%;"><br/>
-                <input class="input1" placeholder="验证码" style="width:47%;float:left">
-                <div class="s2" style="float:left;line-height: 30px;width: 30%;text-align: center;cursor: pointer;" id="getVcode"
-                     onclick="sendMsg()">获取短信验证码
+                <div style="width:80%;">
+                    <input class="input1" placeholder="验证码" style="width:45%;float:left">
+                    <div class="s2" style="float:right;line-height: 30px;width: 35%;text-align: center;cursor: pointer;" id="getVcode"
+                         onclick="sendMsg()">获取短信验证码
+                    </div>
                 </div>
                 <div class="s2" style="float:left;width:30%;display: none;line-height: 30px;text-align: center;background: #9a9898 !important" id="cannotgetVcode">获取短信验证码
                 </div>
