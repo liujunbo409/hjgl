@@ -21,7 +21,6 @@ class PerfectController extends Controller{
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $response = $app->oauth->scopes(['snsapi_userinfo'])->setRequest($request)->redirect();
-        dd($response);
         return $response;
     }
 
