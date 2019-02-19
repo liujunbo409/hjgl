@@ -11,20 +11,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use App\Services\WeChat;
 use EasyWeChat\Factory;
-use App\Components\HJGL\AccessTokenManager;
-use App\Models\HJGL\AccessToken;
+use App\Components\HJGL\UserInfoManager;
+use App\Models\HJGL\UserInfo;
 
 class PerfectController extends Controller{
     public function perfect_phone(Request $request){
-        $config = Config::get("wechat.official_account.default");
-        $app = Factory::officialAccount($config); // 公众号
-        $response = $app->oauth->scopes(['snsapi_userinfo'])->setRequest($request)->redirect();
-        return $response;
+        $session = $request->session()->get('wechat_user','');
+        $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
+        $user = UserInfoManager::getByOpenId($openid);
+        if(empty($user) || empty($user->phone)){
+            return view('HJGL.user.perfect.perfectPhone');
+        }else{
+            return redirect('/api/perfect_info');
+        }
     }
 
     public function perfect_info(Request $request){
+        dd('2');
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
 

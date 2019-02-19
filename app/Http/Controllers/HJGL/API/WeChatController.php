@@ -23,12 +23,15 @@ class WeChatController extends Controller{
 
     //网页授权
     public function webScope(Request $request){
-        $session = $request->session();
-//        dd($session);
-        $config = Config::get("wechat.official_account.default");
-        $app = Factory::officialAccount($config); // 公众号
-        $response = $app->oauth->scopes(['snsapi_userinfo'])->setRequest($request)->redirect();
-        return $response;
+        $session = $request->session()->get('wechat_user','');
+        if(empty($session)){
+            $config = Config::get("wechat.official_account.default");
+            $app = Factory::officialAccount($config); // 公众号
+            $response = $app->oauth->scopes(['snsapi_userinfo'])->setRequest($request)->redirect();
+            return $response;
+        }else{
+            return redirect('/api/perfect_phone'); // 跳转
+        }
     }
 
     public function getInfo(Request $request){
