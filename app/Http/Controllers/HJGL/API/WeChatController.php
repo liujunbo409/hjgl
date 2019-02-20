@@ -51,41 +51,41 @@ class WeChatController extends Controller{
 
     //自定义菜单创建
     public function createMenu(){
-        $access = self::getAccessToken();
-        $data = '{
-      "button":[
-      {
-            "name":"菜单",
-           "sub_button":[
-            {
-                "type":"view",
-                "name":"进入网页",
-                "url":"http://www.baidu.com"
-            }]
-       },
-       {
-            "name":"菜单",
-           "sub_button":[
-            {
-                "type":"view",
-                "name":"进入网页",
-                "url":"http://www.baidu.com"
-            }]
-       }]
- }';
-        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access->access_token;
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        if (!empty($data)){
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($curl);
-        curl_close($curl);
-        dd($output);
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config); // 公众号
+        $buttons = [
+            [
+                "name"       => "菜单",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "环境检测",
+                        "url"  => "http://hj.lljiankang.top/api/hjjc/index"
+                    ]
+                ],
+            ],
+            [
+                "name"       => "菜单",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "订单",
+                        "url"  => "http://hj.lljiankang.top/api/order/index"
+                    ]
+                ],
+            ],
+            [
+                "name"       => "菜单",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "我的",
+                        "url"  => "http://hj.lljiankang.top/api/my/index"
+                    ]
+                ],
+            ],
+        ];
+        return $app->menu->create($buttons);
     }
 
     //删除自定义菜单

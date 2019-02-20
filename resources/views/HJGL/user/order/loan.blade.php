@@ -13,6 +13,10 @@
         -webkit-box-align: center;
         margin-top:10px;
     }
+    elmen {
+        overflow: hidden;
+        overflow-y: auto;
+    }
 </style>
 @section('content')
     <div class="hui-header">
