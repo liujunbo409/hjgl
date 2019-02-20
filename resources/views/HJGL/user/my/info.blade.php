@@ -8,33 +8,33 @@
     <div class="hui-wrap" style="width:100%;">
         <form style="padding:28px 10px;" class="hui-form" id="form1">
             <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
-            <ul>
-                <li>
-                    <div class="hui-list-text">
-                        姓氏<input name="nickname" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入姓氏">
-                    </div>
-                </li>
-                <li>
-                    <div class="hui-list-text">
-                        性别
-                        <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择性别">
-                    </div>
-                </li>
-                <li>
-                    <div class="hui-list-text">
-                        所在地区
+                <ul>
+                    <li>
+                        <div class="hui-list-text">
+                            姓氏<input name="nickname" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入姓氏">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hui-list-text">
+                            性别
+                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择性别">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hui-list-text">
+                            所在地区
                             <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择所在区域">
-                    </div>
-                </li>
-                <li>
-                    <div class="hui-list-text">
-                        详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入详细地址">
-                    </div>
-                </li>
-            </ul>
-        </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hui-list-text">
+                            详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入详细地址">
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div style="padding:15px 8px;">
-                <button type="button" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</button>
+                <a href="javascript:hui.back();" type="button" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</a>
             </div>
         </form>
     </div>

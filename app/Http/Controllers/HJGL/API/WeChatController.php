@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use App\Services\WeChat;
 use EasyWeChat\Factory;
-use App\Components\HJGL\AccessTokenManager;
-use App\Models\HJGL\AccessToken;
 
 class WeChatController extends Controller{
     public function serve(){
@@ -41,35 +39,6 @@ class WeChatController extends Controller{
         $request->session()->put('wechat_user', $user->toArray());//写入session
         return redirect('/api/perfect_phone'); // 跳转
     }
-
-    //获取token
-    public function getAccessToken(){
-        exit;
-        $access_token = AccessTokenManager::getOne();
-        if(empty($access_token) || date('Y-m-d H:i:s') > $access_token->max_time){
-            $config = Config::get("wechat.official_account.default");
-            $app = Factory::officialAccount($config); // 公众号
-            $accessToken = $app->access_token;
-            $token = $accessToken->getToken();
-            if(isset($token['errcode'])){
-                return('系统繁忙，此时请开发者稍候再试');
-            }
-            if(!isset($token['access_token']) || empty($token['access_token'])){
-                return('参数缺失');
-            }
-            $info = new AccessToken();
-            $info->access_token = $token['access_token'];
-            $info->get_time = date('Y-m-d H:i:s');
-            $info->max_time = date('Y-m-d H:i:s',time()+5400);
-            $re = AccessTokenManager::setInfo($info,$info);
-            $re->save();
-            return $re;
-        }
-        return $access_token;
-    }
-
-
-
 
 
     //自定义菜单查询

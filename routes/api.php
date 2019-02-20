@@ -22,6 +22,7 @@ Route::any('/test', 'HJGL\API\WeChatController@test');
 Route::any('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');
 
 Route::group(['middleware'=>['web']],function(){
+    //前方配置
     Route::any('/sendAlertMsg', 'HJGL\API\WeChatController@sendAlertMsg');
     Route::any('/wechat', 'HJGL\API\WeChatController@serve');
     Route::get('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');//获取access_token
@@ -31,14 +32,24 @@ Route::group(['middleware'=>['web']],function(){
     Route::get('/webScope', 'HJGL\API\WeChatController@webScope');//网页授权
     Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
 
-
-    Route::any('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//是否绑定手机号码
+    //完善相关
+    Route::get('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//是否绑定手机号码
     Route::post('/perfect_phone_save', 'HJGL\API\PerfectController@perfect_phone_save');//完善手机号码
-    Route::any('/perfect_info', 'HJGL\API\PerfectController@perfect_info');//是否完善个人信息
+    Route::get('/perfect_info', 'HJGL\API\PerfectController@perfect_info');//是否完善个人信息
     Route::post('/perfect_info_save', 'HJGL\API\PerfectController@perfect_info_save');//完善个人信息
 
+    //环境检测
+    Route::get('/hjjc/index', 'HJGL\API\HjjcController@index');
 
-    Route::get('/hjjc', 'HJGL\API\WeChatController@hjjc');//环境检测
+    //订单
+    Route::get('/order/index', 'HJGL\API\OrderController@index');
+    Route::get('/order/loan', 'HJGL\API\OrderController@loan');
+
+    //我
+    Route::get('/my/index', 'HJGL\API\MyController@index');
+    Route::get('/my/info', 'HJGL\API\MyController@info');
+    Route::get('/my/phone', 'HJGL\API\MyController@phone');
+
 });
 
 

@@ -38,15 +38,15 @@
         @endforeach
     </div>
     <div id="hui-footer">
-        <a href="" id="nav-tab" style="width:33%;">
+        <a href="{{URL::asset('api/hjjc/index')}}" id="nav-tab" style="width:33%;">
             <div class="hui-footer-icons hui-icons-tab"></div>
             <div class="hui-footer-text">环境监测</div>
         </a>
-        <a href="" id="nav-news" style="width:34%;">
+        <a href="{{URL::asset('api/order/index')}}" id="nav-news" style="width:34%;">
             <div class="hui-footer-icons hui-icons-news"></div>
             <div class="hui-footer-text">订单</div>
         </a>
-        <a href="" id="nav-my" style="width:33%;">
+        <a href="{{URL::asset('api/my/index')}}" id="nav-my" style="width:33%;">
             <div class="hui-footer-icons hui-icons-my"></div>
             <div class="hui-footer-text">我的</div>
         </a>
@@ -55,9 +55,9 @@
 
 @section('script')
     <script type="text/javascript">
-        hui('#nav-tab').pointMsg('hot', null, null, null, '16%');
-        hui('#nav-news').pointMsg(8, null, null, null, '25%');
-        hui('#nav-my').pointMsg(null, null, null, null, '25%');
+        // hui('#nav-tab').pointMsg('hot', null, null, null, '16%');
+        // hui('#nav-news').pointMsg(8, null, null, null, '25%');
+        // hui('#nav-my').pointMsg(null, null, null, null, '25%');
 
         function set(id,datas){
             var dom = document.getElementById(id);
