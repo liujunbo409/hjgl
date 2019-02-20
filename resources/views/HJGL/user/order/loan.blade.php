@@ -17,6 +17,31 @@
         overflow: hidden;
         overflow-y: auto;
     }
+    elment::-webkit-scrollbar-track-piece {
+        background-color: rgba(0, 0, 0, 0);
+        border-left: 1px solid rgba(0, 0, 0, 0);
+    }
+    elment::-webkit-scrollbar {
+        width: 6px;
+        height: 13px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    elment::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-clip: padding-box;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        min-height: 28px;
+    }
+    elment::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
 </style>
 @section('content')
     <div class="hui-header">
