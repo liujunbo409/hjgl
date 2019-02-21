@@ -1,13 +1,13 @@
 @extends('HJGL.user.layouts.app')
 <style type="text/css">
     .s2{
-        width:60px;
+        width:20%;
         border: solid 1px black;
         /*border: solid 1px #00b3ee;*/
         /*color: #00b3ee;*/
         text-align:center;
         float:left;
-        margin-right:20px;
+        margin-right:4%;
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
         border-bottom-left-radius: 30px;
@@ -16,34 +16,33 @@
 </style>
 @section('content')
     <div class="hui-header">
-        <div id="hui-back"></div>
         <h1>环境检测</h1>
     </div>
     <div class="hui-wrap">
-        <div style="float:left;margin:20px;">
+        <div style="float:left;margin:4%;">
             订单号: {{$infos['ordernumber']}}
         </div>
-        <div style="float:right;margin:20px;">
+        <div style="float:right;margin:4%;">
             {{$infos['time1']}}
         </div>
         <br/><br/>
         @foreach($infos['tool_ss'] as $v)
-            <div style="margin:20px;">
+            <div style="margin:4%;">
                 <div>
                     检测器编号: {{$v['toolid']}}
                 </div>
                 <div>
-                    <div style="float:left">
+                    <div>
                         检测时间: {{$v['time2']}}
                     </div>
-                    <div style="float:right">
+                    <div>
                         检测时长: {{$v['time_long']}}小时
                     </div>
                 </div>
                 <div>
                     地点备注: {{$v['about']}}--<span>备注</span>
                 </div>
-                <div style="margin-top:10px;width:100%;">
+                <div style="margin-top:4%;width:100%;">
                     <a onclick='getCH2O("{{$v['toolid']}}")'><div id="CH2O_{{$v['toolid']}}" class="s2">甲醛</div></a>
                     <a onclick='getC6H6("{{$v['toolid']}}")'><div id="C6H6_{{$v['toolid']}}" class="s2">甲苯</div></a>
                     <a onclick='getC8H10("{{$v['toolid']}}")'><div id="C8H10_{{$v['toolid']}}" class="s2">二甲苯</div></a>
