@@ -3,6 +3,7 @@
 </style>
 @section('content')
     <div class="hui-header">
+        <div id="hui-back"></div>
         <h1>个人信息</h1>
     </div>
     <div class="hui-wrap" style="width:100%;">

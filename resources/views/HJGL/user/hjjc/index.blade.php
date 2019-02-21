@@ -1,19 +1,34 @@
 @extends('HJGL.user.layouts.app')
-
+<style type="text/css">
+    .s2{
+        width:60px;
+        border: solid 1px black;
+        /*border: solid 1px #00b3ee;*/
+        /*color: #00b3ee;*/
+        text-align:center;
+        float:left;
+        margin-right:20px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+</style>
 @section('content')
     <div class="hui-header">
+        <div id="hui-back"></div>
         <h1>环境检测</h1>
     </div>
     <div class="hui-wrap">
-        <div style="float:left">
+        <div style="float:left;margin:20px;">
             订单号: {{$infos['ordernumber']}}
         </div>
-        <div style="float:right">
+        <div style="float:right;margin:20px;">
             {{$infos['time1']}}
         </div>
         <br/><br/>
         @foreach($infos['tool_ss'] as $v)
-            <div>
+            <div style="margin:20px;">
                 <div>
                     检测器编号: {{$v['toolid']}}
                 </div>
@@ -28,12 +43,13 @@
                 <div>
                     地点备注: {{$v['about']}}--<span>备注</span>
                 </div>
-                <div style="width:98%;height:220px;">
-                    <span onclick='set("container_{{$v['toolid']}}",{{$v['CH2O']}})'>显示显示显示</span>
-                    <span>甲醛</span>----<span>甲苯</span>----<span>二甲苯</span>----<span>voc</span><br/>
-                    <div id="container_{{$v['toolid']}}" style="height:200px"></div>
-
+                <div style="margin-top:10px;width:100%;">
+                    <a onclick='getCH2O("{{$v['toolid']}}")'><div id="CH2O_{{$v['toolid']}}" class="s2">甲醛</div></a>
+                    <a onclick='getC6H6("{{$v['toolid']}}")'><div id="C6H6_{{$v['toolid']}}" class="s2">甲苯</div></a>
+                    <a onclick='getC8H10("{{$v['toolid']}}")'><div id="C8H10_{{$v['toolid']}}" class="s2">二甲苯</div></a>
+                    <a onclick='getVOC("{{$v['toolid']}}")'><div id="VOC_{{$v['toolid']}}" class="s2">voc</div></a>
                 </div>
+                <div id="container_{{$v['toolid']}}" style="height:200px;"></div>
             </div>
         @endforeach
     </div>
@@ -59,35 +75,202 @@
         // hui('#nav-news').pointMsg(8, null, null, null, '25%');
         // hui('#nav-my').pointMsg(null, null, null, null, '25%');
 
-        function set(id,datas){
+        var tool_ids = JSON.parse("{{$tool_ids}}");
+        for(var i=0;i<tool_ids.length;i++){
+            getCH2O(tool_ids[i]);
+        }
+
+        function getCH2O(tool_id){
+            var id = 'container_'+tool_id;
+            $('#CH2O_'+tool_id).css({"color": "#00b3ee","border": "solid 1px #00b3ee"});
+            $('#C6H6_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#C8H10_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#VOC_'+tool_id).css({"color": "black","border": "solid 1px black"});
             var dom = document.getElementById(id);
             var myChart = echarts.init(dom);
             var app = {};
             option = null;
-            option = {
-                xAxis: {
-                    type: 'category',
-                    // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                    data: datas ,
+            $.ajax({
+                type: 'GET',
+                url: "{{URL::asset('api/hjjc/getCH2O')}}",
+                dataType: 'json',
+                data: {
+                    'tool_id' : tool_id,
                 },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [
-                    {
-                        data: datas,
-                        type: 'line',
-                    },
-                    {
-                        data: [100, 200, 300, 700, 600, 700, 600],
-                        type: 'line',
+                success: function (data) {
+                    if (data.code == 200) {
+                        show = JSON.parse(data.ret);
+                        option = {
+                            xAxis: {
+                                type: 'category',
+                                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    data: show,
+                                    type: 'line',
+                                },
+                            ]
+                        };
+                        if (option && typeof option === "object") {
+                            myChart.setOption(option, true);
+                        }
+                    } else {
+                        hui.iconToast(data.ret, 'warn');
+                        // layer.msg(data.message, {icon: 2, time: 1000});
                     }
-
-                ]
-            };
-            if (option && typeof option === "object") {
-                myChart.setOption(option, true);
-            }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+        function getC6H6(tool_id){
+            $('#C6H6_'+tool_id).css({"color": "#00b3ee","border": "solid 1px #00b3ee"});
+            $('#CH2O_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#C8H10_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#VOC_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            var id = 'container_'+tool_id;
+            var dom = document.getElementById(id);
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            $.ajax({
+                type: 'GET',
+                url: "{{URL::asset('api/hjjc/getC6H6')}}",
+                dataType: 'json',
+                data: {
+                    'tool_id' : tool_id,
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        show = JSON.parse(data.ret);
+                        option = {
+                            xAxis: {
+                                type: 'category',
+                                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    data: show,
+                                    type: 'line',
+                                },
+                            ]
+                        };
+                        if (option && typeof option === "object") {
+                            myChart.setOption(option, true);
+                        }
+                    } else {
+                        hui.iconToast(data.ret, 'warn');
+                        // layer.msg(data.message, {icon: 2, time: 1000});
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+        function getC8H10(tool_id){
+            $('#C8H10_'+tool_id).css({"color": "#00b3ee","border": "solid 1px #00b3ee"});
+            $('#C6H6_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#CH2O_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#VOC_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            var id = 'container_'+tool_id;
+            var dom = document.getElementById(id);
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            $.ajax({
+                type: 'GET',
+                url: "{{URL::asset('api/hjjc/getC8H10')}}",
+                dataType: 'json',
+                data: {
+                    'tool_id' : tool_id,
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        show = JSON.parse(data.ret);
+                        option = {
+                            xAxis: {
+                                type: 'category',
+                                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    data: show,
+                                    type: 'line',
+                                },
+                            ]
+                        };
+                        if (option && typeof option === "object") {
+                            myChart.setOption(option, true);
+                        }
+                    } else {
+                        hui.iconToast(data.ret, 'warn');
+                        // layer.msg(data.message, {icon: 2, time: 1000});
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+        function getVOC(tool_id){
+            $('#VOC_'+tool_id).css({"color": "#00b3ee","border": "solid 1px #00b3ee"});
+            $('#C6H6_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#CH2O_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            $('#C8H10_'+tool_id).css({"color": "black","border": "solid 1px black"});
+            var id = 'container_'+tool_id;
+            var dom = document.getElementById(id);
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            $.ajax({
+                type: 'GET',
+                url: "{{URL::asset('api/hjjc/getVOC')}}",
+                dataType: 'json',
+                data: {
+                    'tool_id' : tool_id,
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        show = JSON.parse(data.ret);
+                        option = {
+                            xAxis: {
+                                type: 'category',
+                                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    data: show,
+                                    type: 'line',
+                                },
+                            ]
+                        };
+                        if (option && typeof option === "object") {
+                            myChart.setOption(option, true);
+                        }
+                    } else {
+                        hui.iconToast(data.ret, 'warn');
+                        // layer.msg(data.message, {icon: 2, time: 1000});
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
         }
 
     </script>

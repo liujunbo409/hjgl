@@ -12,138 +12,102 @@
         <h1>订单</h1>
     </div>
     <div class="hui-wrap">
-        <div style="padding:28px 0px;">
-            <div class="hui-tab">
-                <div class="hui-tab-title">
-                    <div>进行中</div>
-                    <div>已完成</div>
+        <div style="padding:5px;">
+            <div class="hui-segment" id="cate">
+                <a href="javascript:showDoing(1);" class="hui-segment-active">进行中</a>
+                <a href="javascript:showFinish(2);">已完成</a>
+            </div>
+            <div id="Doing" style="padding:10px; text-align:center;">
+                <div style="margin:auto;margin:5px;">
+                    <div>
+                        <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
+                        <div class="div1" style="float:right;">未归还(2/4)</div>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">使用地点</span>
+                        <span class="div1" style="float:right;">1111111</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">收费标准</span>
+                        <span class="div1" style="float:right;">2222222</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">订单号</span>
+                        <span class="div1" style="float:right;">2222222</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">检测器</span>
+                        <span class="div1" style="float:right;">
+                                        <span>123132</span><br/>
+                                        <span>123132</span><br/>
+                                        <span>123132</span><br/>
+                                        <span>123132</span><br/>
+                                    </span>
+                    </div>
+                    <div>
+                        <a href="{{URL::asset('api/order/loan')}}" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
+                    </div>
                 </div>
-                <div class="hui-tab-body">
-                    <div class="hui-tab-body-items">
-                        <div class="hui-tab-item hui-list">
-                            <div style="margin:auto;margin:15px;">
-                                <div>
-                                    <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
-                                    <div class="div1" style="float:right;">未归还(2/4)</div>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">使用地点</span>
-                                    <span class="div1" style="float:right;">1111111</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">收费标准</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">订单号</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">检测器</span>
-                                    <span class="div1" style="float:right;">
+            </div>
+            <div id="Finish" style="padding:10px; text-align:center;display: none">
+                <div style="margin:auto;margin:5px;">
+                    <div>
+                        <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
+                        <div class="div1" style="float:right;">未归还(2/4)</div>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">使用地点</span>
+                        <span class="div1" style="float:right;">1111111</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">收费标准</span>
+                        <span class="div1" style="float:right;">2222222</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">订单号</span>
+                        <span class="div1" style="float:right;">2222222</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">检测器</span>
+                        <span class="div1" style="float:right;">
                                         <span>123132</span><br/>
                                         <span>123132</span><br/>
                                         <span>123132</span><br/>
                                         <span>123132</span><br/>
                                     </span>
-                                </div>
-                                <div>
-                                    <a href="{{URL::asset('api/order/loan')}}" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
-                                </div>
-                            </div>
-                            <div style="margin:auto;margin:15px;">
-                                <div>
-                                    <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
-                                    <div class="div1" style="float:right;">未归还(2/4)</div>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">使用地点</span>
-                                    <span class="div1" style="float:right;">1111111</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">收费标准</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">订单号</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">检测器</span>
-                                    <span class="div1" style="float:right;">
+                    </div>
+                    <div>
+                        <a href="{{URL::asset('api/order/loan')}}" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
+                    </div>
+                </div>
+                <div style="margin:auto;margin:5px;">
+                    <div>
+                        <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
+                        <div class="div1" style="float:right;">未归还(2/4)</div>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">使用地点</span>
+                        <span class="div1" style="float:right;">1111111</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">收费标准</span>
+                        <span class="div1" style="float:right;">2222222</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">订单号</span>
+                        <span class="div1" style="float:right;">2222222</span>
+                    </div>
+                    <div>
+                        <span class="div1" style="float:left;">检测器</span>
+                        <span class="div1" style="float:right;">
                                         <span>123132</span><br/>
                                         <span>123132</span><br/>
                                         <span>123132</span><br/>
                                         <span>123132</span><br/>
                                     </span>
-                                </div>
-                                <div>
-                                    <a href="" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hui-tab-item hui-list">
-                            <div style="margin:auto;margin:15px;">
-                                <div>
-                                    <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
-                                    <div class="div1" style="float:right;">未归还(2/4)</div>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">使用地点</span>
-                                    <span class="div1" style="float:right;">1111111</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">收费标准</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">订单号</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">检测器</span>
-                                    <span class="div1" style="float:right;">
-                                        <span>123132</span><br/>
-                                        <span>123132</span><br/>
-                                        <span>123132</span><br/>
-                                        <span>123132</span><br/>
-                                    </span>
-                                </div>
-                                <div>
-                                    <a href="" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
-                                </div>
-                            </div>
-                            <div style="margin:auto;margin:15px;">
-                                <div>
-                                    <div class="div1" style="float:left;">2019-01-01 00:00:00</div>
-                                    <div class="div1" style="float:right;">未归还(2/4)</div>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">使用地点</span>
-                                    <span class="div1" style="float:right;">1111111</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">收费标准</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">订单号</span>
-                                    <span class="div1" style="float:right;">2222222</span>
-                                </div>
-                                <div>
-                                    <span class="div1" style="float:left;">检测器</span>
-                                    <span class="div1" style="float:right;">
-                                        <span>123132</span><br/>
-                                        <span>123132</span><br/>
-                                        <span>123132</span><br/>
-                                        <span>123132</span><br/>
-                                    </span>
-                                </div>
-                                <div>
-                                    <a href="" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div>
+                        <a href="{{URL::asset('api/order/loan')}}" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
                     </div>
                 </div>
             </div>
@@ -167,7 +131,17 @@
 
 @section('script')
     <script type="text/javascript">
-        hui.tab('.hui-tab');
-
+        function showDoing(index){
+            index--;
+            $("#Finish").hide();
+            $("#Doing").show();
+            hui('#cate a').eq(index).addClass('hui-segment-active').siblings().removeClass('hui-segment-active');
+        }
+        function showFinish(index){
+            index--;
+            $("#Doing").hide();
+            $("#Finish").show();
+            hui('#cate a').eq(index).addClass('hui-segment-active').siblings().removeClass('hui-segment-active');
+        }
     </script>
 @endsection

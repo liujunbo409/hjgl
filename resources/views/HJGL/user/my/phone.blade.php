@@ -15,6 +15,7 @@
 </style>
 @section('content')
     <div class="hui-header">
+        <div id="hui-back"></div>
         <h1>更换手机号</h1>
     </div>
     <div class="hui-wrap">

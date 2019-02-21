@@ -111,47 +111,5 @@ class WeChatController extends Controller{
         WeChat::sendAlertMsg("param1", "param2", "param3", "param4", "param5");
     }
 
-    public function hjjc(Request $request){
-        $data = $request->all();
-        $infos = array(
-            'ordernumber'=>'123456',
-            'time1'=>'2019-01-01 00:00:00',
-            'tool_ss' => array(
-                array(
-                    'toolid'=>'111111',
-                    'time2'=>'2019-01-01 00:00:00',
-                    'time_long'=>'24',
-                    'about'=>'',
-                    'CH2O'=>json_encode(array('1','2','3','4','5','6','7'),true),
-                    'C6H6'=>array('31','61','20','61'),
-                    'C8H10'=>array('12','56','75','12'),
-                    'voc'=>array('12','46','23','86'),
-                ),
-                array(
-                    'toolid'=>'222222',
-                    'time2'=>'2019-01-01 00:00:00',
-                    'time_long'=>'24',
-                    'about'=>'',
-                    'CH2O'=>"[123,456,78,48,48,49]",
-                    'C6H6'=>array('31','61','20','61'),
-                    'C8H10'=>array('12','56','75','12'),
-                    'voc'=>array('12','46','23','86'),
-                ),
-                array(
-                    'toolid'=>'333333',
-                    'time2'=>'2019-01-01 00:00:00',
-                    'time_long'=>'24',
-                    'about'=>'',
-                    'CH2O'=>"[111,222,333,444,555,49]",
-                    'C6H6'=>array('31','61','20','61'),
-                    'C8H10'=>array('12','56','75','12'),
-                    'voc'=>array('12','46','23','86'),
-                ),
-            ),
-        );
-        $a = json_encode(array('1111','2222','3333'),true);
-        return view('HJGL.user.hjjc.index', ['infos'=>$infos,'a'=>$a]);
-    }
-
 
 }

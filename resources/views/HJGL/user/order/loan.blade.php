@@ -16,6 +16,7 @@
 </style>
 @section('content')
     <div class="hui-header">
+        <div id="hui-back"></div>
         <h1>订单详情</h1>
     </div>
     <div class="hui-wrap">

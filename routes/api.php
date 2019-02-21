@@ -18,7 +18,7 @@ Route::get('/user', function () {
     dd($user);
     return redirect()->to('/home#/index'); //這時候已經拿到用戶資料了，跳轉到想要的路由
 });
-Route::any('/test', 'HJGL\API\WeChatController@test');
+Route::any('/test', 'HJGL\API\HjjcController@test');
 Route::any('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');
 
 Route::group(['middleware'=>['web']],function(){
@@ -40,6 +40,10 @@ Route::group(['middleware'=>['web']],function(){
 
     //环境检测
     Route::get('/hjjc/index', 'HJGL\API\HjjcController@index');
+    Route::any('/hjjc/getCH2O', 'HJGL\API\HjjcController@getCH2O');
+    Route::any('/hjjc/getC6H6', 'HJGL\API\HjjcController@getC6H6');
+    Route::any('/hjjc/getC8H10', 'HJGL\API\HjjcController@getC8H10');
+    Route::any('/hjjc/getVOC', 'HJGL\API\HjjcController@getVOC');
 
     //订单
     Route::get('/order/index', 'HJGL\API\OrderController@index');
