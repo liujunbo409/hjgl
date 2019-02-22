@@ -32,7 +32,6 @@ class WeChatController extends Controller{
     }
 
     public function getInfo(Request $request){
-        dd('132');
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $user = $app->oauth->user();
