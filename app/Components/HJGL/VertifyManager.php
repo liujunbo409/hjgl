@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2018/2/2
- * Time: 14:23
- */
 
 namespace App\Components\HJGL;
 

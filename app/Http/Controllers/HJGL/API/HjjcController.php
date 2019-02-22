@@ -10,25 +10,8 @@ namespace App\Http\Controllers\HJGL\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiResponse;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Config;
-use App\Services\WeChat;
-use EasyWeChat\Factory;
 
 class HjjcController extends Controller{
-
-    public function test(){
-//        $datas = json_encode(array('41','71','20','61','5','6','1111'),true);
-//        dd($datas);
-        $a = 10;
-        $b = 20;
-        $datas = '['.$a.','.$b.']';
-
-        $arr = array('1','2');
-        $arr = json_encode($arr,true);
-        return view('HJGL.test.index', ['datas'=>$datas,'arr'=>$arr]);
-    }
-
     public function index(Request $request){
         $user_info = $request->session()->get('wechat_user');
 
@@ -56,7 +39,6 @@ class HjjcController extends Controller{
                 ),
             ),
         );
-//        dd($infos);
         $tool_ids = '[';
         foreach($infos['tool_ss'] as $v){
             $tool_ids .= $v['toolid'].',';

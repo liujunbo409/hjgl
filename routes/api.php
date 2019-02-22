@@ -18,8 +18,6 @@ Route::get('/user', function () {
     dd($user);
     return redirect()->to('/home#/index'); //這時候已經拿到用戶資料了，跳轉到想要的路由
 });
-Route::any('/test', 'HJGL\API\HjjcController@test');
-Route::any('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');
 
 Route::group(['middleware'=>['web']],function(){
     //前方配置
@@ -34,9 +32,10 @@ Route::group(['middleware'=>['web']],function(){
 
     //完善相关
     Route::get('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//是否绑定手机号码
-    Route::post('/perfect_phone_save', 'HJGL\API\PerfectController@perfect_phone_save');//完善手机号码
+    Route::any('/perfect_phone_save', 'HJGL\API\PerfectController@perfect_phone_save');//完善手机号码
     Route::get('/perfect_info', 'HJGL\API\PerfectController@perfect_info');//是否完善个人信息
-    Route::post('/perfect_info_save', 'HJGL\API\PerfectController@perfect_info_save');//完善个人信息
+    Route::any('/perfect_info_save', 'HJGL\API\PerfectController@perfect_info_save');//完善个人信息
+    Route::any('/validateNewPhone', 'HJGL\API\PerfectController@validateNewPhone');//发送验证码
 
     //环境检测
     Route::get('/hjjc/index', 'HJGL\API\HjjcController@index');

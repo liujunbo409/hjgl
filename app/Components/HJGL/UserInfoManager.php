@@ -93,8 +93,8 @@ class UserInfoManager{
         if (array_key_exists('hj_province', $data) && !Utils::isObjNull($data['hj_province'])) {
             $info->hj_province = array_get($data, 'hj_province');
         }
-        if (array_key_exists('hj_country', $data) && !Utils::isObjNull($data['hj_country'])) {
-            $info->hj_country = array_get($data, 'hj_country');
+        if (array_key_exists('hj_area', $data) && !Utils::isObjNull($data['hj_area'])) {
+            $info->hj_area = array_get($data, 'hj_area');
         }
         if (array_key_exists('status', $data) && !Utils::isObjNull($data['status'])) {
             $info->status = array_get($data, 'status');

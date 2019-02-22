@@ -45,16 +45,16 @@
             <div class="f2">请输入您的手机号码，</div>
             <div class="f2">绑定您的环境检测帐号</div>
             <form class="from1">
-                <input id="phone" name="phone"  class="input1" placeholder="请输入手机号码" style="width:80%;"><br/>
+                <input id="hj_phone" name="hj_phone" class="input1" placeholder="请输入手机号码" style="width:80%;background-color:transparent;"><br/>
                 <div style="width:80%;">
-                    <input class="input1" placeholder="验证码" style="float:left">
+                    <input class="input1" id="sm_validate" name="sm_validate"  style="width:45%;background-color:transparent;" placeholder="验证码" style="float:left">
                     <div class="s2" style="float:right;line-height: 30px;width: 110px;text-align: center;cursor: pointer;" id="getVcode"
                          onclick="sendMsg()">获取短信验证码
                     </div>
                     <div class="s2" style="float:right;width:110px;display: none;line-height: 30px;text-align: center;background: #9a9898 !important" id="cannotgetVcode">获取短信验证码
                     </div>
                 </div>
-                <input class="s1" type="submit" value="确定">
+                <span type="button" onclick="submit()" class="s1 hui-button" style="background-color:transparent;border: solid 1px #555555;">确定</span>
             </form>
     </div>
 @endsection
@@ -76,39 +76,74 @@
                 $("#cannotgetVcode").html("重新发送(" + countdown + ")");
                 countdown--;
                 setTimeout(function() {
-                    settime()
+                    settime();
                 },1000)
             }
         }
         //进行表单校验
         function sendMsg() {
-            consoledebug.log("sendMsg");
-            layer.msg('发送中...', {icon: 1, time: 1000});
-            settime();
-            // var id = $("#id").val();
-            // //手机号是否为空
-            // if (judgeIsAnyNullStr(id)) {
-            //     layer.msg('账号不能为空！', {icon: 2, time: 1000});
-            //     return false;
-            // }
-            // var  phone= $("#phone").val();
-            // if (phone == null || phone.length == 0 || judgeIsNullStr(phone)) {
-            //     layer.msg('新手机号不能为空！', {icon: 2, time: 1000});
-            //     return false;
-            // }
-            {{--sendMassage('{{ URL::asset('admin/admin/validateNewPhone')}}', {phone: phone},--}}
-                {{--function (res) {--}}
-                    {{--consoledebug.log("发送验证码接口的返回为", res);--}}
-                    {{--toast_hide();--}}
-                    {{--if (res.result) {--}}
-                        {{--layer.msg('发送中...', {icon: 1, time: 1000});--}}
-                        {{--settime();--}}
-                    {{--}--}}
-                    {{--else{--}}
-                        {{--layer.msg(res.message, {icon: 2, time: 1000});--}}
-                        {{--return false;--}}
-                    {{--}--}}
-                {{--})--}}
+            //手机号是否为空
+            var  hj_phone= $("#hj_phone").val();
+            if (hj_phone == null || hj_phone.length == 0 || judgeIsNullStr(hj_phone)) {
+                hui.iconToast('手机号不能为空', 'warn');
+                return false;
+            }
+            $.ajax({
+                type: 'GET',
+                url: "{{URL::asset('api/validateNewPhone')}}",
+                dataType: 'json',
+                data: {
+                    'hj_phone' : hj_phone,
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        hui.iconToast('发送中...', 'warn');
+                        settime();
+                    } else {
+                        hui.iconToast(data.message, 'warn');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+
+        function submit(){
+            //手机号是否为空
+            var  hj_phone= $("#hj_phone").val();
+            if (hj_phone == null || hj_phone.length == 0 || judgeIsNullStr(hj_phone)) {
+                hui.iconToast('手机号不能为空', 'warn');
+                return false;
+            }
+            //
+            var  sm_validate= $("#sm_validate").val();
+            if (sm_validate == null || sm_validate.length == 0 || judgeIsNullStr(sm_validate)) {
+                hui.iconToast('验证码不能为空', 'warn');
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: "{{URL::asset('api/perfect_phone_save')}}",
+                dataType: 'json',
+                data: {
+                    'hj_phone' : hj_phone,
+                    'sm_validate' : sm_validate,
+                    '_token': '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        window.location="{{URL::asset('api/perfect_info')}}";
+                    } else {
+                        hui.iconToast(data.message, 'warn');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
         }
     </script>
 @endsection

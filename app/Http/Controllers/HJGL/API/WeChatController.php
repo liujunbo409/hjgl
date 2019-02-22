@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use App\Services\WeChat;
 use EasyWeChat\Factory;
 
 class WeChatController extends Controller{
@@ -33,6 +32,7 @@ class WeChatController extends Controller{
     }
 
     public function getInfo(Request $request){
+        dd('132');
         $config = Config::get("wechat.official_account.default");
         $app = Factory::officialAccount($config); // 公众号
         $user = $app->oauth->user();
@@ -104,11 +104,6 @@ class WeChatController extends Controller{
         $output = curl_exec($curl);
         curl_close($curl);
         dd($output);
-    }
-
-    //发送模板消息
-    public function sendAlertMsg() {
-        WeChat::sendAlertMsg("param1", "param2", "param3", "param4", "param5");
     }
 
 

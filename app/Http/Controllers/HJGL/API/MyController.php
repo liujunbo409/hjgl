@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/20 0020
- * Time: 上午 9:20
- */
+
 namespace App\Http\Controllers\HJGL\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Config;
-use App\Services\WeChat;
-use EasyWeChat\Factory;
+use App\Components\HJGL\VertifyManager;
+use App\Http\Controllers\ApiResponse;
+
 
 class MyController extends Controller{
 

@@ -8,33 +8,37 @@
     <div class="hui-wrap" style="width:100%;">
         <form style="padding:28px 10px;" class="hui-form" id="form1">
             <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
-            <ul>
-                <li>
-                    <div class="hui-list-text">
-                        姓氏<input name="nickname" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入姓氏">
-                    </div>
-                </li>
-                <li>
-                    <div class="hui-list-text">
-                        性别
-                        <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择性别">
-                    </div>
-                </li>
-                <li>
-                    <div class="hui-list-text">
-                        所在地区
-                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择所在区域">
-                    </div>
-                </li>
-                <li>
-                    <div class="hui-list-text">
-                        详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入详细地址">
-                    </div>
-                </li>
-            </ul>
-        </div>
+                <ul>
+                    <li>
+                        <div class="hui-list-text">
+                            姓氏<input id="hj_name" value="" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入姓氏">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hui-list-text">
+                            性别
+                            <input id="btn1" value="" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择性别" readonly>
+                            <input type="hidden" id="hj_sex" value="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hui-list-text">
+                            所在地区
+                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择所在区域" readonly>
+                            <input type="hidden" id="hj_province" value="">
+                            <input type="hidden" id="hj_city" value="">
+                            <input type="hidden" id="hj_area" value="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="hui-list-text">
+                            详细地址<input id="hj_address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入详细地址">
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div style="padding:15px 8px;">
-                <button type="button" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</button>
+                <span type="button" onclick="submit()" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</span>
             </div>
         </form>
     </div>
@@ -47,6 +51,7 @@
             var val = picker1.getVal(0);
             var txt = picker1.getText(0);
             // hui('#btn1').val(txt + '[' + val + ']');
+            $("#hj_sex").val(val);
             hui('#btn1').val(txt);
         });
         // 同级 picker 数量设置 默认 1
@@ -67,7 +72,11 @@
             var shengVal= picker3.getVal(0);
             var shiVal  = picker3.getVal(1);
             var quVal   = picker3.getVal(2);
+            console.log(sheng, shi, qu);
             console.log(shengVal, shiVal, quVal);
+            $("#hj_province").val(sheng);
+            $("#hj_city").val(shi);
+            $("#hj_area").val(qu);
             hui('#btn3').val(sheng + shi + qu);
         });
         picker3.level = 3;
@@ -76,5 +85,64 @@
         var defaultVal = [330000, 330400, 330424];
         // 不设置默认值忽略第三个参数即可
         picker3.bindRelevanceData(cities, defaultVal);
+
+        function submit(){
+            //手机号是否为空
+            var  hj_name= $("#hj_name").val();
+            if (hj_name == null || hj_name.length == 0 || judgeIsNullStr(hj_name)) {
+                hui.iconToast('姓氏不能为空', 'warn');
+                return false;
+            }
+            var  hj_sex= $("#hj_sex").val();
+            if (hj_sex == null || hj_sex.length == 0 || judgeIsNullStr(hj_sex)) {
+                hui.iconToast('性别不能为空', 'warn');
+                return false;
+            }
+            var  hj_province= $("#hj_province").val();
+            if (hj_province == null || hj_province.length == 0 || judgeIsNullStr(hj_province)) {
+                hui.iconToast('省不能为空', 'warn');
+                return false;
+            }
+            var  hj_city= $("#hj_city").val();
+            if (hj_city == null || hj_city.length == 0 || judgeIsNullStr(hj_city)) {
+                hui.iconToast('市不能为空', 'warn');
+                return false;
+            }
+            var  hj_area= $("#hj_area").val();
+            if (hj_area == null || hj_area.length == 0 || judgeIsNullStr(hj_area)) {
+                hui.iconToast('区不能为空', 'warn');
+                return false;
+            }
+            var  hj_address= $("#hj_address").val();
+            if (hj_address == null || hj_address.length == 0 || judgeIsNullStr(hj_address)) {
+                hui.iconToast('详细地址不能为空', 'warn');
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: "{{URL::asset('api/perfect_info_save')}}",
+                dataType: 'json',
+                data: {
+                    'hj_name' : hj_name,
+                    'hj_sex' : hj_sex,
+                    'hj_province' : hj_province,
+                    'hj_city' : hj_city,
+                    'hj_area' : hj_area,
+                    'hj_address' : hj_address,
+                    '_token': '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        window.location="{{URL::asset('api/my/index')}}";
+                    } else {
+                        hui.iconToast(data.message, 'warn');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
     </script>
 @endsection
