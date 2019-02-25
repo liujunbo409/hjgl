@@ -19,7 +19,7 @@ class HJGLCheckUserLogin
 //            return redirect('/admin/login');
 //        }
         if (!Cache::pull('hj')) {
-            return redirect('/webScope');
+            return redirect('api/webScope');
         }else{
             cache(['hj' => 1], Carbon::now()->addSeconds(60*30));
         }
@@ -27,7 +27,7 @@ class HJGLCheckUserLogin
 
         //检测session中是否有登录信息
         if (!$request->session()->has('wechat_user')) {
-            return redirect('/webScope');
+            return redirect('api/webScope');
         }
         return $next($request);
     }
