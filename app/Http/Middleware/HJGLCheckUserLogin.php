@@ -18,7 +18,7 @@ class HJGLCheckUserLogin
 //            cache(['admin' => 1], Carbon::now()->addSeconds(10));
 //            return redirect('/admin/login');
 //        }
-        
+
 //        if (!Cache::pull('wechat_user')) {
 //            return redirect('/api/webScope');
 //        }else{

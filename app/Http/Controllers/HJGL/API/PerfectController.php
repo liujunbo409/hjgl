@@ -25,7 +25,7 @@ class PerfectController extends Controller{
             return view('HJGL.user.perfect.perfectPhone');
         }else{
             $put = array(
-                'phone'=>$user->hj_phone,
+                'hj_phone'=>$user->hj_phone,
             );
             $request->session()->put('hj', $put );
             return redirect('/api/perfect_info');
@@ -52,7 +52,7 @@ class PerfectController extends Controller{
         $user = UserInfoManager::serInfo($info,$data);
         $user->save();
         $put = array(
-            'phone'=>$data['hj_phone']
+            'hj_phone'=>$data['hj_phone']
         );
         $request->session()->put('hj',$put);
         return ApiResponse::makeResponse(true, '首次保存个人手机号码成功', ApiResponse::SUCCESS_CODE);
@@ -73,36 +73,39 @@ class PerfectController extends Controller{
     }
 
     public function perfect_info_save(Request $request){
-        $info = UserInfoManager::getByPhone($request->session()->get('hj',''));
+        $session = $request->session()->get('hj','');
+        if(empty($session) || !isset($session['hj_phone']) || empty($session['hj_phone'])){
+            return ApiResponse::makeResponse(false, '登录信息已失效,请重新进入', ApiResponse::MISSING_PARAM);
+        }
+        $info = UserInfoManager::getByPhone($session['hj_phone']);
         if(empty($info) || !isset($info['hj_phone']) || empty($info['hj_phone'])){
             return view('HJGL.user.perfect.perfectPhone');
         }else{
             $data = $request->all();
             if (!array_key_exists('hj_name', $data) || Utils::isObjNull($data['hj_name'])) {
-                return ApiResponse::makeResponse(false, '姓氏缺失', ApiResponse::PHONE_LOST);
+                return ApiResponse::makeResponse(false, '姓氏缺失', ApiResponse::MISSING_PARAM);
             }
             if (!array_key_exists('hj_sex', $data) || Utils::isObjNull($data['hj_sex'])) {
-                return ApiResponse::makeResponse(false, '姓别缺失', ApiResponse::PHONE_LOST);
+                return ApiResponse::makeResponse(false, '姓别缺失', ApiResponse::MISSING_PARAM);
             }
             if (!array_key_exists('hj_province', $data) || Utils::isObjNull($data['hj_province'])) {
-                return ApiResponse::makeResponse(false, '省缺失', ApiResponse::PHONE_LOST);
+                return ApiResponse::makeResponse(false, '省缺失', ApiResponse::MISSING_PARAM);
             }
             if (!array_key_exists('hj_city', $data) || Utils::isObjNull($data['hj_city'])) {
-                return ApiResponse::makeResponse(false, '市缺失', ApiResponse::PHONE_LOST);
+                return ApiResponse::makeResponse(false, '市缺失', ApiResponse::MISSING_PARAM);
             }
             if (!array_key_exists('hj_area', $data) || Utils::isObjNull($data['hj_area'])) {
-                return ApiResponse::makeResponse(false, '区缺失', ApiResponse::PHONE_LOST);
+                return ApiResponse::makeResponse(false, '区缺失', ApiResponse::MISSING_PARAM);
             }
             if (!array_key_exists('hj_address', $data) || Utils::isObjNull($data['hj_address'])) {
-                return ApiResponse::makeResponse(false, '详细地址缺失', ApiResponse::PHONE_LOST);
+                return ApiResponse::makeResponse(false, '详细地址缺失', ApiResponse::MISSING_PARAM);
             }
             $user = UserInfoManager::serInfo($info,$data);
             $user->save();
-            $put = array(
-                'phone'=>$data['hj_phone'],
-                ''
-            );
-            $request->session()->put('hj',$put);
+//            $put = array(
+//                'hj_phone'=>$session['hj_phone']
+//            );
+//            $request->session()->put('hj',$put);
             return ApiResponse::makeResponse(true, '首次保存个人信息成功', ApiResponse::SUCCESS_CODE);
         }
     }
