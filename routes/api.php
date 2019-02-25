@@ -19,15 +19,17 @@ Route::get('/user', function () {
     return redirect()->to('/home#/index'); //這時候已經拿到用戶資料了，跳轉到想要的路由
 });
 
-//前方配置
-Route::any('/sendAlertMsg', 'HJGL\API\WeChatController@sendAlertMsg');
-Route::any('/wechat', 'HJGL\API\WeChatController@serve');
-Route::get('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');//获取access_token
-Route::get('/getMenu', 'HJGL\API\WeChatController@getMenu');//获取菜单
-Route::get('/createMenu', 'HJGL\API\WeChatController@createMenu');//创建菜单
-Route::get('/delMenu', 'HJGL\API\WeChatController@delMenu');//删除菜单
-Route::get('/webScope', 'HJGL\API\WeChatController@webScope');//网页授权
-Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
+Route::group(['middleware'=>['web']],function(){
+    //前方配置
+    Route::any('/sendAlertMsg', 'HJGL\API\WeChatController@sendAlertMsg');
+    Route::any('/wechat', 'HJGL\API\WeChatController@serve');
+    Route::get('/getAccessToken', 'HJGL\API\WeChatController@getAccessToken');//获取access_token
+    Route::get('/getMenu', 'HJGL\API\WeChatController@getMenu');//获取菜单
+    Route::get('/createMenu', 'HJGL\API\WeChatController@createMenu');//创建菜单
+    Route::get('/delMenu', 'HJGL\API\WeChatController@delMenu');//删除菜单
+    Route::get('/webScope', 'HJGL\API\WeChatController@webScope');//网页授权
+    Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
+});
 
 Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
 

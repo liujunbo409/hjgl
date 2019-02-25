@@ -21,7 +21,6 @@ class WeChatController extends Controller{
     //网页授权
     public function webScope(Request $request){
         $session = $request->session()->get('wechat_user','');
-        dd($session);
         if(empty($session)){
             $config = Config::get("wechat.official_account.default");
             $app = Factory::officialAccount($config); // 公众号
