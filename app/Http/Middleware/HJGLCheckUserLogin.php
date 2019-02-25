@@ -18,11 +18,12 @@ class HJGLCheckUserLogin
 //            cache(['admin' => 1], Carbon::now()->addSeconds(10));
 //            return redirect('/admin/login');
 //        }
-        if (!Cache::pull('wechat_user')) {
-            return redirect('/api/webScope');
-        }else{
-            cache(['wechat_user' => 1], Carbon::now()->addSeconds(60*30));
-        }
+        
+//        if (!Cache::pull('wechat_user')) {
+//            return redirect('/api/webScope');
+//        }else{
+//            cache(['wechat_user' => 1], Carbon::now()->addSeconds(60*30));
+//        }
 
 
         //检测session中是否有登录信息
