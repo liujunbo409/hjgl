@@ -39,7 +39,6 @@ class WeChatController extends Controller{
         return redirect('/api/perfect_phone'); // 跳转
     }
 
-
     //自定义菜单查询
     public function getMenu(){
         $config = Config::get("wechat.official_account.default");

@@ -46,6 +46,22 @@ class UserInfoManager{
         return $info;
     }
 
+    public static function getListByCon($con_arr, $is_paginate){
+        $info = new UserInfo();
+        //相关条件
+        if (array_key_exists('hj_phone', $con_arr) && !Utils::isObjNull($con_arr['hj_phone'])) {
+            $info = $info->where('hj_phone', '=', $con_arr['hj_phone']);
+        }
+        $info = $info->orderby('id', 'asc');
+        //配置规则
+        if ($is_paginate) {
+            $info = $info->paginate(Utils::PAGE_SIZE);
+        } else {
+            $info = $info->get();
+        }
+        return $info;
+    }
+
     /*
      * 编辑信息
      *

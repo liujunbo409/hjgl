@@ -31,7 +31,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'hjgl.adminLogin' => \App\Http\Middleware\HJGLCheckAdminLogin::class,//后台登录中间件
         'hjgl.AdminRole' => \App\Http\Middleware\HJGLCheckAdminRole::class,//后台权限判断中间件
         'wechat.oauth' => \Overtrue\LaravelWechat\Middleware\OAuthAuthenticate::class,
+        'hjgl.userLogin' => \App\Http\Middleware\HJGLCheckUserLogin::class,//微信端网页授权登录信息判断
     ];
 }
