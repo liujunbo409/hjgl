@@ -18,18 +18,18 @@
                     <li>
                         <div class="hui-list-text">
                             性别
-                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->sex)?$user_info->sex : '' }}">
+                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_sex)?$user_info->hj_sex : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
                             所在地区
-                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="{{isset($user_info->province)?$user_info->province : '' }}-{{isset($user_info->city)?$user_info->city : '' }}-{{isset($user_info->area)?$user_info->area : '' }}">
+                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="{{isset($user_info->hj_province)?$user_info->hj_province : '' }}-{{isset($user_info->hj_city)?$user_info->hj_city : '' }}-{{isset($user_info->hj_area)?$user_info->hj_area : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
-                            详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->address)?$user_info->address : '' }}">
+                            详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_address)?$user_info->hj_address : '' }}">
                         </div>
                     </li>
                 </ul>
