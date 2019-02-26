@@ -135,7 +135,7 @@
                 }
                 //从后台设置管理员状态
                 setAdminStatus('{{URL::asset('')}}', param, function (ret) {
-                    console.log("ret:" + JSON.stringify(ret));
+                    // console.log("ret:" + JSON.stringify(ret));
                     if (ret.result == true) {
                         $(obj).parents("tr").find(".td-manage").prepend('<a onClick="start(this,' + id + ')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
                         $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');

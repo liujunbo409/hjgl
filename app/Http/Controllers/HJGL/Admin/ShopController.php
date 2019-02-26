@@ -171,17 +171,12 @@ class ShopController{
             $search_word = $data['search_word'];
         }
         $con_arr = array(
+            'shop_ids' => array('0',$shop->id),
             'status' => '2',
-            'loan_status' => '1',
             'search_word' => $search_word,
         );
-        $my_con_arr = array(
-            'shop_id' => $shop->id,
-        );
-        $my_tools = ToolManager::getListByCon($my_con_arr,true);
         $tools = ToolManager::getListByCon($con_arr,true);
-
-        return view('HJGL.admin.shop.chooseTool', [ 'shop' => $shop , 'datas' => $tools , 'my_tools' => $my_tools ,'con_arr' => $con_arr]);
+        return view('HJGL.admin.shop.chooseTool', [ 'shop' => $shop , 'datas' => $tools ,'con_arr' => $con_arr]);
     }
 
     /*

@@ -34,26 +34,6 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="text-c">
-                <td>已选择</td>
-            </tr>
-            @foreach($my_tools as $my_tool)
-                <tr class="text-c">
-                    <td>{{$my_tool->id}}</td>
-                    <td>{{$my_tool->number}}</td>
-                    <td>{{$my_tool->created_at}}</td>
-                    <td class="td-manage">
-                        @if($my_tool->shop_id == $shop->id)
-                            <span>已被选择</span>
-                        @else
-                            <span style="color:blue;cursor: pointer;" onclick="chooseCon('{{$my_tool->id}}','{{$shop->id}}')">选择</span>
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-            <tr class="text-c">
-            <td>未选择</td>
-            </tr>
             @foreach($datas as $data)
                 <tr class="text-c">
                     <td>{{$data->id}}</td>
@@ -92,7 +72,7 @@
                 tool_id: tool_id,
             }
             chooseTool('{{URL::asset('')}}', param, function (ret) {
-                consoledebug.log(ret);
+                // consoledebug.log(ret);
                 if (ret.result == true) {
                     layer.msg('选择成功', {icon: 1, time: 1000});
                     window.location.reload();

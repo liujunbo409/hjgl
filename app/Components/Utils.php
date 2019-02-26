@@ -43,6 +43,8 @@ class Utils
     const order_status = ['1' => '进行中', '2' => '已完成 '];
     //文章管理--文章状态
     const articler_status = ['1' => '禁用', '2' => '开启 '];
+    //文章目录--目录是否显示
+    const articler_type_show = ['1' => '不显示', '2' => '显示 '];
 
     /*
      * 判断一个对象是不是空

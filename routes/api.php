@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('/QRcode/index/{tool_id}', 'HJGL\API\QRcodeController@index');
 Route::get('/user', function () {
     $user = session('wechat.oauth_user'); // 拿到授权用户资料
     dd($user);
@@ -56,6 +56,10 @@ Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
     Route::get('/my/index', 'HJGL\API\MyController@index');
     Route::get('/my/info', 'HJGL\API\MyController@info');
     Route::get('/my/phone', 'HJGL\API\MyController@phone');
+
+    //二维码相关
+//    Route::get('/QRcode/index/{tool_id}', 'HJGL\API\QRcodeController@index');
+
 
 });
 

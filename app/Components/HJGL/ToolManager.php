@@ -45,6 +45,9 @@ class ToolManager{
         if (array_key_exists('shop_id', $con_arr) && !Utils::isObjNull($con_arr['shop_id'])) {
             $tools = $tools->where('shop_id', '=', $con_arr['shop_id']);
         }
+        if (array_key_exists('shop_ids', $con_arr) && !Utils::isObjNull($con_arr['shop_ids'])) {
+            $tools = $tools->whereIn('shop_id', $con_arr['shop_ids']);
+        }
         if (array_key_exists('code', $con_arr) && !Utils::isObjNull($con_arr['code'])) {
             $tools = $tools->where('code', '=', $con_arr['code']);
         }

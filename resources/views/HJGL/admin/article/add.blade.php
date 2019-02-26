@@ -53,9 +53,9 @@
                     var index = layer.load(2, {time: 10 * 1000}); //加载
                     $(form).ajaxSubmit({
                         type: 'POST',
-                        url: "{{ URL::asset('admin/articleType/addArticle')}}",
+                        url: "{{ URL::asset('admin/article/addArticle')}}",
                         success: function (ret) {
-                            consoledebug.log(JSON.stringify(ret));
+                            // consoledebug.log(JSON.stringify(ret));
                             if (ret.result) {
                                 layer.msg('保存成功', {icon: 1, time: 1000});
                                 setTimeout(function () {

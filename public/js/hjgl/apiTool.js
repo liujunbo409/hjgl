@@ -39,7 +39,7 @@ function article_delete(url, param, callBack) {
 }
 //文章分类删除所选文章
 function articleascription_delete(url, param, callBack) {
-    ajaxRequest(url + "admin/articleType/delArticle", param, "GET", callBack);
+    ajaxRequest(url + "admin/article/delArticle", param, "GET", callBack);
 }
 //文章分类删除
 function articleType_delete(url, param, callBack) {

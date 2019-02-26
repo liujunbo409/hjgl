@@ -81,11 +81,6 @@
                            class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">编辑</i>
                         </a>
-                        <a title="选择设备" href="javascript:;"
-                           onclick="edit('管理员编辑','{{URL::asset('admin/shop/chooseTool')}}?id={{$data->id}}',{{$data->id}})"
-                           class="ml-5" style="text-decoration:none">
-                            <i class="Hui-iconfont">选择设备</i>
-                        </a>
                         <a href="{{URL::asset('admin/shop/info?id='.$data->id)}}">详情</a>
                     </td>
                 </tr>

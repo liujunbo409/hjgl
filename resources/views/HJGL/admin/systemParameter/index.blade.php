@@ -97,7 +97,7 @@
     <script type="text/javascript">
         /*系统参数-编辑*/
         function edit(title, url, id) {
-            consoledebug.log("edit url:" + url);
+            // consoledebug.log("edit url:" + url);
             var index = layer.open({
                 type: 2,
                 title: title,

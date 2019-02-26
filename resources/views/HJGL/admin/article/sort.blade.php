@@ -43,7 +43,7 @@
     <tr>
         <div class="row cl">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{{URL::asset('admin/articleType/edit')}}?id={{$data['id']}}" class="btn btn-default radius" type="button">返回</a>
+            <a href="{{URL::asset('admin/article/articleList')}}?id={{$data['id']}}" class="btn btn-default radius" type="button">返回</a>
         </div>
         <span class="r">共有数据：<strong>{{$ascriptions->total()}}</span>
     </tr>
@@ -87,7 +87,7 @@
                 <input id="seq_{{$ascription->article_id}}" name="seq" value="1" />
                 <span style="color:#ff0000;cursor: pointer;" onclick="up('{{$ascription->article_id}}','{{$data['id']}}')">上</span>
                 <span style="color:#ff0000;cursor: pointer;" onclick="down('{{$ascription->article_id}}','{{$data['id']}}')">下</span>
-                <span style="color:#ff0000;cursor: pointer;" onclick="moveList('选择目录','{{URL::asset('admin/articleType/moveArticleList')}}?article_id={{$ascription->article_id}}&old_type_id={{$ascription->type_id}}')">移动文章</span>
+                <span style="color:#ff0000;cursor: pointer;" onclick="moveList('选择目录','{{URL::asset('admin/article/moveArticleList')}}?article_id={{$ascription->article_id}}&old_type_id={{$ascription->type_id}}')">移动文章</span>
             </td>
         </tr>
     @endforeach
@@ -115,7 +115,7 @@
         }
 
         function click(id,type) {
-            window.location.href = "{{ URL::asset('admin/articleType/sort?id=')}}" + id ;
+            window.location.href = "{{ URL::asset('admin/article/sort?id=')}}" + id ;
         }
 
         /*设备-停用*/
@@ -168,7 +168,7 @@
             var seq = document.getElementById("seq_" + article_id).value;
             $.ajax({
                 type: 'GET',
-                url: "{{URL::asset('admin/articleType/upArticle')}}",
+                url: "{{URL::asset('admin/article/upArticle')}}",
                 dataType: 'json',
                 data: {
                     article_id: article_id,
@@ -178,7 +178,7 @@
                 },
                 success: function (data, sta) {
                     if (data.code == 200) {
-                        window.location.href = '{{URL::asset('admin/articleType/sort')}}?id={{$data['id']}}';
+                        window.location.href = '{{URL::asset('admin/article/sort')}}?id={{$data['id']}}';
                     } else {
                         layer.alert( data.message , function () {
                         });
@@ -194,7 +194,7 @@
             var seq = document.getElementById("seq_" + article_id).value;
             $.ajax({
                 type: 'GET',
-                url: "{{URL::asset('admin/articleType/downArticle')}}",
+                url: "{{URL::asset('admin/article/downArticle')}}",
                 dataType: 'json',
                 data: {
                     article_id: article_id,
@@ -204,7 +204,7 @@
                 },
                 success: function (data, sta) {
                     if (data.code == 200) {
-                        window.location.href = '{{URL::asset('admin/articleType/sort')}}?id={{$data['id']}}';
+                        window.location.href = '{{URL::asset('admin/article/sort')}}?id={{$data['id']}}';
                     } else {
                         layer.alert(data.message, function () {
                         });

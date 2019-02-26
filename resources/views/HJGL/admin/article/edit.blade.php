@@ -19,13 +19,13 @@
                            value="{{ isset($article->title) ? $article->title : '' }}" placeholder="请输入">
                 </div>
             </div>
-            <div class="row cl">
-                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>作者：</label>
-                <div class="formControls col-xs-8 col-sm-9">
-                    <input id="author" name="author" type="text" class="input-text"
-                           value="{{ isset($article->author) ? $article->author : '' }}" placeholder="请输入">
-                </div>
-            </div>
+            {{--<div class="row cl">--}}
+                {{--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>作者：</label>--}}
+                {{--<div class="formControls col-xs-8 col-sm-9">--}}
+                    {{--<input id="author" name="author" type="text" class="input-text"--}}
+                           {{--value="{{ isset($article->author) ? $article->author : '' }}" placeholder="请输入">--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>内容：</label>
                 <div class="formControls col-xs-8 col-sm-9">

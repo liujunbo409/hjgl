@@ -22,12 +22,12 @@
 
 </style>
 @section('content')
-    <div  style="width:20%;float:left">
+    <div  style="width:30%;float:left">
         <ul id="treeDemo" class="ztree" style="width:100%;float:left"></ul>
         <a id="addParent" href="#" title="添加根分类" onclick="return false;"> <div class="addRoot">添加根分类</div></a>
     </div>
     <input id="refurbish" value="" type="hidden" onclick="click(open_id)">
-    <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=YES width=75% height=AUTO
+    <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=YES width=65% height=AUTO
             SRC="{{ URL::asset('/admin/articleType/edit')}}" style="float:right;min-height: 500px;"></iframe>
 @endsection
 

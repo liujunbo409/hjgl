@@ -27,26 +27,26 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员姓名：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="name" name="name" type="text" class="input-text" style="width:350px" {{$data->id?'disabled':''}} value="{{ isset($data->name) ? $data->name : '' }}" placeholder="请输入管理员姓名">
+                    <input id="name" name="name" type="text" class="input-text" style="width:350px" {{isset($data->id)?'disabled':''}} value="{{ isset($data->name) ? $data->name : '' }}" placeholder="请输入管理员姓名">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>手机号(账号)：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="phone" name="phone" type="text" class="input-text" style="width:350px" {{$data->id?'disabled':''}} value="{{ isset($data->phone) ? $data->phone : '' }}" placeholder="请输入设备编号">
+                    <input id="phone" name="phone" type="text" class="input-text" style="width:350px" {{isset($data->id)?'disabled':''}} value="{{ isset($data->phone) ? $data->phone : '' }}" placeholder="请输入设备编号">
                 </div>
             </div>
-            @if($data->id=="")
+            @if(!isset($data->id) || $data->id=="")
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登录密码：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="password" name="password" type="text" class="input-text" style="width:350px" value="" placeholder="请输入设备编号">
+                    <input id="password" name="password" type="password" class="input-text" style="width:350px" value="" placeholder="请输入设备编号">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>确认密码：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input id="confirm_password" name="confirm_password" type="text" class="input-text" style="width:350px" value="" placeholder="请输入设备编号">
+                    <input id="confirm_password" name="confirm_password" type="password" class="input-text" style="width:350px" value="" placeholder="请输入设备编号">
                 </div>
             </div>
             @endif
@@ -63,6 +63,7 @@
 @section('script')
     <script type="text/javascript">
         $(function () {
+            var md5_status = true; //防止二次加密
             $("#form-edit").validate({
                 rules: {
                     shop_name: {
@@ -126,12 +127,15 @@
                             return false;
                         }
                         //加密密码
-                        if (password) {
+                        if (md5_status) {
                             $('#password').val(hex_md5(password));
-                        }
-                        if (confirm_password) {
                             $('#confirm_password').val(hex_md5(confirm_password));
+                            md5_status = false
                         }
+                        $('#error').hide();
+                        $('.btn-primary').html('<i class="Hui-iconfont">&#xe634;</i> 保存中...');
+
+                        var index = layer.load(2, {time: 10 * 1000}); //加载
                     }
                     //商家名称
                     var shop_name = $("#shop_name").val();

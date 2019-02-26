@@ -49,7 +49,7 @@
                         <div class="formControls col-xs-8 col-sm-9">
                             <input id="new_password" name="new_password" type="password" class="input-text" style="width: 400px;"
                                    placeholder="请输入新密码">
-                            <span style="color:#ff0000;">密码至少长6位并包含大、小写字母和数字</span>
+                            <span id="notice" style="color:#ff0000;">密码至少长6位并包含大、小写字母和数字</span>
                         </div>
                     </div>
                     <div class="row cl">
@@ -132,7 +132,7 @@
                                 type: 'POST',
                                 url: "{{ URL::asset('admin/admin/editMyPass')}}",
                                 success: function (ret) {
-                                    consoledebug.log(JSON.stringify(ret));
+                                    // consoledebug.log(JSON.stringify(ret));
                                     if (ret.result) {
                                         layer.msg(ret.message, {icon: 1, time: 2000});
                                         setTimeout(function () {

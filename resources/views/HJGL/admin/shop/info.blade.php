@@ -33,10 +33,16 @@
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20" style="width:100%;">
             <span class="l">
-                 <a href="javascript:;" onclick="edit('添加设备','{{URL::asset('admin/shop/add_tool')}}')"
+                 <a href="javascript:;" onclick="edit('添加设备','{{URL::asset('admin/shop/chooseTool')}}?id={{$shop->id}}',{{$shop->id}})"
                     class="btn btn-primary radius">
                      <i class="Hui-iconfont">&#xe600;</i> 添加检测器
                  </a>
+
+                <a title="选择设备" href="javascript:;"
+                   onclick="edit('管理员编辑','{{URL::asset('admin/shop/chooseTool')}}?id={{$shop->id}}',{{$shop->id}})"
+                   class="ml-5" style="text-decoration:none">
+                            <i class="Hui-iconfont">选择设备</i>
+                        </a>
             </span>
             <span class="r">共有数据：<strong>{{$datas->total()}}</strong> 条</span>
         </div>
@@ -88,7 +94,7 @@
 
         /*设备-编辑*/
         function edit(title, url, id) {
-            consoledebug.log("show_optRecord url:" + url);
+            // consoledebug.log("show_optRecord url:" + url);
             var index = layer.open({
                 type: 2,
                 area: ['850px', '550px'],
@@ -101,7 +107,7 @@
 
         /*设备-停用*/
         function stop(obj, id) {
-            consoledebug.log("stop id:" + id);
+            // consoledebug.log("stop id:" + id);
             layer.confirm('确认要停用吗？', function (index) {
                 //此处请求后台程序，下方是成功后的前台处理
                 var param = {
@@ -111,7 +117,7 @@
                 }
                 //从后台设置设备状态
                 setToolStatus('{{URL::asset('')}}', param, function (ret) {
-                    console.log("ret:" + JSON.stringify(ret));
+                    // console.log("ret:" + JSON.stringify(ret));
                     if (ret.status == true) {
 
                     }
@@ -158,7 +164,7 @@
                 tool_id: tool_id,
             }
             removeTool('{{URL::asset('')}}', param, function (ret) {
-                consoledebug.log(ret);
+                // consoledebug.log(ret);
                 if (ret.result == true) {
                     layer.msg('选择成功', {icon: 1, time: 1000});
                     window.location.reload();

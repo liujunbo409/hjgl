@@ -78,36 +78,36 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::get('/shop/removeTool', 'HJGL\Admin\ShopController@removeTool')->middleware('hjgl.AdminRole:超级管理员');  //设备移除
 
     //文章管理
-//    Route::any('/article/index', 'HJGL\Admin\ArticleController@index')->middleware('hjgl.AdminRole:超级管理员');  //文章管理首页
+    Route::any('/article/index', 'HJGL\Admin\ArticleController@index')->middleware('hjgl.AdminRole:超级管理员');  //文章管理首页
+    Route::any('/article/articleList', 'HJGL\Admin\ArticleController@articleList')->middleware('hjgl.AdminRole:超级管理员');  //文章管理首页
+    Route::get('/article/addArticle', 'HJGL\Admin\ArticleController@addArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章分类添加文章
+    Route::post('/article/addArticle', 'HJGL\Admin\ArticleController@addArticlePost')->middleware('hjgl.AdminRole:超级管理员');  //文章分类添加文章
+    Route::get('/article/sort', 'HJGL\Admin\ArticleController@sort')->middleware('hjgl.AdminRole:超级管理员');  //文章排序
+    Route::get('/article/info', 'HJGL\Admin\ArticleController@info')->middleware('hjgl.AdminRole:超级管理员');  //文章详情
     Route::get('/article/edit', 'HJGL\Admin\ArticleController@edit')->middleware('hjgl.AdminRole:超级管理员');  //新建或编辑文章
     Route::post('/article/edit', 'HJGL\Admin\ArticleController@editPost')->middleware('hjgl.AdminRole:超级管理员');  //新建或编辑文章
-    Route::get('/article/info', 'HJGL\Admin\ArticleController@info')->middleware('hjgl.AdminRole:超级管理员');  //文章详情
-//    Route::get('/article/del', 'HJGL\Admin\ArticleController@del')->middleware('hjgl.AdminRole:超级管理员');  //文章删除
+    Route::get('/article/delArticle', 'HJGL\Admin\ArticleController@delArticle')->middleware('hjgl.AdminRole:超级管理员');  //删除文章分类所属文章
     Route::get('/article/setStatus/{id}', 'HJGL\Admin\ArticleController@setStatus')->middleware('hjgl.AdminRole:超级管理员');  //设置文章状态
+    Route::get('/article/upArticle', 'HJGL\Admin\ArticleController@upArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章向上移动
+    Route::get('/article/downArticle', 'HJGL\Admin\ArticleController@downArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章向下移动
+    Route::get('/article/moveArticleList', 'HJGL\Admin\ArticleController@moveArticleList')->middleware('hjgl.AdminRole:超级管理员');  //文章选择根目录
+    Route::post('/article/moveArticleSave', 'HJGL\Admin\ArticleController@moveArticleSave')->middleware('hjgl.AdminRole:超级管理员'); //文章选择根目录
+
+//    Route::get('/article/chooseArticle', 'HJGL\Admin\ArticleController@chooseArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择文章
+//    Route::get('/article/chooseArticleSave', 'HJGL\Admin\ArticleController@chooseArticleSave')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择文章
 
 
-    //文章分类管理(目录管理)
+    //文章目录管理
     Route::any('/articleType/index', 'HJGL\Admin\ArticleTypeController@index')->middleware('hjgl.AdminRole:超级管理员');  //文章分类首页
     Route::get('/articleType/edit', 'HJGL\Admin\ArticleTypeController@edit')->middleware('hjgl.AdminRole:超级管理员');  //编辑文章分类
     Route::post('/articleType/edit', 'HJGL\Admin\ArticleTypeController@editPost')->middleware('hjgl.AdminRole:超级管理员');  //编辑文章分类
     Route::get('/articleType/del', 'HJGL\Admin\ArticleTypeController@del')->middleware('hjgl.AdminRole:超级管理员');  //文章分类删除
     Route::get('/articleType/upType', 'HJGL\Admin\ArticleTypeController@upType')->middleware('hjgl.AdminRole:超级管理员');  //文章分类向上移动
     Route::get('/articleType/downType', 'HJGL\Admin\ArticleTypeController@downType')->middleware('hjgl.AdminRole:超级管理员');  //文章分类向下移动
-    Route::get('/articleType/upArticle', 'HJGL\Admin\ArticleTypeController@upArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章向上移动
-    Route::get('/articleType/downArticle', 'HJGL\Admin\ArticleTypeController@downArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章向下移动
     Route::post('/articleType/addTypeFather', 'HJGL\Admin\ArticleTypeController@addTypeFather')->middleware('hjgl.AdminRole:超级管理员');  //新建文章父分类
-    Route::get('/articleType/chooseArticle', 'HJGL\Admin\ArticleTypeController@chooseArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择文章
-    Route::get('/articleType/chooseArticleSave', 'HJGL\Admin\ArticleTypeController@chooseArticleSave')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择文章
-    Route::get('/articleType/addArticle', 'HJGL\Admin\ArticleTypeController@addArticle')->middleware('hjgl.AdminRole:超级管理员');  //文章分类添加文章
-    Route::post('/articleType/addArticle', 'HJGL\Admin\ArticleTypeController@addArticlePost')->middleware('hjgl.AdminRole:超级管理员');  //文章分类添加文章
     Route::get('/articleType/moveTypeList', 'HJGL\Admin\ArticleTypeController@moveTypeList')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择根目录
     Route::post('/articleType/moveTypeSave', 'HJGL\Admin\ArticleTypeController@moveTypeSave')->middleware('hjgl.AdminRole:超级管理员');  //文章分类选择根目录
-    Route::get('/articleType/moveArticleList', 'HJGL\Admin\ArticleTypeController@moveArticleList')->middleware('hjgl.AdminRole:超级管理员');  //文章选择根目录
-    Route::post('/articleType/moveArticleSave', 'HJGL\Admin\ArticleTypeController@moveArticleSave')->middleware('hjgl.AdminRole:超级管理员');  //文章选择根目录
-    Route::get('/articleType/sort', 'HJGL\Admin\ArticleTypeController@sort')->middleware('hjgl.AdminRole:超级管理员');  //文章排序
 
-    //文章所属相关
-    Route::get('/articleType/delArticle', 'HJGL\Admin\ArticleTypeController@delArticle')->middleware('hjgl.AdminRole:超级管理员');  //删除文章分类所属文章
 
     //用户订单管理
     Route::any('/userOrder/index', 'HJGL\Admin\UserOrderController@index')->middleware('hjgl.AdminRole:超级管理员');  //用户订单管理首页

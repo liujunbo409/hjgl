@@ -49,7 +49,7 @@
         function moveMulu(article_id, move_id,old_type_id) {
             $.ajax({
                 type: 'POST',
-                url: "{{URL::asset('admin/articleType/moveArticleSave')}}",
+                url: "{{URL::asset('admin/article/moveArticleSave')}}",
                 dataType: 'json',
                 data: {
                     article_id: article_id,

@@ -40,10 +40,9 @@
                 设备二维码<br/>
                 <input id="code" name="code" value="{{$tool->code}}" hidden>
                 @if(isset($tool->code_status) && $tool->code_status == 2 )
-                    <div  id="qrcodeCanvas"></div>
+                    <div id="qrcodeCanvas" style="margin-top:20px;text-align:center;"></div>
                 @else
                     <div style="width:200px;height:200px;"></div><br/>
-                    <span>生成二维码</span>
                 @endif
 
             </div>

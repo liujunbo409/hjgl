@@ -101,8 +101,12 @@
                     </dt>
                     <dd>
                         <ul>
-                            <li><a data-href="{{ URL::asset('admin/articleType/index') }}" data-title="文章管理"
-                                   href="javascript:void(0)" target="'_blank">文章分类</a></li>
+                            <li><a data-href="{{ URL::asset('admin/article/index') }}" data-title="文章管理"
+                                   href="javascript:void(0)" target="'_blank">文章管理</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-href="{{ URL::asset('admin/articleType/index') }}" data-title="文章目录"
+                                   href="javascript:void(0)" target="'_blank">文章目录</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -139,10 +143,6 @@
                         <ul>
                             <li><a data-href="{{ URL::asset('admin/userAccount/rent') }}" data-title="租金管理"
                                    href="javascript:void(0)" target="'_blank">租金管理</a></li>
-                        </ul>
-                        <ul>
-                            <li><a data-href="{{ URL::asset('admin/userAccount/rent_statistics') }}" data-title="租金管理"
-                                   href="javascript:void(0)" target="'_blank">租金统计</a></li>
                         </ul>
                         <ul>
                             <li><a data-href="{{ URL::asset('admin/userAccount/deposit') }}" data-title="押金管理"
