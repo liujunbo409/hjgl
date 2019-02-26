@@ -114,7 +114,7 @@
             }
             $.ajax({
                 type: 'post',
-                url: "{{URL::asset('api/info_save')}}",
+                url: "{{URL::asset('api/my/info_save')}}",
                 dataType: 'json',
                 data: {
                     'openid' : openid,

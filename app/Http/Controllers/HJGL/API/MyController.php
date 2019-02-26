@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Components\HJGL\VertifyManager;
 use App\Http\Controllers\ApiResponse;
+use App\Components\Utils;
 
 
 class MyController extends Controller{

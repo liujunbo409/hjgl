@@ -12,7 +12,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
-use App\Services\WeChat;
 use EasyWeChat\Factory;
 
 class OrderController extends Controller{
