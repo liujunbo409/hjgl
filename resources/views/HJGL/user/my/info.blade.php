@@ -8,6 +8,7 @@
     </div>
     <div class="hui-wrap" style="width:100%;">
         <form style="padding:28px 10px;" class="hui-form" id="form1">
+            <inpur type="hidden" name="openid" id="openid" value="{{isset($user_info->openid)?$user_info->openid : '' }}">
             <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
                 <ul>
                     <li>
@@ -35,7 +36,7 @@
                 </ul>
             </div>
             <div style="padding:15px 8px;">
-                <a href="javascript:hui.back();" type="button" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</a>
+                <span type="button" onclick="submit()" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</span>
             </div>
         </form>
     </div>
@@ -77,5 +78,70 @@
         var defaultVal = [330000, 330400, 330424];
         // 不设置默认值忽略第三个参数即可
         picker3.bindRelevanceData(cities, defaultVal);
+
+        function submit(){
+            //是否为空
+            var  openid= $("#openid").val();
+            if (openid == null || openid.length == 0 || judgeIsNullStr(openid)) {
+                hui.iconToast('关键信息未获取,请从新进入此页面', 'warn');
+                return false;
+            }
+            var  hj_name= $("#hj_name").val();
+            if (hj_name == null || hj_name.length == 0 || judgeIsNullStr(hj_name)) {
+                hui.iconToast('姓氏不能为空', 'warn');
+                return false;
+            }
+            var  hj_sex= $("#hj_sex").val();
+            if (hj_sex == null || hj_sex.length == 0 || judgeIsNullStr(hj_sex)) {
+                hui.iconToast('性别不能为空', 'warn');
+                return false;
+            }
+            var  hj_province= $("#hj_province").val();
+            if (hj_province == null || hj_province.length == 0 || judgeIsNullStr(hj_province)) {
+                hui.iconToast('省不能为空', 'warn');
+                return false;
+            }
+            var  hj_city= $("#hj_city").val();
+            if (hj_city == null || hj_city.length == 0 || judgeIsNullStr(hj_city)) {
+                hui.iconToast('市不能为空', 'warn');
+                return false;
+            }
+            var  hj_area= $("#hj_area").val();
+            if (hj_area == null || hj_area.length == 0 || judgeIsNullStr(hj_area)) {
+                hui.iconToast('区不能为空', 'warn');
+                return false;
+            }
+            var  hj_address= $("#hj_address").val();
+            if (hj_address == null || hj_address.length == 0 || judgeIsNullStr(hj_address)) {
+                hui.iconToast('详细地址不能为空', 'warn');
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: "{{URL::asset('api/info_save')}}",
+                dataType: 'json',
+                data: {
+                    'openid' : openid,
+                    'hj_name' : hj_name,
+                    'hj_sex' : hj_sex,
+                    'hj_province' : hj_province,
+                    'hj_city' : hj_city,
+                    'hj_area' : hj_area,
+                    'hj_address' : hj_address,
+                    '_token': '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        hui.iconToast(data.message, 'warn');
+                    } else {
+                        hui.iconToast(data.message, 'warn');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
     </script>
 @endsection

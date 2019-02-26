@@ -131,10 +131,6 @@ class PerfectController extends Controller{
             }
             $user = UserInfoManager::serInfo($info,$data);
             $user->save();
-//            $put = array(
-//                'hj_phone'=>$session['hj_phone']
-//            );
-//            $request->session()->put('hj',$put);
             return ApiResponse::makeResponse(true, '首次保存个人信息成功', ApiResponse::SUCCESS_CODE);
         }
     }
