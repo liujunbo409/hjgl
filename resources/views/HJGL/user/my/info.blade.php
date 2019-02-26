@@ -8,7 +8,7 @@
     </div>
     <div class="hui-wrap" style="width:100%;">
         <form style="padding:28px 10px;" class="hui-form" id="form1">
-            <inpur type="hidden" name="openid" id="openid" value="{{isset($user_info->openid)?$user_info->openid : '' }}">
+            <inpur type="hidden" name="openid" id="openid" value="{{isset($user_info->open_id)?$user_info->open_id : '' }}">
             <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
                 <ul>
                     <li>
