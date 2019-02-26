@@ -55,7 +55,9 @@ Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
     //我
     Route::get('/my/index', 'HJGL\API\MyController@index');
     Route::get('/my/info', 'HJGL\API\MyController@info');
+    Route::post('/my/info_save', 'HJGL\API\MyController@info_save');
     Route::get('/my/phone', 'HJGL\API\MyController@phone');
+    Route::post('/my/phone_save', 'HJGL\API\MyController@phone_save');
 
     //二维码相关
 //    Route::get('/QRcode/index/{tool_id}', 'HJGL\API\QRcodeController@index');

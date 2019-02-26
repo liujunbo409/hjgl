@@ -8,29 +8,33 @@
     </div>
     <div class="hui-wrap" style="width:100%;">
         <form style="padding:28px 10px;" class="hui-form" id="form1">
-            <inpur type="hidden" name="openid" id="openid" value="{{isset($user_info->open_id)?$user_info->open_id : '' }}">
+            <input type="hidden" name="openid" id="openid" value="{{isset($user_info->openid)?$user_info->openid : '' }}">
             <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
                 <ul>
                     <li>
                         <div class="hui-list-text">
-                            姓氏<input name="nickname" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_name)?$user_info->hj_name : '' }}">
+                            姓氏<input id="hj_name" name="hj_name" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_name)?$user_info->hj_name : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
                             性别
-                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_sex)?$user_info->hj_sex : '' }}">
+                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_sex)? \App\Components\Utils::gender_val[$user_info->hj_sex] : '' }}" readonly>
+                            <input type="hidden" id="hj_sex" value="{{isset($user_info->hj_sex)?$user_info->hj_sex : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
                             所在地区
-                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="{{isset($user_info->hj_province)?$user_info->hj_province : '' }}-{{isset($user_info->hj_city)?$user_info->hj_city : '' }}-{{isset($user_info->hj_area)?$user_info->hj_area : '' }}">
+                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="{{isset($user_info->hj_province)?$user_info->hj_province : '' }}-{{isset($user_info->hj_city)?$user_info->hj_city : '' }}-{{isset($user_info->hj_area)?$user_info->hj_area : '' }}" readonly>
+                            <input type="hidden" id="hj_province" value="">
+                            <input type="hidden" id="hj_city" value="">
+                            <input type="hidden" id="hj_area" value="">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
-                            详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_address)?$user_info->hj_address : '' }}">
+                            详细地址<input name="hj_address" id="hj_address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_address)?$user_info->hj_address : '' }}">
                         </div>
                     </li>
                 </ul>
@@ -69,8 +73,11 @@
             var shengVal= picker3.getVal(0);
             var shiVal  = picker3.getVal(1);
             var quVal   = picker3.getVal(2);
-            console.log(shengVal, shiVal, quVal);
-            hui('#btn3').val(sheng + shi + qu);
+            // console.log(shengVal, shiVal, quVal);
+            $("#hj_province").val(sheng);
+            $("#hj_city").val(shi);
+            $("#hj_area").val(qu);
+            hui('#btn3').val(sheng +'-'+ shi +'-'+ qu);
         });
         picker3.level = 3;
         //cities 数据来源于 cities.js
@@ -97,20 +104,9 @@
                 return false;
             }
             var  hj_province= $("#hj_province").val();
-            if (hj_province == null || hj_province.length == 0 || judgeIsNullStr(hj_province)) {
-                hui.iconToast('省不能为空', 'warn');
-                return false;
-            }
             var  hj_city= $("#hj_city").val();
-            if (hj_city == null || hj_city.length == 0 || judgeIsNullStr(hj_city)) {
-                hui.iconToast('市不能为空', 'warn');
-                return false;
-            }
             var  hj_area= $("#hj_area").val();
-            if (hj_area == null || hj_area.length == 0 || judgeIsNullStr(hj_area)) {
-                hui.iconToast('区不能为空', 'warn');
-                return false;
-            }
+
             var  hj_address= $("#hj_address").val();
             if (hj_address == null || hj_address.length == 0 || judgeIsNullStr(hj_address)) {
                 hui.iconToast('详细地址不能为空', 'warn');

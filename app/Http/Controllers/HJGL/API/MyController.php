@@ -65,6 +65,7 @@ class MyController extends Controller{
             if (!array_key_exists('hj_address', $data) || Utils::isObjNull($data['hj_address'])) {
                 return ApiResponse::makeResponse(false, '详细地址缺失', ApiResponse::MISSING_PARAM);
             }
+
             $user = UserInfoManager::serInfo($info,$data);
             $user->save();
             return ApiResponse::makeResponse(true, '修改个人信息成功', ApiResponse::SUCCESS_CODE);
@@ -78,6 +79,10 @@ class MyController extends Controller{
         }
         $user_info = UserInfoManager::getByOpenId($session['original']['openid']);
         return view('HJGL.user.my.phone',['user_info'=>$user_info]);
+    }
+
+    public function phone_save(Request $request){
+
     }
 
 }
