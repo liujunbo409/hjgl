@@ -54,15 +54,6 @@ class MyController extends Controller{
             if (!array_key_exists('hj_sex', $data) || Utils::isObjNull($data['hj_sex'])) {
                 return ApiResponse::makeResponse(false, '姓别缺失', ApiResponse::MISSING_PARAM);
             }
-            if (!array_key_exists('hj_province', $data) || Utils::isObjNull($data['hj_province'])) {
-                return ApiResponse::makeResponse(false, '省缺失', ApiResponse::MISSING_PARAM);
-            }
-            if (!array_key_exists('hj_city', $data) || Utils::isObjNull($data['hj_city'])) {
-                return ApiResponse::makeResponse(false, '市缺失', ApiResponse::MISSING_PARAM);
-            }
-            if (!array_key_exists('hj_area', $data) || Utils::isObjNull($data['hj_area'])) {
-                return ApiResponse::makeResponse(false, '区缺失', ApiResponse::MISSING_PARAM);
-            }
             if (!array_key_exists('hj_address', $data) || Utils::isObjNull($data['hj_address'])) {
                 return ApiResponse::makeResponse(false, '详细地址缺失', ApiResponse::MISSING_PARAM);
             }
