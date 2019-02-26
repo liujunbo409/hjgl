@@ -24,12 +24,22 @@ class MyController extends Controller{
         return view('HJGL.user.my.index',['user_info'=>$user_info]);
     }
 
-    public function info(){
-        return view('HJGL.user.my.info');
+    public function info(Request $request){
+        $session = $request->session()->get('wechat_user');
+        if(!isset($session['original']['openid']) || empty($session['original']['openid'])){
+            return view('HJGL.user.index.lose');
+        }
+        $user_info = UserInfoManager::getByOpenId($session['original']['openid']);
+        return view('HJGL.user.my.info',['user_info'=>$user_info]);
     }
 
-    public function phone(){
-        return view('HJGL.user.my.phone');
+    public function phone(Request $request){
+        $session = $request->session()->get('wechat_user');
+        if(!isset($session['original']['openid']) || empty($session['original']['openid'])){
+            return view('HJGL.user.index.lose');
+        }
+        $user_info = UserInfoManager::getByOpenId($session['original']['openid']);
+        return view('HJGL.user.my.phone',['user_info'=>$user_info]);
     }
 
 }

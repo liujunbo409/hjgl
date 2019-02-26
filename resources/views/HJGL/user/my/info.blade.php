@@ -12,24 +12,24 @@
                 <ul>
                     <li>
                         <div class="hui-list-text">
-                            姓氏<input name="nickname" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入姓氏">
+                            姓氏<input name="nickname" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->hj_name)?$user_info->hj_name : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
                             性别
-                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择性别">
+                            <input id="btn1" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->sex)?$user_info->sex : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
                             所在地区
-                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请选择所在区域">
+                            <input id="btn3" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="{{isset($user_info->province)?$user_info->province : '' }}-{{isset($user_info->city)?$user_info->city : '' }}-{{isset($user_info->area)?$user_info->area : '' }}">
                         </div>
                     </li>
                     <li>
                         <div class="hui-list-text">
-                            详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" placeholder="请输入详细地址">
+                            详细地址<input name="address" class="hui-input hui-input-clear" style="margin-right:2%;width:100%;height:49px;direction:rtl;" value="{{isset($user_info->address)?$user_info->address : '' }}">
                         </div>
                     </li>
                 </ul>
