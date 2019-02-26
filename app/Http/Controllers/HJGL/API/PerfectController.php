@@ -52,38 +52,39 @@ class PerfectController extends Controller{
         $user=UserInfoManager::getByPhone($data['hj_phone']);
         if($user){
             return ApiResponse::makeResponse(false, '手机号已存在', ApiResponse::PHONE_HAS_BEEN_SELECTED);
+        }else{
+            $ys_sm = VertifyManager::judgeVertifyCode($data['hj_phone'], $data['sm_validate']);
+            if (!$ys_sm) {
+                return ApiResponse::makeResponse(false, '短信验证码验证失败', ApiResponse::SM_VERTIFY_ERROR);
+            }
+            $info = new UserInfo();
+            $user = UserInfoManager::serInfo($info,$data);
+            if (array_key_exists('nickname', $session['original']) && !Utils::isObjNull($session['original']['nickname'])) {
+                $user->nick_name = $session['original']['nickname'];
+            }
+            if (array_key_exists('sex', $session['original']) && !Utils::isObjNull($session['original']['sex'])) {
+                $user->sex = $session['original']['sex'];
+            }
+            if (array_key_exists('city', $session['original']) && !Utils::isObjNull($session['original']['city'])) {
+                $user->city = $session['original']['city'];
+            }
+            if (array_key_exists('province', $session['original']) && !Utils::isObjNull($session['original']['province'])) {
+                $user->province = $session['original']['province'];
+            }
+            if (array_key_exists('headimgurl', $session['original']) && !Utils::isObjNull($session['original']['headimgurl'])) {
+                $user->headimgurl = $session['original']['headimgurl'];
+            }
+            if (array_key_exists('country', $session['original']) && !Utils::isObjNull($session['original']['country'])) {
+                $user->country = $session['original']['country'];
+            }
+            $user->openid = $openid;
+            $user->save();
+            $put = array(
+                'hj_phone'=>$data['hj_phone']
+            );
+            $request->session()->put('hj',$put);
+            return ApiResponse::makeResponse(true, '首次保存个人手机号码成功', ApiResponse::SUCCESS_CODE);
         }
-        $ys_sm = VertifyManager::judgeVertifyCode($data['hj_phone'], $data['sm_validate']);
-        if (!$ys_sm) {
-            return ApiResponse::makeResponse(false, '短信验证码验证失败', ApiResponse::SM_VERTIFY_ERROR);
-        }
-        $info = new UserInfo();
-        $user = UserInfoManager::serInfo($info,$data);
-        if (array_key_exists('nickname', $session['original']) && !Utils::isObjNull($session['original']['nickname'])) {
-            $user->nick_name = $session['original']['nickname'];
-        }
-        if (array_key_exists('sex', $session['original']) && !Utils::isObjNull($session['original']['sex'])) {
-            $user->sex = $session['original']['sex'];
-        }
-        if (array_key_exists('city', $session['original']) && !Utils::isObjNull($session['original']['city'])) {
-            $user->city = $session['original']['city'];
-        }
-        if (array_key_exists('province', $session['original']) && !Utils::isObjNull($session['original']['province'])) {
-            $user->province = $session['original']['province'];
-        }
-        if (array_key_exists('headimgurl', $session['original']) && !Utils::isObjNull($session['original']['headimgurl'])) {
-            $user->headimgurl = $session['original']['headimgurl'];
-        }
-        if (array_key_exists('country', $session['original']) && !Utils::isObjNull($session['original']['country'])) {
-            $user->country = $session['original']['country'];
-        }
-        $user->openid = $openid;
-        $user->save();
-        $put = array(
-            'hj_phone'=>$data['hj_phone']
-        );
-        $request->session()->put('hj',$put);
-        return ApiResponse::makeResponse(true, '首次保存个人手机号码成功', ApiResponse::SUCCESS_CODE);
     }
 
     //判断用户是否录入详细信息

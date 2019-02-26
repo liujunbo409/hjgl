@@ -36,12 +36,8 @@ class MyController extends Controller{
 
     public function info_save(Request $request){
         $data = $request->all();
-        $session = $request->session()->get('hj','');
-        if(empty($session) || !isset($session['hj_phone']) || empty($session['hj_phone'])){
-            return ApiResponse::makeResponse(false, '登录信息已失效,请重新进入', ApiResponse::MISSING_PARAM);
-        }
         if (!array_key_exists('openid', $data) || Utils::isObjNull($data['openid'])) {
-            return ApiResponse::makeResponse(false, '关键信息获取失败', ApiResponse::MISSING_PARAM);
+            return ApiResponse::makeResponse(false, '关键信息获取失败,请重新进入', ApiResponse::MISSING_PARAM);
         }
         $info = UserInfoManager::getByOpenId($data['openid']);
         if(empty($info)){
@@ -74,7 +70,33 @@ class MyController extends Controller{
     }
 
     public function phone_save(Request $request){
-
+        $session = $request->session()->get('wechat_user');
+        if(!isset($session['original']['openid']) || empty($session['original']['openid'])){
+            return view('HJGL.user.index.lose');
+        }
+        $info = UserInfoManager::getByOpenId($session['original']['openid']);
+        if(empty($info)){
+            return view('HJGL.user.perfect.perfectPhone');
+        }else{
+            $data = $request->all();
+            if (!array_key_exists('hj_phone', $data) || Utils::isObjNull($data['hj_phone'])) {
+                return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::MISSING_PARAM);
+            }
+            if (!array_key_exists('sm_validate', $data) || Utils::isObjNull($data['sm_validate'])) {
+                return ApiResponse::makeResponse(false, '短信验证码缺失', ApiResponse::SM_VERTIFY_LOST);
+            }
+            $user=UserInfoManager::getByPhone($data['hj_phone']);
+            if($user){
+                return ApiResponse::makeResponse(false, '手机号已存在', ApiResponse::PHONE_HAS_BEEN_SELECTED);
+            }
+            $ys_sm = VertifyManager::judgeVertifyCode($data['hj_phone'], $data['sm_validate']);
+            if (!$ys_sm) {
+                return ApiResponse::makeResponse(false, '短信验证码验证失败', ApiResponse::SM_VERTIFY_ERROR);
+            }
+            $info = UserInfoManager::serInfo($info,$data);
+            $info->save();
+            return ApiResponse::makeResponse(true, '修改个人信息成功', ApiResponse::SUCCESS_CODE);
+        }
     }
 
 }

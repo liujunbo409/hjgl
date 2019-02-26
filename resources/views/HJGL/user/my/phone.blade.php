@@ -21,8 +21,9 @@
     <div class="hui-wrap">
         <div style="margin:20px 10px; margin-bottom:15px;" class="hui-form" id="form1">
             <div class="hui-form-items">
+                <input type="hidden" name="openid" id="openid" value="{{isset($user_info->openid)?$user_info->openid : '' }}">
                 <div class="hui-form-items-title">手机号</div>
-                <input class="hui-input hui-input-clear" placeholder="请输入手机号" checkType="string" checkData="11,11" checkMsg="手机号应为11个数字" />
+                <input class="hui-input hui-input-clear" id="hj_phone" name="hj_phone" value="{{isset($user_info->hj_phone)?$user_info->hj_phone: '' }}" checkType="string" checkData="11,11" checkMsg="手机号应为11个数字" />
             </div>
             <div class="hui-form-items">
                 <div class="hui-form-items-title">图片验证码</div>
@@ -78,33 +79,32 @@
         }
         //进行表单校验
         function sendMsg() {
-            consoledebug.log("sendMsg");
-            layer.msg('发送中...', {icon: 1, time: 1000});
-            settime();
-            // var id = $("#id").val();
-            // //手机号是否为空
-            // if (judgeIsAnyNullStr(id)) {
-            //     layer.msg('账号不能为空！', {icon: 2, time: 1000});
-            //     return false;
-            // }
-            // var  phone= $("#phone").val();
-            // if (phone == null || phone.length == 0 || judgeIsNullStr(phone)) {
-            //     layer.msg('新手机号不能为空！', {icon: 2, time: 1000});
-            //     return false;
-            // }
-            {{--sendMassage('{{ URL::asset('admin/admin/validateNewPhone')}}', {phone: phone},--}}
-            {{--function (res) {--}}
-            {{--consoledebug.log("发送验证码接口的返回为", res);--}}
-            {{--toast_hide();--}}
-            {{--if (res.result) {--}}
-            {{--layer.msg('发送中...', {icon: 1, time: 1000});--}}
-            {{--settime();--}}
-            {{--}--}}
-            {{--else{--}}
-            {{--layer.msg(res.message, {icon: 2, time: 1000});--}}
-            {{--return false;--}}
-            {{--}--}}
-            {{--})--}}
+            //是否为空
+            var  hj_phone= $("#hj_phone").val();
+            if (hj_phone == null || hj_phone.length == 0 || judgeIsNullStr(hj_phone)) {
+                hui.iconToast('手机号不能为空', 'warn');
+                return false;
+            }
+            $.ajax({
+                type: 'GET',
+                url: "{{URL::asset('api/validateNewPhone')}}",
+                dataType: 'json',
+                data: {
+                    'hj_phone' : hj_phone,
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        hui.iconToast('发送中...', 'warn');
+                        settime();
+                    } else {
+                        hui.iconToast(data.message, 'warn');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
         }
     </script>
 @endsection
