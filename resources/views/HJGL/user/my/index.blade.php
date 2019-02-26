@@ -8,11 +8,11 @@
         <div class="hui-list" style="background:#FFFFFF; margin-top:28px;">
             {{--<a style="height:auto; height:80px; padding-bottom:8px;">--}}
                 <div class="hui-list-icons" style="width:110px; height:80px;float:left;">
-                    123123<img src="" style="width:66px; margin:0px; border-radius:50%;" />
+                    <img src="{{$user_info->headimgurl}}" style="width:66px; margin:0px; border-radius:50%;" />
                 </div>
                 <div style="height:79px; line-height:79px;float:left;">
                     <div class="hui-list-text-content">
-                        Hcoder.net
+                        {{$user_info->nick_name}}
                     </div>
                 </div>
             {{--</a>--}}

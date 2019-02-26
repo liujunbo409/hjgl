@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Config;
 use EasyWeChat\Factory;
 
 class PerfectController extends Controller{
+    //判断微信用户是否录入手机号信息
     public function perfect_phone(Request $request){
         $session = $request->session()->get('wechat_user','');
         if(empty($session)){
             return view('HJGL.user.perfect.perfectPhone');
         }
         $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
+        if(empty($openid)){
+            return view('HJGL.user.index.lose');
+        }
         $user = UserInfoManager::getByOpenId($openid);
         if(empty($user) || empty($user->hj_phone)){
             return view('HJGL.user.perfect.perfectPhone');
@@ -34,6 +38,11 @@ class PerfectController extends Controller{
 
     public function perfect_phone_save(Request $request){
         $data = $request->all();
+        $session = $request->session()->get('wechat_user','');
+        $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
+        if(empty($session) || empty($openid)){
+            return view('HJGL.user.perfect.lose');
+        }
         if (!array_key_exists('hj_phone', $data) || Utils::isObjNull($data['hj_phone'])) {
             return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::PHONE_LOST);
         }
@@ -50,6 +59,25 @@ class PerfectController extends Controller{
         }
         $info = new UserInfo();
         $user = UserInfoManager::serInfo($info,$data);
+        if (array_key_exists('nickname', $session['original']) && !Utils::isObjNull($session['original']['nickname'])) {
+            $user->nick_name = $session['original']['nickname'];
+        }
+        if (array_key_exists('sex', $session['original']) && !Utils::isObjNull($session['original']['sex'])) {
+            $user->sex = $session['original']['sex'];
+        }
+        if (array_key_exists('city', $session['original']) && !Utils::isObjNull($session['original']['city'])) {
+            $user->city = $session['original']['city'];
+        }
+        if (array_key_exists('province', $session['original']) && !Utils::isObjNull($session['original']['province'])) {
+            $user->province = $session['original']['province'];
+        }
+        if (array_key_exists('headimgurl', $session['original']) && !Utils::isObjNull($session['original']['headimgurl'])) {
+            $user->headimgurl = $session['original']['headimgurl'];
+        }
+        if (array_key_exists('country', $session['original']) && !Utils::isObjNull($session['original']['country'])) {
+            $user->country = $session['original']['country'];
+        }
+        $user->openid = $openid;
         $user->save();
         $put = array(
             'hj_phone'=>$data['hj_phone']
@@ -58,6 +86,7 @@ class PerfectController extends Controller{
         return ApiResponse::makeResponse(true, '首次保存个人手机号码成功', ApiResponse::SUCCESS_CODE);
     }
 
+    //判断用户是否录入详细信息
     public function perfect_info(Request $request){
         $session = $request->session()->get('hj','');
         if(empty($session) || empty($session['hj_phone'])){
@@ -110,6 +139,7 @@ class PerfectController extends Controller{
         }
     }
 
+    //发送痒验证码
     public function validateNewPhone(Request $request)
     {
         $data = $request->all();
