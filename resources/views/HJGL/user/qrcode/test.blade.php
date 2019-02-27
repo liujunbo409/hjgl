@@ -15,12 +15,12 @@
     <script type="text/javascript" charset="utf-8">
         wx.config({
             debug: true,
-            appId: "{{$data->appId}}",
-            timestamp: "{{$data->timestamp}}",
-            nonceStr: "{{$data->nonceStr}}",
-            signature: "{{$data->signature}}",
+            appId: "{{$data['appId']}}",
+            timestamp: "{{$data['timestamp']}}",
+            nonceStr: "{{$data['nonceStr']}}",
+            signature: "{{$data['signature']}}",
             // signature: '4F76593A4245644FAE4E1BC940F6422A0C3EC03E',
-            jsApiList: "{{$data->jsApiList}}"
+            jsApiList: "{{$data['jsApiList']}}"
         });
         console.log(wx.config);
     </script>
