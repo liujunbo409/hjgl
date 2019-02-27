@@ -30,9 +30,6 @@ Route::group(['middleware'=>['web']],function(){
     Route::any('/wechat', 'HJGL\API\WeChatController@serve');
     Route::get('/webScope', 'HJGL\API\WeChatController@webScope');//网页授权
     Route::get('/getInfo', 'HJGL\API\WeChatController@getInfo');//获取信息
-});
-
-Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
 
     //完善相关
     Route::get('/perfect_phone', 'HJGL\API\PerfectController@perfect_phone');//是否绑定手机号码
@@ -41,6 +38,9 @@ Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
     Route::any('/perfect_info_save', 'HJGL\API\PerfectController@perfect_info_save');//完善个人信息
     Route::any('/validateNewPhone', 'HJGL\API\PerfectController@validateNewPhone');//发送验证码
     Route::any('/lose', 'HJGL\API\PerfectController@lose');//信息丢失
+});
+
+Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
 
     //环境检测
     Route::get('/hjjc/index', 'HJGL\API\HjjcController@index');
