@@ -39,7 +39,7 @@ class HJGLCheckUserLogin
         }
         $session = $request->session()->get('wechat_user','');
         $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
-        if(empty(!$session) || empty(!$openid)){
+        if(empty($session) || empty($openid)){
             return redirect('/api/lose');
         }else{
             $user = UserInfoManager::getByOpenId($openid);
