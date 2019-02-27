@@ -112,6 +112,9 @@ class UserInfoManager{
         if (array_key_exists('hj_area', $data) && !Utils::isObjNull($data['hj_area'])) {
             $info->hj_area = array_get($data, 'hj_area');
         }
+        if (array_key_exists('hj_address', $data) && !Utils::isObjNull($data['hj_address'])) {
+            $info->hj_address = array_get($data, 'hj_address');
+        }
         if (array_key_exists('status', $data) && !Utils::isObjNull($data['status'])) {
             $info->status = array_get($data, 'status');
         }

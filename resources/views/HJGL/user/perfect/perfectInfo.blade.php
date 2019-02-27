@@ -38,7 +38,7 @@
                 </ul>
             </div>
             <div style="padding:15px 8px;">
-                <span type="button" onclick="submit()" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</span>
+                <span type="button" onclick="submit()" class="hui-button hui-primary hui-wrap" value="" id="submitBtn" style="margin-top:10%;">确定</span>
             </div>
         </form>
     </div>
