@@ -39,16 +39,17 @@ class HJGLCheckUserLogin
         }
         $session = $request->session()->get('wechat_user','');
         $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
-        if(empty($session) || empty($openid)){
-            return view('HJGL.user.index.lose');
-        }
-        $user = UserInfoManager::getByOpenId($openid);
-        if(empty($user) || empty($user->hj_phone)){
-            return redirect('/api/perfect_phone');
-        }else if(empty($user->hj_name) || empty($user->hj_sex) || empty($user->hj_province) || empty($user->hj_city) || empty($user->hj_area) || empty($user->hj_address)){
-            return redirect('/api/perfect_info');
+        if(empty(!$session) || empty(!$openid)){
+            return redirect('/api/lose');
         }else{
-            return $next($request);
+            $user = UserInfoManager::getByOpenId($openid);
+            if(empty($user) || empty($user->hj_phone)){
+                return redirect('/api/perfect_phone');
+            }else if(empty($user->hj_name) || empty($user->hj_sex) || empty($user->hj_province) || empty($user->hj_city) || empty($user->hj_area) || empty($user->hj_address)){
+                return redirect('/api/perfect_info');
+            }else{
+                return $next($request);
+            }
         }
     }
 

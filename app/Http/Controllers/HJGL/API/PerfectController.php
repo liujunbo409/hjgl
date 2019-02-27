@@ -16,6 +16,7 @@ use EasyWeChat\Factory;
 class PerfectController extends Controller{
     //判断微信用户是否录入手机号信息
     public function perfect_phone(Request $request){
+        dd('2');
         return view('HJGL.user.perfect.perfectPhone');
     }
 
@@ -125,5 +126,8 @@ class PerfectController extends Controller{
             return ApiResponse::makeResponse(true,'短信验证码已发送', ApiResponse::SUCCESS_CODE);
         }
         return ApiResponse::makeResponse(false, '短信验证码发送失败', ApiResponse::SM_VERTIFY_SEND_ERROR);
+    }
+    public function lose(){
+        return view('HJGL.user.index.lose');
     }
 }
