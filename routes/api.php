@@ -62,6 +62,7 @@ Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
 
     //二维码相关
     Route::get('/QRcode/index/{tool_id}', 'HJGL\API\QRcodeController@index');
+    Route::any('/QRcode/test', 'HJGL\API\QRcodeController@test');
 
 
 });
