@@ -81,7 +81,7 @@ class ToolController{
             if ($e_tool) {
                 return ApiResponse::makeResponse(false, "设备编号重复", ApiResponse::PHONE_DUP);
             }
-            $tool->code = 'http://hj.lljiankang.top/api/QRcode/'.$data['number'];
+            $tool->code = 'http://hj.lljiankang.top/api/QRcode/index/'.$data['number'];
             $tool = ToolManager::setTool($tool, $data);
         }else{
             $tool = ToolManager::getById($data['id']);
@@ -203,6 +203,7 @@ class ToolController{
 
         $tool->shop_id = $data['shop_id'];
         $tool->shop_name = $shop->shop_name;
+        $tool->code_status = 2;
         $tool->save();
         $shop->tool_qty = $shop->tool_qty + 1;
         $shop->save();

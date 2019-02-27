@@ -27,14 +27,14 @@
             </div>
             <div class="hui-form-items">
                 <div class="hui-form-items-title">图片验证码</div>
-                <input class="hui-input hui-pwd-eye" placeholder="请输入图片验证码" checkType="string" id="pwd" checkData="6,20" checkMsg="密码应为6-20个字符" />
+                <input class="hui-input hui-pwd-eye" placeholder="请输入图片验证码" checkType="string" id="img_code" checkData="6,20" checkMsg="图片验证码应为6-20个字符" />
                 <div style="height:22px;">
                     <img src="" width="100px" />
                 </div>
             </div>
             <div class="hui-form-items">
-                <div class="hui-form-items-title">验证码</div>
-                <input type="number" placeholder="请输入短信验证码" class="hui-input" name="yzm" value="" checkType="reg" checkData="^\d{4,4}$" checkMsg="验证码应该为4个数字" />
+                <div class="hui-form-items-title">短信验证码</div>
+                <input type="number" placeholder="请输入短信验证码" class="hui-input" id="sm_validate" name="sm_validate" value="" checkType="reg" checkData="^\d{4,4}$" checkMsg="短信验证码应该为4个数字" />
                 <div style="width:240px;height:40px;">
                     <div class="hui-primary s2" style="float:right;line-height: 30px;width: 100px;text-align: center;cursor: pointer;" id="getVcode"
                          onclick="sendMsg()">获取验证码
@@ -45,18 +45,47 @@
             </div>
         </div>
         <div style="padding:15px 8px;">
-            <a href="javascript:hui.back();" type="button" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</a>
+            <span type="button" onclick="submit()" class="hui-button hui-primary hui-wrap" id="submitBtn" style="margin-top:10%;">确定</span>
         </div>
     </div>
 @endsection
 
 @section('script')
     <script type="text/javascript">
-        function s1() {
+        function submit() {
             //验证
             var res = huiFormCheck('#form1');
             //提交
-            if(res){hui.iconToast('验证通过！');}
+            // if(res){hui.iconToast('验证通过！');}
+
+            var  hj_phone= $("#hj_phone").val();
+            var  img_code= $("#img_code").val();
+            var  sm_validate= $("#sm_validate").val();
+
+            $.ajax({
+                type: 'post',
+                url: "{{URL::asset('api/my/phone_save')}}",
+                dataType: 'json',
+                data: {
+                    'hj_phone' : hj_phone,
+                    'img_code' : img_code,
+                    'sm_validate' : sm_validate,
+                    '_token': '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        hui.iconToast(data.message, 'warn');
+                        settime();
+                        window.location="{{URL::asset('api/my/index')}}";
+                    } else {
+                        hui.iconToast(data.message, 'warn');
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
         }
         var countdown = 60;
         /*
