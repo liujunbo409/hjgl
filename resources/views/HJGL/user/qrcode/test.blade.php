@@ -3,10 +3,10 @@
 </style>
 @section('content')
     <div class="hui-header">
-        <h1>个人信息</h1>
+        <h1>扫一扫</h1>
     </div>
     <div class="hui-wrap" style="width:100%;">
-        <span onclick="scanQRCode()">调用微信扫一扫</span>
+
     </div>
 @endsection
 
@@ -15,7 +15,7 @@
     <script type="text/javascript" charset="utf-8">
         wx.config(<?php use Illuminate\Support\Facades\Config;
             use EasyWeChat\Factory; $config = Config::get("wechat.official_account.default");
-            $app = Factory::officialAccount($config); echo $app->jssdk->buildConfig(array('scanQRCode'), true) ?>);
+            $app = Factory::officialAccount($config); echo $app->jssdk->buildConfig(array('scanQRCode'), false) ?>);
         {{--wx.config({--}}
             {{--debug: true,--}}
             {{--appId: "{{$data['appId']}}",--}}
@@ -24,32 +24,29 @@
             {{--signature: "{{$data['signature']}}",--}}
             {{--jsApiList: "{{$data['jsApiList']}}"--}}
         {{--});--}}
-        console.log(wx.config);
-        {{--wx.ready(function () {--}}
-            {{--wx.checkJsApi({--}}
-                {{--jsApiList: ['checkJsApi','openLocation'],--}}
-                {{--success: function (res) {}--}}
-            {{--});--}}
-        {{--});--}}
-        {{--wx.error(function(res){--}}
-            {{--console.log(res);--}}
-        {{--});--}}
+        // console.log(wx.config);
+        wx.ready(function () {
+
+        });
+        wx.error(function(res){
+            console.log(res);
+        });
         function scanQRCode(){
             wx.scanQRCode({
-                needResult : 1,
-                scanType : [ "qrCode", "barCode" ],
-                success : function(res) {
-                    console.log(res);
-                    alert(JSON.stringify(res));
+                needResult: 1,
+                scanType: ["qrCode", "barCode"],
+                success: function (res) {
+                    // console.log(res);
+                    window.location=res.resultStr;
+                    // alert(JSON.stringify(res));
                     var result = res.resultStr;
                 },
-                fail : function(res) {
-                    console.log(res);
-                    alert(JSON.stringify(res));
-
+                fail: function (res) {
+                    // console.log(res);
+                    // alert(JSON.stringify(res));
                 }
+            })
         }
-
     </script>
     <script type="text/javascript">
 
