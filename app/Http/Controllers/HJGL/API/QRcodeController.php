@@ -23,12 +23,35 @@ class QRcodeController extends Controller{
             $jsapi_ticket = $re->ticket;
             cache(['jsapi_ticket'=>$re->ticket],$re->expires_in - 200);
         }
-        dd($jsapi_ticket);
-        return view('HJGL.user.qrcode.test',['jsapi_ticket'=>$jsapi_ticket]);
+        $time = time();
+        $noncestr = 'hkhKHKHJKhjk';
+        $str_array = array(
+            'noncestr'=>$noncestr,
+            'jsapi_ticket'=>$jsapi_ticket,
+            'timestamp'=>$time,
+            'url'=>'http://hj.lljiankang.top/api/QRcode/test',
+        );
+        ksort($str_array);
+        $str = '';
+        foreach($str_array as $k=>$v){
+            $str .= $k.'='.$v.'&';
+        }
+        $str = substr($str,0,-1);
+        $signature = sha1($str);
+        $data = array(
+            'appId'=>'wxa683153d92d8a626',
+            'timestamp'=>$time,
+            'nonceStr'=>$noncestr,
+            'signature'=> $signature,
+            'jsApiList'=> '[scanQRCode]'
+        );
+        return view('HJGL.user.qrcode.test',['data'=>$data]);
     }
 
     public function index($tool_id){
         dd($tool_id);
         return('到达测试');
     }
+
+
 }
