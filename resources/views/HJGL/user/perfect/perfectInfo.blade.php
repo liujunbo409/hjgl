@@ -134,7 +134,7 @@
                 success: function (data) {
                     console.log(data);
                     if (data.code == 200) {
-                        window.location="{{URL::asset('api/my/index')}}";
+                        window.location="{{URL::asset('api/hjjc/index')}}";
                     } else {
                         hui.iconToast(data.message, 'warn');
                     }

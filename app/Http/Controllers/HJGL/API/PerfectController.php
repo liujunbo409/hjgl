@@ -16,24 +16,7 @@ use EasyWeChat\Factory;
 class PerfectController extends Controller{
     //判断微信用户是否录入手机号信息
     public function perfect_phone(Request $request){
-        $session = $request->session()->get('wechat_user','');
-        if(empty($session)){
-            return view('HJGL.user.perfect.perfectPhone');
-        }
-        $openid = isset($session['original']['openid']) ? $session['original']['openid'] : '';
-        if(empty($openid)){
-            return view('HJGL.user.index.lose');
-        }
-        $user = UserInfoManager::getByOpenId($openid);
-        if(empty($user) || empty($user->hj_phone)){
-            return view('HJGL.user.perfect.perfectPhone');
-        }else{
-            $put = array(
-                'hj_phone'=>$user->hj_phone,
-            );
-            $request->session()->put('hj', $put );
-            return redirect('/api/perfect_info');
-        }
+        return view('HJGL.user.perfect.perfectPhone');
     }
 
     public function perfect_phone_save(Request $request){
@@ -89,17 +72,7 @@ class PerfectController extends Controller{
 
     //判断用户是否录入详细信息
     public function perfect_info(Request $request){
-        $session = $request->session()->get('hj','');
-        if(empty($session) || empty($session['hj_phone'])){
-            return view('HJGL.user.perfect.perfectPhone');
-        }else{
-            $user = UserInfoManager::getByPhone($session['hj_phone']);
-            if(empty($user) || empty($user->hj_phone) || empty($user->hj_name) || empty($user->hj_sex) || empty($user->hj_province) || empty($user->hj_city) || empty($user->hj_area) || empty($user->hj_address)){
-                return view('HJGL.user.perfect.perfectInfo');
-            }else{
-                return redirect('/api/hjjc/index');
-            }
-        }
+        return view('HJGL.user.perfect.perfectInfo');
     }
 
     public function perfect_info_save(Request $request){
