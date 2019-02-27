@@ -23,6 +23,15 @@
             jsApiList: "{{$data['jsApiList']}}"
         });
         console.log(wx.config);
+        wx.ready(function () {
+            wx.checkJsApi({
+                jsApiList: ['checkJsApi','openLocation'],
+                success: function (res) {}
+            });
+        });
+        wx.error(function(res){
+            console.log(res);
+        });
     </script>
     <script type="text/javascript">
 
