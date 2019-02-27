@@ -15,7 +15,7 @@
     <script type="text/javascript" charset="utf-8">
         wx.config(<?php use Illuminate\Support\Facades\Config;
             use EasyWeChat\Factory; $config = Config::get("wechat.official_account.default");
-            $app = Factory::officialAccount($config); echo $app->jssdk->buildConfig(array('onMenuShareQQ', 'onMenuShareWeibo'), true) ?>);
+            $app = Factory::officialAccount($config); echo $app->jssdk->buildConfig(array('scanQRCode'), true) ?>);
         {{--wx.config({--}}
             {{--debug: true,--}}
             {{--appId: "{{$data['appId']}}",--}}

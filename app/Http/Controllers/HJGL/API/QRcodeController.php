@@ -44,7 +44,7 @@ class QRcodeController extends Controller{
             'timestamp'=>$time,
             'nonceStr'=>$noncestr,
             'signature'=> $signature,
-            'jsApiList'=> ["onMenuShareTimeline","onMenuShareAppMessage"],
+            'jsApiList'=> ["scanQRCode"],
 //            'jsApiList'=> '[scanQRCode]',
         );
         return view('HJGL.user.qrcode.test',['data'=>$data]);
