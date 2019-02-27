@@ -11,10 +11,11 @@ use EasyWeChat\Factory;
 class QRcodeController extends Controller{
 
     public function test(Request $request){
+        $config = Config::get("wechat.official_account.default");
+        $app = Factory::officialAccount($config);
+
         $jsapi_ticket = cache('jsapi_ticket', null);
         if(empty($jsapi_ticket)){
-            $config = Config::get("wechat.official_account.default");
-            $app = Factory::officialAccount($config);
             $accessToken = $app->access_token;
             $token = $accessToken->getToken();
             $url='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$token['access_token'].'&type=jsapi';
@@ -43,7 +44,8 @@ class QRcodeController extends Controller{
             'timestamp'=>$time,
             'nonceStr'=>$noncestr,
             'signature'=> $signature,
-            'jsApiList'=> '[scanQRCode]'
+            'jsApiList'=> ["onMenuShareTimeline","onMenuShareAppMessage"],
+//            'jsApiList'=> '[scanQRCode]',
         );
         return view('HJGL.user.qrcode.test',['data'=>$data]);
     }
