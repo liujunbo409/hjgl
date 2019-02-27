@@ -6,12 +6,12 @@
         <h1>个人信息</h1>
     </div>
     <div class="hui-wrap" style="width:100%;">
-            123
+        <span onclick="scanQRCode()">调用微信扫一扫</span>
     </div>
 @endsection
 
 @section('script')
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
         wx.config(<?php use Illuminate\Support\Facades\Config;
             use EasyWeChat\Factory; $config = Config::get("wechat.official_account.default");
@@ -34,6 +34,22 @@
         {{--wx.error(function(res){--}}
             {{--console.log(res);--}}
         {{--});--}}
+        function scanQRCode(){
+            wx.scanQRCode({
+                needResult : 1,
+                scanType : [ "qrCode", "barCode" ],
+                success : function(res) {
+                    console.log(res);
+                    alert(JSON.stringify(res));
+                    var result = res.resultStr;
+                },
+                fail : function(res) {
+                    console.log(res);
+                    alert(JSON.stringify(res));
+
+                }
+        }
+
     </script>
     <script type="text/javascript">
 
