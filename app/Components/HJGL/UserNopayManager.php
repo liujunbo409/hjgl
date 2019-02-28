@@ -11,6 +11,13 @@ use App\Models\HJGL\UserNopay;
 use App\Components\Utils;
 
 class UserNopayManager{
+
+    public static function getById($user_openid)
+    {
+        $info = UserNopay::where('user_openid', '=', $user_openid)->first();
+        return $info;
+    }
+
     /*
      * 根据条件获取
      *

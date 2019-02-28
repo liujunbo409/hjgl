@@ -6,23 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\HJGL\UserNopay;
 use App\Components\HJGL\UserNopayManager;
 use App\Components\HJGL\ToolManager;
+use App\Components\Utils;
 
 class QRcodeController extends Controller{
 
     public function index(Request $request){
         $session = $request->session()->get('wechat_user','');
         $data = $request->all();
-        $tool_num = isset($data->tool_num) ? $data->tool_num : '';
+        $tool_num = isset($data['tool_num']) ? $data['tool_num'] : '';
         if(empty($tool_num)){
             return('设备编码获取失败');
         }
         if(is_numeric($tool_num)){
             return('设备编码错误');
         }
-        $con_arr = array(
-            'user_openid'=>$session['original']['openid'],
-        );
-        $nopay = UserNopayManager::getListByCon($con_arr,false);
+        $nopay = UserNopayManager::getById($session['original']['openid']);
         if($nopay->count() == 0){
             $nopay = new UserNopay();
             $nopay->user_openid = $session['original']['openid'];
