@@ -1,19 +1,19 @@
 <?php
 namespace App\Http\Controllers\HJGL\API;
 
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HJGL\UserNopay;
 use App\Components\HJGL\UserNopayManager;
 use App\Components\HJGL\ToolManager;
 
-
-
 class QRcodeController extends Controller{
 
     public function index(Request $request){
-        $session = $request->session()->get('wechat_user');
+        dd($request);
+//        $session = $request->session()->get('wechat_user','');
+        $session = $request->session();
+        dd($session);
         $tool_num = $request->tool_num;
         if(empty($tool_num)){
             return('设备编码获取失败');
