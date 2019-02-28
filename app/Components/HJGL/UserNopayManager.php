@@ -22,7 +22,7 @@ class UserNopayManager{
         $info = new UserNopay();
         //相关条件
         if (array_key_exists('user_openid', $con_arr) && !Utils::isObjNull($con_arr['user_openid'])) {
-            $info = $info->whereIn('user_openid',$con_arr['user_openid']);
+            $info = $info->where('user_openid', '=' ,$con_arr['user_openid']);
         }
         $info = $info->orderBy('id', 'desc');
         //配置规则
