@@ -10,7 +10,6 @@ use App\Components\HJGL\ToolManager;
 class QRcodeController extends Controller{
 
     public function index(Request $request){
-        dd($request);
 //        $session = $request->session()->get('wechat_user','');
         $session = $request->session();
         dd($session);
