@@ -10,10 +10,9 @@ use App\Components\HJGL\ToolManager;
 class QRcodeController extends Controller{
 
     public function index(Request $request){
-//        $session = $request->session()->get('wechat_user','');
-        $session = $request->session();
-        dd($session);
-        $tool_num = $request->tool_num;
+        $session = $request->session()->get('wechat_user','');
+        $data = $request->all();
+        $tool_num = isset($data->tool_num) ? $data->tool_num : '';
         if(empty($tool_num)){
             return('设备编码获取失败');
         }
@@ -31,6 +30,7 @@ class QRcodeController extends Controller{
         }else{
             $nopay->tool_num = $nopay->tool_num.','.$tool_num;
         }
+        $nopay->save();
         $tool_array_num = explode(',',$nopay->tool_num);
         foreach($tool_array_num as $v){
             cache([$v=>$nopay->user_openid],1);
