@@ -15,9 +15,9 @@
     }
 </style>
 @section('content')
-    <div class="hui-header">
-        <h1>环境检测</h1>
-        <div id="hui-header-menu"></div>
+    <div class="hui-header" style="width:100%;">
+        <div style="width:80%;"><h1>环境检测</h1></div>
+        <div style="width:20%;margin-top:2%;float:right;text-align:center;"><span style="color:#fcfcfc;font-size:25px;" onclick="scanQRCode()">扫</span></div>
     </div>
     <div class="hui-wrap">
         <div style="float:left;margin:4%;">
