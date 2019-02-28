@@ -21,15 +21,16 @@ class QRcodeController extends Controller{
             return('设备编码错误');
         }
         $nopay = UserNopayManager::getById($session['original']['openid']);
-        if($nopay->count() == 0){
+        if(empty($nopay) || $nopay->count() == 0){
             $nopay = new UserNopay();
             $nopay->user_openid = $session['original']['openid'];
             $nopay->tool_num = $tool_num;
-        }else{
-            $nopay->tool_num = $nopay->tool_num.','.$tool_num;
         }
         $nopay->save();
         $tool_array_num = explode(',',$nopay->tool_num);
+        if(!in_array($tool_num,$tool_array_num)){
+            $nopay->tool_num = $nopay->tool_num.','.$tool_num;
+        }
         foreach($tool_array_num as $v){
             cache([$v=>$nopay->user_openid],1);
         }

@@ -43,7 +43,7 @@ class ToolManager{
         $tools = new Tool();
         //相关条件
         if (array_key_exists('numbers', $con_arr) && !Utils::isObjNull($con_arr['numbers'])) {
-            $tools = $tools->whereIn('numbers', $con_arr['numbers']);
+            $tools = $tools->whereIn('number', $con_arr['numbers']);
         }
         if (array_key_exists('shop_id', $con_arr) && !Utils::isObjNull($con_arr['shop_id'])) {
             $tools = $tools->where('shop_id', '=', $con_arr['shop_id']);
