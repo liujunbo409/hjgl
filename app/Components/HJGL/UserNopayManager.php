@@ -32,7 +32,7 @@ class UserNopayManager{
             $info = $info->where('user_openid', '=' ,$con_arr['user_openid']);
         }
         if (array_key_exists('start_time', $con_arr) && !Utils::isObjNull($con_arr['start_time']) && array_key_exists('end_time', $con_arr) && !Utils::isObjNull($con_arr['end_time'])) {
-            $info = $info->whereBetween('updated_at', $con_arr['start_time'] ,$con_arr['end_time']);
+            $info = $info->whereBetween('updated_at', [$con_arr['start_time'] ,$con_arr['end_time']]);
         }
         $info = $info->orderBy('id', 'desc');
         //配置规则

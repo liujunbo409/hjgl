@@ -22,6 +22,7 @@ class QRcodeController extends Controller{
                 $v->delete();
             }
         }
+        dd($del);
         $session = $request->session()->get('wechat_user','');
         $data = $request->all();
         $tool_num = isset($data['tool_num']) ? $data['tool_num'] : '';
