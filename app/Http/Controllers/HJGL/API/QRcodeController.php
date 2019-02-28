@@ -14,15 +14,14 @@ class QRcodeController extends Controller{
     public function index(Request $request){
         $con_arr = array(
             'start_time'=>'1999-01-01 00:00:00',
-            'end_time'=>date('Y-m-d H:i:s',time() - 60 * 10),
+            'end_time'=>date('Y-m-d H:i:s',time() - 6),
         );
-        $del = ToolManager::getListByCon($con_arr,false);
+        $del = UserNopayManager::getListByCon($con_arr,false);
         if(!empty($del) && $del->count() > 0){
             foreach($del as $v){
                 $v->delete();
             }
         }
-        dd($del);
         $session = $request->session()->get('wechat_user','');
         $data = $request->all();
         $tool_num = isset($data['tool_num']) ? $data['tool_num'] : '';
@@ -49,11 +48,12 @@ class QRcodeController extends Controller{
             foreach($tool_array_num as $v){
                 cache([$v=>$nopay->user_openid],0.1);
             }
+            $new_tool_array_nums = explode(',',$nopay->tool_num);
             $tool_arr = array(
-                'numbers' =>$tool_array_num,
+                'numbers' =>$new_tool_array_nums,
             );
-            $tool_array = ToolManager::getListByCon($tool_arr,false);
-            dd($tool_array);
+            $tools = ToolManager::getListByCon($tool_arr,false);
+            return view('HJGL.user.qrcode.nopay',['tools'=>$tools]);
         }
     }
 
