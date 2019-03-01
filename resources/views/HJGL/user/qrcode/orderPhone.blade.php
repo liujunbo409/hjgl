@@ -23,7 +23,7 @@
             <div class="hui-form-items">
                 <input type="hidden" name="openid" id="openid" value="{{isset($user_info->openid)?$user_info->openid : '' }}">
                 <div class="hui-form-items-title">手机号</div>
-                <input class="hui-input hui-input-clear" id="hj_phone" name="hj_phone" value="{{isset($user_info->hj_phone)?$user_info->hj_phone: '' }}" checkType="string" checkData="11,11" checkMsg="手机号应为11个数字" />
+                <input class="hui-input hui-input-clear" id="phone" name="phone" value="{{isset($user_info->hj_phone)?$user_info->hj_phone: '' }}" checkType="string" checkData="11,11" checkMsg="手机号应为11个数字" />
             </div>
             <div class="hui-form-items">
                 <div class="hui-form-items-title">图片验证码</div>
@@ -57,7 +57,7 @@
             var res = huiFormCheck('#form1');
             //提交
             if(res){
-                var  hj_phone= $("#hj_phone").val();
+                var  phone= $("#phone").val();
                 var  img_code= $("#img_code").val();
                 var  sm_validate= $("#sm_validate").val();
 
@@ -66,7 +66,7 @@
                     url: "{{URL::asset('api/QRcode/orderPhoneSave')}}",
                     dataType: 'json',
                     data: {
-                        'hj_phone' : hj_phone,
+                        'phone' : phone,
                         'img_code' : img_code,
                         'sm_validate' : sm_validate,
                         '_token': '{{csrf_token()}}'
@@ -76,7 +76,7 @@
                         if (data.code == 200) {
                             hui.iconToast(data.message, 'warn');
                             settime();
-                            window.location="{{URL::asset('api/my/index')}}";
+                            window.location="{{URL::asset('api/QRcode/paying')}}";
                         } else {
                             hui.iconToast(data.message, 'warn');
                         }
@@ -109,8 +109,8 @@
         //进行表单校验
         function sendMsg() {
             //是否为空
-            var  hj_phone= $("#hj_phone").val();
-            if (hj_phone == null || hj_phone.length == 0 || judgeIsNullStr(hj_phone)) {
+            var  phone= $("#phone").val();
+            if (phone == null || phone.length == 0 || judgeIsNullStr(phone)) {
                 hui.iconToast('手机号不能为空', 'warn');
                 return false;
             }
@@ -119,7 +119,7 @@
                 url: "{{URL::asset('api/validateNewPhone')}}",
                 dataType: 'json',
                 data: {
-                    'hj_phone' : hj_phone,
+                    'hj_phone' : phone,
                 },
                 success: function (data) {
                     console.log(data);

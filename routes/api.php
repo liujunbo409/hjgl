@@ -67,6 +67,7 @@ Route::group(['middleware'=>['web','hjgl.userLogin']],function(){
     Route::any('/QRcode/order_list', 'HJGL\API\QRcodeController@order_list');
     Route::any('/QRcode/orderPhone', 'HJGL\API\QRcodeController@orderPhone');
     Route::any('/QRcode/orderPhoneSave', 'HJGL\API\QRcodeController@orderPhoneSave');
+    Route::any('/QRcode/paying', 'HJGL\API\QRcodeController@paying');
 
 });
 

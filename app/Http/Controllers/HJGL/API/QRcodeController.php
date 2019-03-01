@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\HJGL\API;
 
+use App\Components\HJGL\UserInfoManager;
 use App\Http\Controllers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,8 +9,7 @@ use App\Models\HJGL\UserNopay;
 use App\Components\HJGL\UserNopayManager;
 use App\Components\HJGL\ToolManager;
 use App\Components\Utils;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
+use App\Components\HJGL\VertifyManager;
 
 class QRcodeController extends Controller{
 
@@ -85,12 +85,43 @@ class QRcodeController extends Controller{
     }
 
     public function orderPhone(Request $request){
-        return view('HJGL.user.qrcode.orderPhone');
+        $session = $request->session()->get('wechat_user','');
+        $user_info = UserInfoManager::getByOpenId($session['original']['openid']);
+        return view('HJGL.user.qrcode.orderPhone',['user_info'=>$user_info]);
     }
 
     public function orderPhoneSave(Request $request){
-        return view('HJGL.user.qrcode.orderPhone');
+        $data = $request->all();
+        $session = $request->session()->get('wechat_user','');
+        $nopay = UserNopayManager::getById($session['original']['openid']);
+        if($nopay->count() == 0){
+            return ApiResponse::makeResponse(false, '相关信息获取失败', ApiResponse::MISSING_PARAM);
+        }else{
+            if (!array_key_exists('phone', $data) || Utils::isObjNull($data['phone'])) {
+                return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::MISSING_PARAM);
+            }
+            if (!array_key_exists('sm_validate', $data) || Utils::isObjNull($data['sm_validate'])) {
+                return ApiResponse::makeResponse(false, '短信验证码缺失', ApiResponse::SM_VERTIFY_LOST);
+            }
+            $ys_sm = VertifyManager::judgeVertifyCode($data['phone'], $data['sm_validate']);
+            if (!$ys_sm) {
+                return ApiResponse::makeResponse(false, '短信验证码验证失败', ApiResponse::SM_VERTIFY_ERROR);
+            }
+            foreach($nopay as $v){
+                $v->user_phone = $data['phone'];
+                $v->save();
+            }
+        }
+        return ApiResponse::makeResponse(true, '手机号验证成功', ApiResponse::SUCCESS_CODE);
     }
 
+    public function paying(Request $request){
+        $session = $request->session()->get('wechat_user','');
+        $nopay = UserNopayManager::getById($session['original']['openid']);
+        foreach($nopay as $v){
+            $v->delete();
+        }
+        return('支付成功');
+    }
 
 }
