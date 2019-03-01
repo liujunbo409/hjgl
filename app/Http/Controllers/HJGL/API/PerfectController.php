@@ -132,16 +132,12 @@ class PerfectController extends Controller{
         }
     }
 
-    //发送痒验证码
+    //发送验证码
     public function validateNewPhone(Request $request)
     {
         $data = $request->all();
         if (!array_key_exists('hj_phone', $data) || Utils::isObjNull($data['hj_phone'])) {
             return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::PHONE_LOST);
-        }
-        $is_have=UserInfoManager::getByPhone($data['hj_phone']);
-        if($is_have){
-            return ApiResponse::makeResponse(false, '手机号已存在', ApiResponse::PHONE_HAS_BEEN_SELECTED);
         }
         $result = VertifyManager::sendVertify($data['hj_phone']);
         if($result){
