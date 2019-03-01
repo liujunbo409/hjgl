@@ -81,9 +81,14 @@ class QRcodeController extends Controller{
 //                cache([$nopay->tool_num=>$nopay->user_openid],0.1);
             }
         }
+        return ApiResponse::makeResponse(true,'', ApiResponse::SUCCESS_CODE);
     }
 
     public function orderPhone(Request $request){
+        return view('HJGL.user.qrcode.orderPhone');
+    }
+
+    public function orderPhoneSave(Request $request){
         return view('HJGL.user.qrcode.orderPhone');
     }
 
