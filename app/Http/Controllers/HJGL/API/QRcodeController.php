@@ -69,8 +69,7 @@ class QRcodeController extends Controller{
         }
     }
 
-
-    public function pay_PPhone(Request $request){
+    public function order_list(Request $request){
         $data = $request->all();
         $order_1 = explode(',',$data['order']);
         foreach($order_1 as $k=>$v){
@@ -79,9 +78,13 @@ class QRcodeController extends Controller{
                 $nopay->work_start = $order_1[$k+1].' '.$order_1[$k+2];
                 $nopay->work_time = $order_1[$k+3];
                 $nopay->save();
+//                cache([$nopay->tool_num=>$nopay->user_openid],0.1);
             }
         }
-        Log::info($order_1);
+    }
+
+    public function orderPhone(Request $request){
+        return view('HJGL.user.qrcode.orderPhone');
     }
 
 

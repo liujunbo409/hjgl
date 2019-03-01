@@ -104,7 +104,7 @@
                 console.log(str);
                 $.ajax({
                     type: 'POST',
-                    url: "{{URL::asset('api/QRcode/pay_PPhone')}}",
+                    url: "{{URL::asset('api/QRcode/order_list')}}",
                     dataType: 'json',
                     data:{
                         'order':str,
@@ -113,9 +113,9 @@
                     success: function (data) {
                         console.log(data);
                         if (data.code == 200) {
-                            hui.iconToast('发送中...', 'warn');
+                            window.location="{{URL::asset('api/QRcode/orderPhone')}}";
                         } else {
-                            hui.iconToast(data.message, 'warn');
+                            // hui.iconToast(data.message, 'warn');
                         }
                     },
                     error: function (data) {
