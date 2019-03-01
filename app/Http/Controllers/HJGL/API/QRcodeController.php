@@ -9,6 +9,7 @@ use App\Components\HJGL\UserNopayManager;
 use App\Components\HJGL\ToolManager;
 use App\Components\Utils;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class QRcodeController extends Controller{
 
@@ -62,7 +63,10 @@ class QRcodeController extends Controller{
 
     public function pay_PPhone(Request $request){
         $data = $request->all();
-        return ApiResponse::makeResponse(false, $data, ApiResponse::PHONE_HAS_BEEN_SELECTED);
+        $order_1 = explode(',',$data['order']);
+        Log::info($order_1);
+        return ApiResponse::makeResponse(true,'123', ApiResponse::SUCCESS_CODE);
+//        return ApiResponse::makeResponse(true,'qweqwe', ApiResponse::SUCCESS_CODE);
     }
 
 

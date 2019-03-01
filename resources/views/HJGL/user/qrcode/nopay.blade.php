@@ -83,27 +83,35 @@
             })
         }
         function submit(){
+            var str = '';
             var paying = new Array();
             var aa = $('#numbers').val();
             var a = JSON.parse(aa);
-            $.each(a, function(){
-                var number = $('#number_'+this).val();
-                paying[number] = new Array();
-                paying[number]['date'] = $('#date_'+this).val();
-                paying[number]['time'] = $('#time_'+this).val();
-                paying[number]['long'] = $('#long_'+this).val();
+            $.each(a, function(key,val){
+                var number = $('#number_'+val).val();
+                paying[number] = $('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
+                // paying[key]['date'] = $('#date_'+val).val();
+                // paying[key]['time'] = $('#time_'+val).val();
+                // paying[key]['long'] = $('#long_'+val).val();
+                if(str.length == 0){
+                    str = $('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
+                }else{
+                    str = str+','+$('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
+                }
             });
-            console.log(paying);
+            console.log(str);
             $.ajax({
                 type: 'POST',
                 url: "{{URL::asset('api/QRcode/pay_PPhone')}}",
                 dataType: 'json',
-                data: paying,
+                data:{
+                    'order':str,
+                    '_token':'{{csrf_token()}}',
+                },
                 success: function (data) {
                     console.log(data);
                     if (data.code == 200) {
                         hui.iconToast('发送中...', 'warn');
-                        settime();
                     } else {
                         hui.iconToast(data.message, 'warn');
                     }
