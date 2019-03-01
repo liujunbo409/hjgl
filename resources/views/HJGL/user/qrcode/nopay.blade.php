@@ -19,22 +19,22 @@
     </div>
     <div class="hui-wrap" style="width:100%;">
         <div style="margin:20px 10px; margin-bottom:15px;" class="hui-form" id="form1">
-            @foreach($tools as $v)
+            @foreach($nopay_s as $v)
                 <div class="hui-form-items">
                     <div class="hui-form-items-title" style="width:30%;">检测器编号:</div>
-                    <input type="text" class="hui-input hui-input-clear" id="number_{{$v->number}}" value="{{$v->number}}" readonly />
+                    <input type="text" class="hui-input hui-input-clear" id="number_{{$v->tool_num}}" value="{{$v->tool_num}}" readonly />
                 </div>
                 <div class="hui-form-items">
                     <div class="hui-form-items-title" style="width:30%;">开始检测时间</div>
-                    <input type="date" id="date_{{$v->number}}" class="hui-button hui-button-large hui-date-picker" value="2018-09-01" style="width:50%;height:30px;" />
+                    <input type="date" id="date_{{$v->tool_num}}" class="hui-button hui-button-large hui-date-picker" value="2018-09-01" style="width:50%;height:30px;" checkType="string" checkData="10,10" checkMsg="开始检测时间未填写1" />
                 </div>
                 <div class="hui-form-items">
                     <div class="hui-form-items-title" style="width:30%;"></div>
-                    <input type="time" id="time_{{$v->number}}" value="" class="hui-button hui-button-large hui-date-picker" style="width:50%;height:30px;" />
+                    <input type="time" id="time_{{$v->tool_num}}" value="" class="hui-button hui-button-large hui-date-picker" style="width:50%;height:30px;" checkType="string" checkData="5,8" checkMsg="开始检测时间未填写2" />
                 </div>
                 <div class="hui-form-items">
                     <div class="hui-form-items-title" style="width:30%;">检测时长</div>
-                    <input id="long_{{$v->number}}" class="hui-input hui-pwd-eye"/>
+                    <input id="long_{{$v->tool_num}}" value="" class="hui-input hui-pwd-eye" checkType="reg" checkData="^\d{4,4}$" checkMsg="检测时长未填写"/>
                 </div>
                 <div class="hui-common-title-line" style="margin:auto;width:100%;height:5px;"></div>
             @endforeach
@@ -47,7 +47,7 @@
             归还结算租金并退还押金
         </div>
         <div style="width:55%;margin:auto;">
-            <input type="hidden" id="numbers" value="{{$numbers}}">
+            <input type="hidden" id="numbers" value="{{$number_json}}">
             <div style="float:left;">2000元</div>
             <a onclick="submit()" style="float:left;margin-left:5px;"><div class="s1" >支付押金</div></a>
         </div>
@@ -83,43 +83,46 @@
             })
         }
         function submit(){
-            var str = '';
-            var paying = new Array();
-            var aa = $('#numbers').val();
-            var a = JSON.parse(aa);
-            $.each(a, function(key,val){
-                var number = $('#number_'+val).val();
-                paying[number] = $('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
-                // paying[key]['date'] = $('#date_'+val).val();
-                // paying[key]['time'] = $('#time_'+val).val();
-                // paying[key]['long'] = $('#long_'+val).val();
-                if(str.length == 0){
-                    str = $('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
-                }else{
-                    str = str+','+$('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
-                }
-            });
-            console.log(str);
-            $.ajax({
-                type: 'POST',
-                url: "{{URL::asset('api/QRcode/pay_PPhone')}}",
-                dataType: 'json',
-                data:{
-                    'order':str,
-                    '_token':'{{csrf_token()}}',
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (data.code == 200) {
-                        hui.iconToast('发送中...', 'warn');
-                    } else {
-                        hui.iconToast(data.message, 'warn');
+            var res = huiFormCheck('#form1');
+            if(res){
+                var str = '';
+                // var paying = new Array();
+                var aa = $('#numbers').val();
+                var a = JSON.parse(aa);
+                $.each(a, function(key,val){
+                    // var number = $('#number_'+val).val();
+                    // paying[number] = $('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
+                    // paying[key]['date'] = $('#date_'+val).val();
+                    // paying[key]['time'] = $('#time_'+val).val();
+                    // paying[key]['long'] = $('#long_'+val).val();
+                    if(str.length == 0){
+                        str = $('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
+                    }else{
+                        str = str+','+$('#number_'+val).val() + ','+ $('#date_'+val).val()+','+$('#time_'+val).val()+','+$('#long_'+val).val();
                     }
-                },
-                error: function (data) {
-                    console.log(data)
-                }
-            });
+                });
+                console.log(str);
+                $.ajax({
+                    type: 'POST',
+                    url: "{{URL::asset('api/QRcode/pay_PPhone')}}",
+                    dataType: 'json',
+                    data:{
+                        'order':str,
+                        '_token':'{{csrf_token()}}',
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.code == 200) {
+                            hui.iconToast('发送中...', 'warn');
+                        } else {
+                            hui.iconToast(data.message, 'warn');
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+                    }
+                });
+            }
         }
     </script>
 @endsection

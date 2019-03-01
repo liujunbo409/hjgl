@@ -18,6 +18,12 @@ class UserNopayManager{
         return $info;
     }
 
+    public static function getByToolNum($tool_num)
+    {
+        $info = UserNopay::where('tool_num', '=', $tool_num)->first();
+        return $info;
+    }
+
     /*
      * 根据条件获取
      *

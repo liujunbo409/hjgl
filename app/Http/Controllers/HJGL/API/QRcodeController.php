@@ -33,30 +33,39 @@ class QRcodeController extends Controller{
         if(is_numeric($tool_num)){
             return('设备编码错误');
         }
+        $tool = ToolManager::getByNumber($tool_num);
+        if(empty($tool)){
+            return('设备获取失败');
+        }
+        if($tool->status != 2){
+            return('该设备未启用');
+        }
+        if($tool->loan_status != 1){
+            return('该设备已被借出或待校准');
+        }
         if(!empty(cache($tool_num))){
             return('该设备正在被下单中');
         }else{
             $nopay = UserNopayManager::getById($session['original']['openid']);
-            if(empty($nopay) || $nopay->count() == 0){
+            if(!empty($nopay)){
+                $nopay->updated_at = date('Y-m-d H:i:s');
+            }else{
                 $nopay = new UserNopay();
                 $nopay->user_openid = $session['original']['openid'];
                 $nopay->tool_num = $tool_num;
             }
-            $tool_array_num = explode(',',$nopay->tool_num);
-            if(!in_array($tool_num,$tool_array_num)){
-                $nopay->tool_num = $nopay->tool_num.','.$tool_num;
-            }
 //            $nopay->save();
-//            foreach($tool_array_num as $v){
-//                cache([$v=>$nopay->user_openid],0.1);
-//            }
-            $new_tool_array_nums = explode(',',$nopay->tool_num);
-            $tool_arr = array(
-                'numbers' =>$new_tool_array_nums,
+            $con_arr1 = array(
+                'user_openid'=>$session['original']['openid'],
             );
-            $tools = ToolManager::getListByCon($tool_arr,false);
-            $numbers = json_encode($new_tool_array_nums);
-            return view('HJGL.user.qrcode.nopay',['tools'=>$tools,'numbers'=>$numbers]);
+            $nopay_s = UserNopayManager::getListByCon($con_arr1,false);
+            $numbers = array();
+            foreach($nopay_s as $v){
+                $numbers[] = $v->tool_num;
+//                cache([$v->tool_num=>$v->user_openid],0.1);
+            }
+            $number_json = json_encode($numbers);
+            return view('HJGL.user.qrcode.nopay',['nopay_s'=>$nopay_s,'number_json'=>$number_json]);
         }
     }
 
@@ -64,9 +73,15 @@ class QRcodeController extends Controller{
     public function pay_PPhone(Request $request){
         $data = $request->all();
         $order_1 = explode(',',$data['order']);
+        foreach($order_1 as $k=>$v){
+            if($k/4 == ceil($k/4)){
+                $nopay = UserNopayManager::getByToolNum($v);
+                $nopay->work_start = $order_1[$k+1].' '.$order_1[$k+2];
+                $nopay->work_time = $order_1[$k+3];
+                $nopay->save();
+            }
+        }
         Log::info($order_1);
-        return ApiResponse::makeResponse(true,'123', ApiResponse::SUCCESS_CODE);
-//        return ApiResponse::makeResponse(true,'qweqwe', ApiResponse::SUCCESS_CODE);
     }
 
 
