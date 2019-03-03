@@ -80,54 +80,53 @@ class UserLoanManager{
      *
      * 2019-01-09
      */
-    public static function setUserLoan($user_loan, $data)
-    {
-        if (array_key_exists('order_number', $data)) {
-            $user_loan->order_number = array_get($data, 'order_number');
+    public static function setInfo($info,$data){
+        if (array_key_exists('order_number', $data) && !Utils::isObjNull($data['order_number'])) {
+            $info->order_number = array_get($data, 'order_number');
         }
-        if (array_key_exists('tool_id', $data)) {
-            $user_loan->tool_id = array_get($data, 'tool_id');
+        if (array_key_exists('tool_id', $data) && !Utils::isObjNull($data['tool_id'])) {
+            $info->tool_id = array_get($data, 'tool_id');
         }
-        if (array_key_exists('tool_number', $data)) {
-            $user_loan->tool_number = array_get($data, 'tool_number');
+        if (array_key_exists('tool_number', $data) && !Utils::isObjNull($data['tool_number'])) {
+            $info->tool_number = array_get($data, 'tool_number');
         }
-        if (array_key_exists('detection_address', $data)) {
-            $user_loan->detection_address = array_get($data, 'detection_address');
+        if (array_key_exists('detection_address', $data) && !Utils::isObjNull($data['detection_address'])) {
+            $info->detection_address = array_get($data, 'detection_address');
         }
-        if (array_key_exists('detection_duration', $data)) {
-            $user_loan->detection_duration = array_get($data, 'detection_duration');
+        if (array_key_exists('detection_duration', $data) && !Utils::isObjNull($data['detection_duration'])) {
+            $info->detection_duration = array_get($data, 'detection_duration');
         }
-        if (array_key_exists('lease_duration', $data)) {
-            $user_loan->lease_duration = array_get($data, 'lease_duration');
+        if (array_key_exists('lease_duration', $data) && !Utils::isObjNull($data['lease_duration'])) {
+            $info->lease_duration = array_get($data, 'lease_duration');
         }
-        if (array_key_exists('out_time', $data)) {
-            $user_loan->out_time = array_get($data, 'out_time');
+        if (array_key_exists('out_time', $data) && !Utils::isObjNull($data['out_time'])) {
+            $info->out_time = array_get($data, 'out_time');
         }
-        if (array_key_exists('back_time', $data)) {
-            $user_loan->back_time = array_get($data, 'back_time');
+        if (array_key_exists('back_time', $data) && !Utils::isObjNull($data['back_time'])) {
+            $info->back_time = array_get($data, 'back_time');
         }
-        if (array_key_exists('plan_maxbacktime', $data)) {
-            $user_loan->plan_maxbacktime = array_get($data, 'plan_maxbacktime');
+        if (array_key_exists('plan_maxbacktime', $data) && !Utils::isObjNull($data['plan_maxbacktime'])) {
+            $info->plan_maxbacktime = array_get($data, 'plan_maxbacktime');
         }
-        if (array_key_exists('rent', $data)) {
-            $user_loan->rent = array_get($data, 'rent');
+        if (array_key_exists('rent', $data) && !Utils::isObjNull($data['rent'])) {
+            $info->rent = array_get($data, 'rent');
         }
-        if (array_key_exists('rent_status', $data)) {
-            $user_loan->rent_status = array_get($data, 'rent_status');
+        if (array_key_exists('rent_status', $data) && !Utils::isObjNull($data['rent_status'])) {
+            $info->rent_status = array_get($data, 'rent_status');
         }
-        if (array_key_exists('deposit', $data)) {
-            $user_loan->deposit = array_get($data, 'deposit');
+        if (array_key_exists('deposit', $data) && !Utils::isObjNull($data['deposit'])) {
+            $info->deposit = array_get($data, 'deposit');
         }
-        if (array_key_exists('deposit_status', $data)) {
-            $user_loan->deposit_status = array_get($data, 'deposit_status');
+        if (array_key_exists('deposit_status', $data) && !Utils::isObjNull($data['deposit_status'])) {
+            $info->deposit_status = array_get($data, 'deposit_status');
         }
-        if (array_key_exists('loan_status', $data)) {
-            $user_loan->loan_status = array_get($data, 'loan_status');
+        if (array_key_exists('loan_status', $data) && !Utils::isObjNull($data['loan_status'])) {
+            $info->loan_status = array_get($data, 'loan_status');
         }
-        if (array_key_exists('feedback', $data)) {
-            $user_loan->feedback = array_get($data, 'feedback');
+        if (array_key_exists('feedback', $data) && !Utils::isObjNull($data['feedback'])) {
+            $info->feedback = array_get($data, 'feedback');
         }
-        return $user_loan;
+        return $info;
     }
 
     /*
@@ -166,5 +165,7 @@ class UserLoanManager{
         $sum = $sum->sum('deposit');
         return $sum;
     }
+
+
 
 }

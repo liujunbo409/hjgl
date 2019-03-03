@@ -72,34 +72,34 @@ class UserOrderManager{
      */
     public static function setUserOrder($user_order, $data)
     {
-        if (array_key_exists('order_number', $data)) {
+        if (array_key_exists('order_number', $data) && !Utils::isObjNull($data['order_number'])) {
             $user_order->order_number = array_get($data, 'order_number');
         }
-        if (array_key_exists('shop_id', $data)) {
+        if (array_key_exists('shop_id', $data) && !Utils::isObjNull($data['shop_id'])) {
             $user_order->shop_id = array_get($data, 'shop_id');
         }
-        if (array_key_exists('shop_name', $data)) {
+        if (array_key_exists('shop_name', $data) && !Utils::isObjNull($data['shop_name'])) {
             $user_order->shop_name = array_get($data, 'shop_name');
         }
-        if (array_key_exists('user_id', $data)) {
+        if (array_key_exists('user_id', $data) && !Utils::isObjNull($data['user_id'])) {
             $user_order->user_id = array_get($data, 'user_id');
         }
-        if (array_key_exists('user_phone', $data)) {
+        if (array_key_exists('user_phone', $data) && !Utils::isObjNull($data['user_phone'])) {
             $user_order->user_phone = array_get($data, 'user_phone');
         }
-        if (array_key_exists('user_name', $data)) {
+        if (array_key_exists('user_name', $data) && !Utils::isObjNull($data['user_name'])) {
             $user_order->user_name = array_get($data, 'user_name');
         }
-        if (array_key_exists('address', $data)) {
+        if (array_key_exists('address', $data) && !Utils::isObjNull($data['address'])) {
             $user_order->address = array_get($data, 'address');
         }
-        if (array_key_exists('order_duration', $data)) {
+        if (array_key_exists('order_duration', $data) && !Utils::isObjNull($data['order_duration'])) {
             $user_order->order_duration = array_get($data, 'order_duration');
         }
-        if (array_key_exists('plan_minbacktime', $data)) {
+        if (array_key_exists('plan_minbacktime', $data) && !Utils::isObjNull($data['plan_minbacktime'])) {
             $user_order->plan_minbacktime = array_get($data, 'plan_minbacktime');
         }
-        if (array_key_exists('order_status', $data)) {
+        if (array_key_exists('order_status', $data) && !Utils::isObjNull($data['order_status'])) {
             $user_order->order_status = array_get($data, 'order_status');
         }
         return $user_order;
