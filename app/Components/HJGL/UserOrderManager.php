@@ -87,6 +87,9 @@ class UserOrderManager{
         if (array_key_exists('user_id', $data) && !Utils::isObjNull($data['user_id'])) {
             $user_order->user_id = array_get($data, 'user_id');
         }
+        if (array_key_exists('user_openid', $data) && !Utils::isObjNull($data['user_openid'])) {
+            $user_order->user_openid = array_get($data, 'user_openid');
+        }
         if (array_key_exists('user_phone', $data) && !Utils::isObjNull($data['user_phone'])) {
             $user_order->user_phone = array_get($data, 'user_phone');
         }

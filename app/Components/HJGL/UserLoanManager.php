@@ -102,6 +102,9 @@ class UserLoanManager{
         if (array_key_exists('out_time', $data) && !Utils::isObjNull($data['out_time'])) {
             $info->out_time = array_get($data, 'out_time');
         }
+        if (array_key_exists('work_start', $data) && !Utils::isObjNull($data['work_start'])) {
+            $info->work_start = array_get($data, 'work_start');
+        }
         if (array_key_exists('back_time', $data) && !Utils::isObjNull($data['back_time'])) {
             $info->back_time = array_get($data, 'back_time');
         }

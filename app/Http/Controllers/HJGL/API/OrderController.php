@@ -22,25 +22,25 @@ class OrderController extends Controller{
 
     public function index(Request $request){
         $session = $request->session()->get('wechat_user');
-
         $con_doing = array(
             'user_openid'=>$session['original']['openid'],
-            'order_status'=>1
+            'order_status'=>array('1')
         );
         $order_doing = UserOrderManager::getListByCon($con_doing,false);
+        $order_doing_tool = array();
         foreach($order_doing as $v){
             $order_doing_tool[$v->order_number] = explode(',',$v->tool_numstr);
         }
 
         $con_finish = array(
             'user_openid'=>$session['original']['openid'],
-            'order_status'=>2
+            'order_status'=>array('2')
         );
         $order_finish = UserOrderManager::getListByCon($con_finish,false);
+        $order_finish_tool = array();
         foreach($order_finish as $v){
             $order_finish_tool[$v->order_number] = explode(',',$v->tool_numstr);
         }
-
         return view('HJGL.user.order.index',['order_doing'=>$order_doing,'order_doing_tool'=>$order_doing_tool,'order_finish'=>$order_finish,'order_finish_tool'=>$order_finish_tool]);
     }
 
