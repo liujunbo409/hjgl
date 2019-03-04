@@ -96,6 +96,9 @@ class UserOrderManager{
         if (array_key_exists('user_name', $data) && !Utils::isObjNull($data['user_name'])) {
             $user_order->user_name = array_get($data, 'user_name');
         }
+        if (array_key_exists('tool_numstr', $data) && !Utils::isObjNull($data['tool_numstr'])) {
+            $user_order->tool_numstr = array_get($data, 'tool_numstr');
+        }
         if (array_key_exists('address', $data) && !Utils::isObjNull($data['address'])) {
             $user_order->address = array_get($data, 'address');
         }

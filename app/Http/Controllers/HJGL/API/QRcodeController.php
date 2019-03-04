@@ -169,10 +169,12 @@ class QRcodeController extends Controller{
             if(empty($tool_numstr)){
                 $tool_numstr = $v->tool_num;
             }else{
-                $tool_numstr = ','.$v->tool_num;
+                $tool_numstr .= ','.$v->tool_num;
             }
         }
-
+        if(empty($tool_numstr)){
+            return('检测器编号未获取');
+        }
         $order = array(
             'order_number' => date('YmdHis').mt_rand(1000,9999),
             'shop_id'=>$nopay_one->shop_id,
@@ -181,6 +183,7 @@ class QRcodeController extends Controller{
             'user_openid'=>$nopay_one->user_openid,
             'user_phone'=>$nopay_one->user_phone,
             'user_name'=>$user->hj_name,
+            'tool_numstr'=>$tool_numstr,
             'address'=>$user->hj_address,
             'work_time'=>$nopay_one->work_time,
             'plan_minbacktime'=>date('Y-m-d H:i:s',strtotime($nopay_one->work_start) + $nopay_one->work_time * 60 * 60),
