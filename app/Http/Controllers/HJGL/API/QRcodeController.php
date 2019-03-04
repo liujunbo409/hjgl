@@ -157,6 +157,22 @@ class QRcodeController extends Controller{
         }
         $user = UserInfoManager::getByOpenId($session['original']['openid']);
 
+        $con_arr = array(
+            'user_openid'=>$session['original']['openid']
+        );
+        $nopay = UserNopayManager::getListByCon($con_arr,false);
+
+        $tool_total = 0;
+        $tool_numstr = '';
+        foreach($nopay as $v){
+            $tool_total++;
+            if(empty($tool_numstr)){
+                $tool_numstr = $v->tool_num;
+            }else{
+                $tool_numstr = ','.$v->tool_num;
+            }
+        }
+
         $order = array(
             'order_number' => date('YmdHis').mt_rand(1000,9999),
             'shop_id'=>$nopay_one->shop_id,
@@ -179,10 +195,7 @@ class QRcodeController extends Controller{
         $order_in = UserOrderManager::setUserOrder($data,$order);
         $order_in->save();
 
-        $con_arr = array(
-            'user_openid'=>$session['original']['openid']
-        );
-        $nopay = UserNopayManager::getListByCon($con_arr,false);
+
         foreach($nopay as $v){
             $tool = ToolManager::getByNumber($v->tool_num);
             $tool->loan_status=2;

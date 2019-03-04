@@ -10,16 +10,29 @@ namespace App\Http\Controllers\HJGL\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Config;
-use EasyWeChat\Factory;
+use App\Models\HJGL\UserOrder;
+use App\Components\HJGL\UserOrderManager;
+use App\Models\HJGL\UserLoan;
+use App\Components\HJGL\UserLoanManager;
 
 class OrderController extends Controller{
 
     public function index(Request $request){
-        $user_info = $request->session()->get('wechat_user');
+        $session = $request->session()->get('wechat_user');
 
-        return view('HJGL.user.order.index');
+        $con_doing = array(
+            'user_openid'=>$session['original']['openid'],
+            'order_status'=>1
+        );
+        $order_doing = UserOrderManager::getListByCon($con_doing,false);
+
+        $con_finish = array(
+            'user_openid'=>$session['original']['openid'],
+            'order_status'=>2
+        );
+        $order_finish = UserOrderManager::getListByCon($con_finish,false);
+
+        return view('HJGL.user.order.index',['order_doing'=>$order_doing,'order_finish'=>$order_finish]);
     }
 
     public function loan(Request $request){
