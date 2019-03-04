@@ -182,7 +182,7 @@ class QRcodeController extends Controller{
             'user_phone'=>$nopay_one->user_phone,
             'user_name'=>$user->hj_name,
             'address'=>$user->hj_address,
-            'work_time'=>$nopay_one->work_start,
+            'work_time'=>$nopay_one->work_time,
             'plan_minbacktime'=>date('Y-m-d H:i:s',strtotime($nopay_one->work_start) + $nopay_one->work_time * 60 * 60),
             'rent_total'=>'0',
             'rent_unpaid'=>'0',
@@ -194,7 +194,6 @@ class QRcodeController extends Controller{
         $data = new UserOrder();
         $order_in = UserOrderManager::setUserOrder($data,$order);
         $order_in->save();
-
 
         foreach($nopay as $v){
             $tool = ToolManager::getByNumber($v->tool_num);
@@ -208,6 +207,7 @@ class QRcodeController extends Controller{
                 'tool_number'=>$v->tool_num,
                 'detection_address'=>$user->hj_address,
                 'detection_duration'=>$v->work_time,
+                'work_start'=>$v->work_start,
                 'out_time'=>date('Y-m-d H:i:s'),
                 'plan_minbacktime'=>date('Y-m-d H:i:s',strtotime($v->work_start) + $v->work_time * 60 * 60),
                 'rent'=>'0',
