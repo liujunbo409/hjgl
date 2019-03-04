@@ -46,7 +46,7 @@ class OrderController extends Controller{
 
     public function loan(Request $request){
         $data = $request->all();
-        if(array_key_exists('order_number',$data) || Utils::isObjNull($data['order_number'])){
+        if(!array_key_exists('order_number',$data) || Utils::isObjNull($data['order_number'])){
             return('订单号未获取到');
         }
         $order = UserOrderManager::getByOrderNumber($data['order_number']);

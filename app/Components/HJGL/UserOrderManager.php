@@ -99,6 +99,12 @@ class UserOrderManager{
         if (array_key_exists('tool_numstr', $data) && !Utils::isObjNull($data['tool_numstr'])) {
             $user_order->tool_numstr = array_get($data, 'tool_numstr');
         }
+        if (array_key_exists('tool_total', $data) && !Utils::isObjNull($data['tool_total'])) {
+            $user_order->tool_total = array_get($data, 'tool_total');
+        }
+        if (array_key_exists('tool_finish', $data) && !Utils::isObjNull($data['tool_finish'])) {
+            $user_order->tool_finish = array_get($data, 'tool_finish');
+        }
         if (array_key_exists('address', $data) && !Utils::isObjNull($data['address'])) {
             $user_order->address = array_get($data, 'address');
         }

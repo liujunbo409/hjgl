@@ -45,7 +45,7 @@
                             </span>
                         </div>
                         <div>
-                            <a href="{{URL::asset('api/order/loan')}}" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
+                            <a href="{{URL::asset('api/order/loan')}}?order_number={{$v->order_number}}" class="div1" style="float:right;color:#007bb6;">查看订单详情</a>
                         </div>
                     </div>
                 @endforeach
