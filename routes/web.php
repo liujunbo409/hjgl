@@ -122,3 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
     Route::any('/userAccount/deposit', 'HJGL\Admin\UserAccountController@deposit')->middleware('hjgl.AdminRole:超级管理员');//押金管理
 
 });
+
+Route::group(['prefix' => 'app'], function () {
+    Route::post('/login', 'HJGL\App\LoginController@login');  //登录-post
+});
