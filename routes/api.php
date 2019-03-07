@@ -19,6 +19,10 @@ Route::get('/user', function () {
     return redirect()->to('/home#/index'); //這時候已經拿到用戶資料了，跳轉到想要的路由
 });
 
+Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
+    Route::any('/login', 'HJGL\App\LoginController@login');
+});
+
 Route::group(['middleware'=>['web']],function(){
     //前方配置
     Route::any('/sendAlertMsg', 'HJGL\API\WeChatController@sendAlertMsg');

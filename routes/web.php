@@ -124,5 +124,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['hjgl.adminLogin']], functio
 });
 
 Route::group(['prefix' => 'app'], function () {
-    Route::post('/login', 'HJGL\App\LoginController@login');  //登录-post
+    Route::any('/login', 'HJGL\App\LoginController@login');
 });

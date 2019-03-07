@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: HappyQi
- * Date: 2017/10/3
- * Time: 0:38
- */
-
-namespace App\Http\Controllers\HJGL\Admin;
+namespace App\Http\Controllers\HJGL\App;
 
 use App\Components\HJGL\AdminManager;
 use Illuminate\Http\Request;
@@ -16,13 +9,15 @@ use App\Http\Controllers\ApiResponse;
 use App\Components\HJGL\VertifyManager;
 use App\Components\Utils;
 
-
 class LoginController
 {
     //POST-实现登录逻辑
-    public function loginPost(Request $request)
+    public function login(Request $request)
     {
         $data = $request->all();
+//        return var_dump($data);
+        return ApiResponse::makeResponse(false, '请输入账号或密码', ApiResponse::MISSING_PARAM);
+
         //参数校验
         $requestValidationResult = RequestValidator::validator($request->all(), [
             'phone' => 'required',
