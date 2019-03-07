@@ -184,6 +184,7 @@ class QRcodeController extends Controller{
             'user_phone'=>$nopay_one->user_phone,
             'user_name'=>$user->hj_name,
             'tool_numstr'=>$tool_numstr,
+            'tool_total'=>$tool_total,
             'address'=>$user->hj_address,
             'work_time'=>$nopay_one->work_time,
             'plan_minbacktime'=>date('Y-m-d H:i:s',strtotime($nopay_one->work_start) + $nopay_one->work_time * 60 * 60),
@@ -221,6 +222,8 @@ class QRcodeController extends Controller{
             );
             $user_loan_in = UserLoanManager::setInfo($user_loan,$data2);
             $user_loan_in->save();
+
+            cache([$v->tool_num=>$nopay_one->user_openid],0.1);
 
             $v->delete();
         }

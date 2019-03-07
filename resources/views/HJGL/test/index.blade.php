@@ -1,4 +1,9 @@
 @extends('HJGL.user.layouts.app')
+<style>
+    .a1{
+
+    }
+</style>
 @section('content')
     <span onclick='set("container",{{$datas}})'>1111111</span>
     <div id="container" style="height:200px">22222222</div>
