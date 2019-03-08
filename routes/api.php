@@ -21,6 +21,7 @@ Route::get('/user', function () {
 
 Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
     Route::any('/login', 'HJGL\App\LoginController@login');
+    Route::any('/send_code', 'HJGL\App\LoginController@send_code');
 });
 
 Route::group(['middleware'=>['web']],function(){

@@ -15,8 +15,6 @@ class LoginController
     public function login(Request $request)
     {
         $data = $request->all();
-//        return ApiResponse::makeResponse(true, '登陆成功', ApiResponse::SUCCESS_CODE);
-        return ApiResponse::makeResponse(false, '请输入账号或密码', ApiResponse::MISSING_PARAM);
 
         //参数校验
         $requestValidationResult = RequestValidator::validator($request->all(), [
@@ -30,22 +28,23 @@ class LoginController
             'phone' => $data['phone'],
             'password' => $data['password'],
         );
-        $admin = ShopManager::getListByCon($con_arr, false)->first();
-        if (!$admin) {
+        $shop = ShopManager::getListByCon($con_arr, false)->first();
+        if (!$shop) {
             return ApiResponse::makeResponse(false, '账户名或密码错误', ApiResponse::PARAM_ERROR);
         }
-        if($admin->status != 2 && $admin->id != 1){
+        if($shop->status != 2 && $shop->id != 1){
             return ApiResponse::makeResponse(false, '该账号已被禁用', ApiResponse::POWER_ERROR);
         }
-        return ApiResponse::makeResponse(true, '登陆成功', ApiResponse::SUCCESS_CODE);
+        $re_shop = array(
+            'id'=>$shop->id,
+        );
+        return ApiResponse::makeResponse(true, $re_shop, ApiResponse::SUCCESS_CODE);
     }
 
     //注销登录
-    public function loginout(Request $request)
+    public function forget(Request $request)
     {
-        //清空session
-        $request->session()->remove('admin');
-        return redirect('/admin/login');
+
     }
 
     /*
@@ -55,20 +54,20 @@ class LoginController
      *
      * 2018/12/27
      */
-    public function validateOldPhonenum(Request $request)
+    public function send_code(Request $request)
     {
         $data = $request->all();
-        if (!array_key_exists('login_name', $data) || $data['login_name'] == '') {
-            return ApiResponse::makeResponse(false, '请输入登录名', ApiResponse::MISSING_PARAM);
+        if (!array_key_exists('phone', $data) || $data['phone'] == '') {
+            return ApiResponse::makeResponse(false, '请输入手机号', ApiResponse::MISSING_PARAM);
         }
         $con_arr=array(
-            'login_name'=>$data['login_name']
+            'phone'=>$data['phone']
         );
-        $admin=ShopManager::getListByCon($con_arr,false)->first();
-        if(!$admin){
-            return ApiResponse::makeResponse(false, '账号不存在', ApiResponse::NO_USER);
+        $shop=ShopManager::getListByCon($con_arr,false)->first();
+        if(!$shop){
+            return ApiResponse::makeResponse(false, '手机号不存在', ApiResponse::NO_USER);
         }
-        $phonenum=$admin->phonenum;
+        $phonenum=$shop->phonenum;
         $result = VertifyManager::sendVertify($phonenum);
         if($result){
             return ApiResponse::makeResponse(true,'短信验证码已发送', ApiResponse::SUCCESS_CODE);
