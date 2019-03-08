@@ -22,6 +22,8 @@ Route::get('/user', function () {
 Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
     Route::any('/login', 'HJGL\App\LoginController@login');
     Route::any('/send_code', 'HJGL\App\LoginController@send_code');
+    Route::any('/forget_login', 'HJGL\App\LoginController@forget_login');
+    Route::any('/tool', 'HJGL\App\ShopToolController@index');
 });
 
 Route::group(['middleware'=>['web']],function(){

@@ -42,17 +42,47 @@ class LoginController
     }
 
     //注销登录
-    public function forget(Request $request)
+    public function forget_login(Request $request)
     {
+        $data = $request->all();
+        if(!array_key_exists('phone',$data) || Utils::isObjNull($data['phone'])){
+            return ApiResponse::makeResponse(false, '请输入手机号', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('sms_code',$data) || Utils::isObjNull($data['sms_code'])){
+            return ApiResponse::makeResponse(false, '请输入验证码', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('password',$data) || Utils::isObjNull($data['password'])){
+            return ApiResponse::makeResponse(false, '请输入密码', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('confirm_password',$data) || Utils::isObjNull($data['confirm_password'])){
+            return ApiResponse::makeResponse(false, '请输入确认密码', ApiResponse::MISSING_PARAM);
+        }
+        if($data['password'] != $data['confirm_password']){
+            return ApiResponse::makeResponse(false, '两次输入密码不一致', ApiResponse::INNER_ERROR);
+        }
 
+        $con_arr=array(
+            'phone'=>$data['phone']
+        );
+        $shop=ShopManager::getListByCon($con_arr,false)->first();
+        if(!$shop){
+            return ApiResponse::makeResponse(false, '手机号不存在', ApiResponse::NO_USER);
+        }
+        $ys_sm = VertifyManager::judgeVertifyCode($data['phone'], $data['sms_code']);
+        if (!$ys_sm) {
+            return ApiResponse::makeResponse(false, '短信验证码验证失败', ApiResponse::SM_VERTIFY_ERROR);
+        }
+
+        $shop->password = $data['password'];
+        $re_shop = array(
+            'id'=>$shop->id
+        );
+        $shop->save();
+        return ApiResponse::makeResponse(true, $re_shop, ApiResponse::SUCCESS_CODE);
     }
 
     /*
-     * 向用户旧手机号发送短信
-     *
-     * By Yuyang
-     *
-     * 2018/12/27
+     * 向用户手机号发送短信
      */
     public function send_code(Request $request)
     {
@@ -67,8 +97,8 @@ class LoginController
         if(!$shop){
             return ApiResponse::makeResponse(false, '手机号不存在', ApiResponse::NO_USER);
         }
-        $phonenum=$shop->phonenum;
-        $result = VertifyManager::sendVertify($phonenum);
+        $phone=$shop->phone;
+        $result = VertifyManager::sendVertify($phone);
         if($result){
             return ApiResponse::makeResponse(true,'短信验证码已发送', ApiResponse::SUCCESS_CODE);
         }
