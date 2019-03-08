@@ -53,6 +53,9 @@ class ShopManager{
         if (array_key_exists('status', $con_arr) && !Utils::isObjNull($con_arr['status'])) {
             $shops = $shops->where('status', '=', $con_arr['status']);
         }
+        if (array_key_exists('password', $con_arr) && !Utils::isObjNull($con_arr['password'])) {
+            $shops = $shops->where('password', '=', $con_arr['password']);
+        }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $shops = $shops->where(function ($query) use ($keyword) {

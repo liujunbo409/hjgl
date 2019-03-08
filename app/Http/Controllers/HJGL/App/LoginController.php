@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\HJGL\App;
 
-use App\Components\HJGL\AdminManager;
+use App\Components\HJGL\ShopManager;
 use Illuminate\Http\Request;
 use App\Components\RequestValidator;
 use App\Http\Controllers\ApiResponse;
@@ -15,7 +15,7 @@ class LoginController
     public function login(Request $request)
     {
         $data = $request->all();
-//        return var_dump($data);
+//        return ApiResponse::makeResponse(true, '登陆成功', ApiResponse::SUCCESS_CODE);
         return ApiResponse::makeResponse(false, '请输入账号或密码', ApiResponse::MISSING_PARAM);
 
         //参数校验
@@ -30,7 +30,7 @@ class LoginController
             'phone' => $data['phone'],
             'password' => $data['password'],
         );
-        $admin = AdminManager::getListByCon($con_arr, false)->first();
+        $admin = ShopManager::getListByCon($con_arr, false)->first();
         if (!$admin) {
             return ApiResponse::makeResponse(false, '账户名或密码错误', ApiResponse::PARAM_ERROR);
         }
@@ -64,7 +64,7 @@ class LoginController
         $con_arr=array(
             'login_name'=>$data['login_name']
         );
-        $admin=AdminManager::getListByCon($con_arr,false)->first();
+        $admin=ShopManager::getListByCon($con_arr,false)->first();
         if(!$admin){
             return ApiResponse::makeResponse(false, '账号不存在', ApiResponse::NO_USER);
         }
