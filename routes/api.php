@@ -25,6 +25,7 @@ Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
     Route::any('/forget_login', 'HJGL\App\LoginController@forget_login');
     Route::any('/tool', 'HJGL\App\ShopToolController@index');
     Route::any('/order', 'HJGL\App\ShopOrderController@index');
+    Route::any('/order_detail', 'HJGL\App\ShopOrderController@order_detail');
 });
 
 Route::group(['middleware'=>['web']],function(){

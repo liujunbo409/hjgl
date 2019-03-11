@@ -47,6 +47,9 @@ class UserOrderManager{
         if (array_key_exists('user_openid', $con_arr) && !Utils::isObjNull($con_arr['user_openid'])) {
             $orders = $orders->where('user_openid','=',$con_arr['user_openid']);
         }
+        if (array_key_exists('shop_id', $con_arr) && !Utils::isObjNull($con_arr['shop_id'])) {
+            $orders = $orders->where('shop_id','=',$con_arr['shop_id']);
+        }
         if (array_key_exists('search_word', $con_arr) && !Utils::isObjNull($con_arr['search_word'])) {
             $keyword = $con_arr['search_word'];
             $orders = $orders->where(function ($query) use ($keyword) {
