@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\HJGL\App;
 
 use App\Components\HJGL\ShopManager;
-use App\Components\HJGL\ToolManager;
+use App\Components\HJGL\UserOrderManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiResponse;
 use App\Components\Utils;
 
-class ShopToolController
+class ShopOrderController
 {
 
     public function index(Request $request)
@@ -25,7 +25,7 @@ class ShopToolController
         $con_arr = array(
             'shop_id'=>$data['id'],
         );
-        $tools = ToolManager::getListByCon($con_arr,false);
+        $tools = UserOrderManager::getListByCon($con_arr,false);
         $re_tools = array();
         foreach($tools as $k=>$v){
             $re_tools[$k]['number'] = $v->number;
