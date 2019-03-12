@@ -26,7 +26,12 @@ Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
     Route::any('/tool', 'HJGL\App\ShopToolController@index');//商家设备管理
     Route::any('/order', 'HJGL\App\ShopOrderController@index');//商家订单管理
     Route::any('/order_detail', 'HJGL\App\ShopOrderController@order_detail');//商家订单详情管理
-    Route::any('/shop', 'HJGL\App\ShopController@index');//商家订单详情管理
+    Route::any('/shop', 'HJGL\App\ShopController@index');//商家管理
+    Route::any('/update_time', 'HJGL\App\ShopController@update_time');//修改商家营业时间
+    Route::any('/update_phone', 'HJGL\App\ShopController@update_phone');//修改商家手机号
+    Route::any('/name_phone', 'HJGL\App\ShopController@name_phone');//提交修改审核
+    Route::any('/update_pwd', 'HJGL\App\ShopController@update_pwd');//提交原密码
+    Route::any('/save_pwd', 'HJGL\App\ShopController@save_pwd');//修改新密码
 });
 
 Route::group(['middleware'=>['web']],function(){
