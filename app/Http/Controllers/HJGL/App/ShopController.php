@@ -23,10 +23,11 @@ class ShopController
         }
         $re_shop = array(
             'shop_name'=>$shop->shop_name,
+            'name'=>$shop->name,
             'address'=>$shop->address,
             'phone'=>$shop->phone,
-            'open_time'=>$shop->open_time,
-            'close_time'=>$shop->close_time,
+            'open_time'=>substr(date($shop->open_time),0,5),
+            'close_time'=>substr(date($shop->close_time),0,5),
         );
         return ApiResponse::makeResponse(true, $re_shop, ApiResponse::SUCCESS_CODE);
     }
