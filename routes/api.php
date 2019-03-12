@@ -20,12 +20,13 @@ Route::get('/user', function () {
 });
 
 Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
-    Route::any('/login', 'HJGL\App\LoginController@login');
-    Route::any('/send_code', 'HJGL\App\LoginController@send_code');
-    Route::any('/forget_login', 'HJGL\App\LoginController@forget_login');
-    Route::any('/tool', 'HJGL\App\ShopToolController@index');
-    Route::any('/order', 'HJGL\App\ShopOrderController@index');
-    Route::any('/order_detail', 'HJGL\App\ShopOrderController@order_detail');
+    Route::any('/login', 'HJGL\App\LoginController@login');//商家登录
+    Route::any('/send_code', 'HJGL\App\LoginController@send_code');//发送验证码
+    Route::any('/forget_login', 'HJGL\App\LoginController@forget_login');//忘记密码登录
+    Route::any('/tool', 'HJGL\App\ShopToolController@index');//商家设备管理
+    Route::any('/order', 'HJGL\App\ShopOrderController@index');//商家订单管理
+    Route::any('/order_detail', 'HJGL\App\ShopOrderController@order_detail');//商家订单详情管理
+    Route::any('/shop', 'HJGL\App\ShopController@index');//商家订单详情管理
 });
 
 Route::group(['middleware'=>['web']],function(){
