@@ -7,6 +7,7 @@ use App\Components\HJGL\ToolManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiResponse;
 use App\Components\Utils;
+use App\Components\HJGL\VertifyManager;
 
 class ShopController
 {
@@ -86,6 +87,10 @@ class ShopController
         }
         if(!array_key_exists('remarks',$data) || Utils::isObjNull($data['remarks'])){
             return ApiResponse::makeResponse(false, '备注缺失', ApiResponse::MISSING_PARAM);
+        }
+        $ys_sm = VertifyManager::judgeVertifyCode($data['phone'], $data['sms_code']);
+        if (!$ys_sm) {
+            return ApiResponse::makeResponse(false, '短信验证码验证失败', ApiResponse::SM_VERTIFY_ERROR);
         }
         $shop = ShopManager::getById($data['id']);
         if(empty($shop)){

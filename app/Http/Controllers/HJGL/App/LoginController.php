@@ -43,7 +43,7 @@ class LoginController
         return ApiResponse::makeResponse(true, $re_shop, ApiResponse::SUCCESS_CODE);
     }
 
-    //注销登录
+    //忘记密码_登录
     public function forget_login(Request $request)
     {
         $data = $request->all();
@@ -120,10 +120,10 @@ class LoginController
             'phone'=>$data['phone']
         );
         $shop=ShopManager::getListByCon($con_arr,false)->first();
-        if(!$shop){
-            return ApiResponse::makeResponse(false, '手机号不存在', ApiResponse::NO_USER);
+        if($shop){
+            return ApiResponse::makeResponse(false, '手机号已存在', ApiResponse::NO_USER);
         }
-        $phone=$shop->phone;
+        $phone=$data['phone'];
         $result = VertifyManager::sendVertify($phone);
         if($result){
             return ApiResponse::makeResponse(true,'短信验证码已发送', ApiResponse::SUCCESS_CODE);
