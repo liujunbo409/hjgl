@@ -126,16 +126,27 @@ class ShopController
         if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
             return ApiResponse::makeResponse(false, '信息缺失', ApiResponse::MISSING_PARAM);
         }
-        if(!array_key_exists('pwd',$data) || Utils::isObjNull($data['pwd'])){
-            return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::MISSING_PARAM);
+        if(!array_key_exists('new_pwd',$data) || Utils::isObjNull($data['new_pwd'])){
+            return ApiResponse::makeResponse(false, '新密码缺失', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('confirm_pwd',$data) || Utils::isObjNull($data['confirm_pwd'])){
+            return ApiResponse::makeResponse(false, '确认密码缺失', ApiResponse::MISSING_PARAM);
+        }
+        if($data['new_pwd'] != $data['confirm_pwd']){
+            return ApiResponse::makeResponse(false, '两次密码输入不一致', ApiResponse::MISSING_PARAM);
         }
         $shop = ShopManager::getById($data['id']);
         if(empty($shop)){
             return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
         }
-        $shop->password = $data['pwd'];
+        $shop->password = $data['new_pwd'];
         $shop->save();
         return ApiResponse::makeResponse(true, '新密码保存成功', ApiResponse::SUCCESS_CODE);
+    }
+
+    public function add_img(Request $request){
+        $data = $request->all();
+        dd($data);
     }
 
 

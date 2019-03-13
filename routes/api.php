@@ -33,6 +33,7 @@ Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
     Route::any('/name_phone', 'HJGL\App\ShopController@name_phone');//提交修改审核
     Route::any('/update_pwd', 'HJGL\App\ShopController@update_pwd');//提交原密码
     Route::any('/save_pwd', 'HJGL\App\ShopController@save_pwd');//修改新密码
+    Route::any('/add_img', 'HJGL\App\ShopController@add_img');//增加商家图片
 });
 
 Route::group(['middleware'=>['web']],function(){
