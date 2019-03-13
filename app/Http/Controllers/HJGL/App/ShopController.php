@@ -78,7 +78,7 @@ class ShopController
         if(!array_key_exists('phone',$data) || Utils::isObjNull($data['phone'])){
             return ApiResponse::makeResponse(false, '手机号缺失', ApiResponse::MISSING_PARAM);
         }
-        if(!array_key_exists('shop_name',$data) || Utils::isObjNull($data['shop_name'])){
+        if(!array_key_exists('name',$data) || Utils::isObjNull($data['name'])){
             return ApiResponse::makeResponse(false, '商家姓名缺失', ApiResponse::MISSING_PARAM);
         }
         if(!array_key_exists('sms_code',$data) || Utils::isObjNull($data['sms_code'])){
@@ -92,7 +92,7 @@ class ShopController
             return ApiResponse::makeResponse(false, '不存在该商家', ApiResponse::MISSING_PARAM);
         }
         $shop->phone = $data['phone'];
-        $shop->shop_name = $data['shop_name'];
+        $shop->name = $data['name'];
         $shop->save();
         return ApiResponse::makeResponse(true, '提交审核成功', ApiResponse::SUCCESS_CODE);
     }

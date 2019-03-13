@@ -21,7 +21,8 @@ Route::get('/user', function () {
 
 Route::group(['prefix' => 'app','middleware'=>['cors']],function(){
     Route::any('/login', 'HJGL\App\LoginController@login');//商家登录
-    Route::any('/send_code', 'HJGL\App\LoginController@send_code');//发送验证码
+    Route::any('/send_code', 'HJGL\App\LoginController@send_code');//向原有手机发送验证码
+    Route::any('/send_code_new', 'HJGL\App\LoginController@send_code_new');//向新手机发送验证码
     Route::any('/forget_login', 'HJGL\App\LoginController@forget_login');//忘记密码登录
     Route::any('/tool', 'HJGL\App\ShopToolController@index');//商家设备管理
     Route::any('/order', 'HJGL\App\ShopOrderController@index');//商家订单管理

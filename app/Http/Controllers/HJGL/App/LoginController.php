@@ -37,6 +37,8 @@ class LoginController
         }
         $re_shop = array(
             'id'=>$shop->id,
+            'name'=>$shop->name,
+            'phone'=>$shop->phone,
         );
         return ApiResponse::makeResponse(true, $re_shop, ApiResponse::SUCCESS_CODE);
     }
@@ -82,9 +84,33 @@ class LoginController
     }
 
     /*
-     * 向用户手机号发送短信
+     * 向用户原有手机号发送短信
      */
     public function send_code(Request $request)
+    {
+        $data = $request->all();
+        if (!array_key_exists('phone', $data) || $data['phone'] == '') {
+            return ApiResponse::makeResponse(false, '请输入手机号', ApiResponse::MISSING_PARAM);
+        }
+        $con_arr=array(
+            'phone'=>$data['phone']
+        );
+        $shop=ShopManager::getListByCon($con_arr,false)->first();
+        if(!$shop){
+            return ApiResponse::makeResponse(false, '手机号不存在', ApiResponse::NO_USER);
+        }
+        $phone=$shop->phone;
+        $result = VertifyManager::sendVertify($phone);
+        if($result){
+            return ApiResponse::makeResponse(true,'短信验证码已发送', ApiResponse::SUCCESS_CODE);
+        }
+        return ApiResponse::makeResponse(false, '短信验证码发送失败', ApiResponse::SM_VERTIFY_SEND_ERROR);
+    }
+
+    /*
+     * 向用户新手机号发送短信
+     */
+    public function send_code_new(Request $request)
     {
         $data = $request->all();
         if (!array_key_exists('phone', $data) || $data['phone'] == '') {
