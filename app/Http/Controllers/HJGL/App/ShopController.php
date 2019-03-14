@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiResponse;
 use App\Components\Utils;
 use App\Components\HJGL\VertifyManager;
+use Illuminate\Support\Facades\Log;
 
 class ShopController
 {
@@ -24,6 +25,7 @@ class ShopController
         }
         $re_shop = array(
             'shop_name'=>$shop->shop_name,
+            'shop_img'=>$shop->shop_img,
             'name'=>$shop->name,
             'address'=>$shop->address,
             'phone'=>$shop->phone,
@@ -146,7 +148,19 @@ class ShopController
 
     public function add_img(Request $request){
         $data = $request->all();
-        dd($data);
+        if(!array_key_exists('id',$data) || Utils::isObjNull($data['id'])){
+            return ApiResponse::makeResponse(false, '信息缺失', ApiResponse::MISSING_PARAM);
+        }
+        if(!array_key_exists('shop_img',$data) || Utils::isObjNull($data['shop_img'])){
+            return ApiResponse::makeResponse(false, '图片未获取到', ApiResponse::MISSING_PARAM);
+        }
+        $shop = ShopManager::getById($data['id']);
+        if(empty($shop)){
+            return ApiResponse::makeResponse(false, '商家信息获取失败', ApiResponse::MISSING_PARAM);
+        }
+        $shop->shop_img = $data['shop_img'];
+        $shop->save();
+        return ApiResponse::makeResponse(true, $data, ApiResponse::SUCCESS_CODE);
     }
 
 
